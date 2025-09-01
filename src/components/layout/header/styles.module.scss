@@ -5,7 +5,7 @@
 	background-color: var(--bg-color);
 	&__nav {
 		display: block;
-		transition: 1s;
+		// transition: 1s;
 		&Links {
 			display: flex;
 			gap: clamp(10px, 3.33vw, 50px);

@@ -1,0 +1,7 @@
+.footer{
+	padding: clamp(16px, 1.6vw, 24px) clamp(20px, 2vw, 30px);
+
+    &__social{
+        gap: 10px;
+    }
+}
