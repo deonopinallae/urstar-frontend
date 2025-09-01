@@ -1,0 +1,12 @@
+
+.icon-button{
+	width: clamp(30px, 3.33vw, 50px);
+	height: clamp(30px, 3.33vw, 50px);
+	min-width: 30px;
+}
+
+.logo {
+	width: clamp(133px, 13.33vw, 200px);
+	height: clamp(67px, 6.67vw, 100px);
+	min-width: 133px;
+}

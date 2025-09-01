@@ -1,0 +1,1 @@
+export * as logoImg from './logo.svg'
