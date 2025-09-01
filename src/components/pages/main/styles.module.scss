@@ -1,0 +1,18 @@
+.main {
+    width: 100%;
+	&__button {
+		font-family: var(--decore-font);
+		font-size: clamp(20px, 3.33vw, 50px);
+        padding: 20px;
+        top: 30%;
+
+	}
+	&__decore {
+		width: clamp(50px, 10vw, 150px);
+        left: 50%;
+        top: -10%;
+	}
+	&__image {
+		width: clamp(200px, 40vw, 600px);
+	}
+}

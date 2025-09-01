@@ -1,12 +1,13 @@
 import { Routes, Route } from 'react-router'
 import { AppColumn, Header, Footer } from './components'
+import { Main } from './components/pages'
 
 export const App = () => {
 	return (
 		<AppColumn>
 			<Header />
 				<Routes>
-					<Route path="/" element="" />
+					<Route path="/" element={<Main/>} />
 					<Route path="/catalog" element="" />
 					<Route path="/product" element="" />
 					<Route path="/favorite" element="" />
