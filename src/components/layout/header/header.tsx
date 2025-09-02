@@ -27,10 +27,10 @@ export const Header = () => {
 					<Link to="/catalog/top">top</Link>
 					<Link to="/catalog/bottom">bottom</Link>
 					<Link to="/catalog/shoes">shoes</Link>
-					<Link to="/catalog/accessories">accessories</Link>
+					<Link to="/catalog/accessories">accessory</Link>
 					<Link to="/catalog/combine">
 						<div>combine</div>
-						<div>clothers</div>
+						<div>clothes</div>
 					</Link>
 				</div>
 			</nav>

@@ -1,0 +1,11 @@
+.catalog{
+    &__search{
+        width: clamp(200px, 33.33vw, 500px);
+        border: 1px solid var(--main-color);
+        padding: 2px clamp(10px, 1.00vw, 15px);
+        border-radius: clamp(13px, 1.33vw, 20px);
+        & input{
+            width: 100%;
+        }
+    }
+}

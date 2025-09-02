@@ -8,26 +8,21 @@ html {
 	margin: 0;
 	padding: 0;
 }
-body,
-#root {
-	height: 100vh;
-}
-
 body {
 	font-family: 'Zain', sans-serif;
 	font-weight: 400;
 	font-size: clamp(18px, 1.73vw, 26px);
 	color: var(--main-font-color);
-	display: flex;
-	flex-direction: column;
 	background-image: url('../assets/bgi.jpg');
 	background-position: center;
 	background-size: cover;
 	background-repeat: no-repeat;
 }
-section {
-	height: 100%;
+body,
+#root {
+	height: 100vh;
 }
+
 h1 {
 	font-size: clamp(18px, 1.39vw, 20px);
 	font-weight: inherit;
