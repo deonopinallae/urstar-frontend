@@ -2,17 +2,17 @@
     width: 100%;
 	&__button {
 		font-family: var(--decore-font);
-		font-size: clamp(20px, 3.33vw, 50px);
-        padding: 20px;
-        top: 30%;
+		font-size: clamp(20px, 2.00vw, 30px);
+        top: 40%;
+		left: 50%;
+		z-index: 20;
+		background-color: #fff1bb;
+		box-shadow: 0 0 30px 30px #fff1bb;
+		border-radius: 30px;
 
 	}
-	&__decore {
-		width: clamp(50px, 10vw, 150px);
-        left: 50%;
-        top: -10%;
-	}
 	&__image {
-		width: clamp(200px, 40vw, 600px);
+		width: clamp(467px, 46.67vw, 700px);
+		left: -30%;
 	}
 }

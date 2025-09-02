@@ -9,11 +9,6 @@ export const Main = () => {
 					to CATalog...
 				</Link>
 				<img
-					className={`${styles.main__decore} relative`}
-					src="src/assets/arrow.svg"
-					alt=""
-				/>
-				<img
 					className={`${styles.main__image} relative`}
 					src="src/assets/model.png"
 					alt=""

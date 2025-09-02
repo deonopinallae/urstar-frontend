@@ -1,8 +1,9 @@
 .header {
 	position: sticky;
 	top: 0;
-	padding: clamp(16px, 1.6vw, 24px) clamp(20px, 2vw, 30px);
+	padding: clamp(7px, 0.67vw, 10px) clamp(20px, 2vw, 30px);
 	background-color: var(--bg-color);
+	box-shadow: 0px 0px 30px 30px var(--bg-color);
 	&__nav {
 		display: block;
 		// transition: 1s;
