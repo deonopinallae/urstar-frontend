@@ -7,7 +7,7 @@ export const Footer = () => {
     return <footer className={`${styles.footer} flex justify-between`}>
       <div className={`${styles.footer__social} flex item-center`}>
         <a href={SOCIAL.EMAIL}>{SOCIAL.EMAIL}</a>
-        <a href={SOCIAL.INSTAGRAM}><img className='icon-button' src="src/assets/instagram.svg" alt="instagram" /></a>
+        <a href={SOCIAL.INSTAGRAM}><img className='icon-button' src="src/assets/icons/instagram.svg" alt="instagram" /></a>
       </div>
       <div>{currentYear}</div>
     </footer>

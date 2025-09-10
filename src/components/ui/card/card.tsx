@@ -16,10 +16,10 @@ export const Card = ({ productData: { imageUrl, name, brand, type, price } }) =>
 			</div>
 			<div className={`${styles.card__buttons} flex justify-between`}>
 				<button className={styles.card__button} onClick={addToCart}>
-					<img src="src/assets/cart.svg" alt="cart" />
+					<img src="src/assets/icons/cart.svg" alt="cart" />
 				</button>
 				<button className={styles.card__button} onClick={addToFavorite}>
-					<img src="src/assets/like.svg" alt="cart" />
+					<img src="src/assets/icons/like.svg" alt="cart" />
 				</button>
 				<button>fast combine</button>
 				<button>combine</button>
