@@ -1,13 +1,18 @@
-.catalog{
-    &__search{
-        width: clamp(200px, 33.33vw, 500px);
-        border: 1px solid var(--main-color);
-        padding: 2px clamp(10px, 1.00vw, 15px);
-        border-radius: clamp(13px, 1.33vw, 20px);
-        margin: 0 auto;
-        background-color: var(--bg-color);
-        & input{
-            width: 100%;
-        }
-    }
+.catalog {
+	gap: clamp(20px, 2.00vw, 30px);
+	&__search {
+		width: clamp(200px, 33.33vw, 500px);
+		border: 1px solid var(--main-color);
+		padding: 2px clamp(10px, 1vw, 15px);
+		border-radius: clamp(13px, 1.33vw, 20px);
+		margin: 0 auto;
+		background-color: var(--bg-color);
+		& input {
+			width: 100%;
+		}
+	}
+	&__list {
+		gap: clamp(47px, 4.67vw, 70px) clamp(25px, 3.33vw, 50px);
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr) );
+	}
 }

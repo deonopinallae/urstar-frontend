@@ -1,0 +1,25 @@
+.card {
+	height: 300px;
+	width: 200px;
+    margin: 0 auto;
+	gap: clamp(3px, 0.67vw, 10px);
+    box-shadow: 0 0 10px 3px var(--main-color);
+    padding: 10px;
+	box-sizing: content-box;
+    background-color: var(--bg-color);
+    &__buttons {
+		gap: clamp(5px, 0.67vw, 10px);
+	}
+    &__button{
+        width: 30px;
+        height: 30px;
+        white-space: wrap;
+    }
+	&__image {
+		width: 200px;
+		height: 200px;
+		background-position: center;
+		background-size: cover;
+		background-repeat: no-repeat;
+	}
+}

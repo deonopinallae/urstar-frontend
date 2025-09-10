@@ -11,3 +11,9 @@
 .container{
 	padding: 0 clamp(10px, 3.33vw, 50px);
 }
+
+button:hover{
+	color: var(--decore-color);
+	transition: .5s;
+	transform: scale(1.01);
+}

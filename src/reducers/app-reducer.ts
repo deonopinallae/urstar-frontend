@@ -1,4 +1,4 @@
-export const initialState: stateTypes = {
+const initialState: stateTypes = {
 
 }
 export const appReducer = (state = initialState, action) => {

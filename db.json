@@ -1,0 +1,59 @@
+{
+	"products": [
+		{
+			"id": "001",
+			"imageUrl": "src/assets/products/tshirt.jpg",
+			"name": "star t-shirt",
+			"type": "t-shirt",
+			"brand": "urstar",
+			"price": "1234",
+			"description": "This lightweight T-shirt is crafted from soft, breathable cotton, ensuring all-day comfort for any activity. Its classic crewneck design and relaxed fit make it a versatile staple for your everyday wardrobe. The durable fabric holds up to repeated washes, maintaining its shape and color. Whether you're dressing up or keeping it casual, this T-shirt is the perfect foundation for any look. It’s an essential piece that combines style, comfort, and long-lasting quality.",
+			"rating": "5",
+			"reviews": []
+		},
+		{
+			"id": "002",
+			"imageUrl": "src/assets/products/jorts.jpeg",
+			"name": "spider jorts",
+			"type": "jorts",
+			"brand": "urstar",
+			"price": "1234",
+			"description": "This lightweight T-shirt is crafted from soft, breathable cotton, ensuring all-day comfort for any activity. Its classic crewneck design and relaxed fit make it a versatile staple for your everyday wardrobe. The durable fabric holds up to repeated washes, maintaining its shape and color. Whether you're dressing up or keeping it casual, this T-shirt is the perfect foundation for any look. It’s an essential piece that combines style, comfort, and long-lasting quality.",
+			"rating": "5",
+			"reviews": []
+		},
+		{
+			"id": "003",
+			"imageUrl": "src/assets/products/accessory2.jpg",
+			"name": " star belt",
+			"type": "belt",
+			"brand": "urstar",
+			"price": "1234",
+			"description": "This lightweight T-shirt is crafted from soft, breathable cotton, ensuring all-day comfort for any activity. Its classic crewneck design and relaxed fit make it a versatile staple for your everyday wardrobe. The durable fabric holds up to repeated washes, maintaining its shape and color. Whether you're dressing up or keeping it casual, this T-shirt is the perfect foundation for any look. It’s an essential piece that combines style, comfort, and long-lasting quality.",
+			"rating": "5",
+			"reviews": []
+		},
+		{
+			"id": "004",
+			"imageUrl": "src/assets/products/tshirt2.webp",
+			"name": "nike t-shirt",
+			"type": "t-shirt",
+			"brand": "nike",
+			"price": "1234",
+			"description": "This lightweight T-shirt is crafted from soft, breathable cotton, ensuring all-day comfort for any activity. Its classic crewneck design and relaxed fit make it a versatile staple for your everyday wardrobe. The durable fabric holds up to repeated washes, maintaining its shape and color. Whether you're dressing up or keeping it casual, this T-shirt is the perfect foundation for any look. It’s an essential piece that combines style, comfort, and long-lasting quality.",
+			"rating": "5",
+			"reviews": []
+		},
+		{
+			"id": "005",
+			"imageUrl": "src/assets/products/accessory.jpg",
+			"name": "star bracelet",
+			"type": "bracelet",
+			"brand": "urstar",
+			"price": "1234",
+			"description": "This lightweight T-shirt is crafted from soft, breathable cotton, ensuring all-day comfort for any activity. Its classic crewneck design and relaxed fit make it a versatile staple for your everyday wardrobe. The durable fabric holds up to repeated washes, maintaining its shape and color. Whether you're dressing up or keeping it casual, this T-shirt is the perfect foundation for any look. It’s an essential piece that combines style, comfort, and long-lasting quality.",
+			"rating": "5",
+			"reviews": []
+		}
+	]
+}
