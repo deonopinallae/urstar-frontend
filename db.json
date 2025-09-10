@@ -61,16 +61,34 @@
 			"reviews": []
 		}
 	],
+	"roles": [
+		{
+			"id": 0,
+			"name": "admin"
+		},
+		{
+			"id": 1,
+			"name": "buyer"
+		},
+		{
+			"id": 2,
+			"name": "guest"
+		}
+	],
 	"users": [
 		{
 			"id": "001",
-			"login": "",
-			"email": "",
-			"password": "",
-			"favoriteProducts": [],
-			"savedOutfit": [],
-			"orders": [],
-			"cart": []
+			"roleId": 0,
+			"login": "leebit",
+			"email": "leebit@gmail.com",
+			"password": "allin006",
+			"favoriteProductsId": ["001", "002"],
+			"savedOutfit": [
+				{ "id": "001", "name": "star girl", "imageUrl": "" },
+				{ "id": "001", "name": "star boy", "imageUrl": "" }
+			],
+			"ordersId": ["002"],
+			"productsInCartId": ["001"]
 		}
 	]
 }
