@@ -1,2 +1,6 @@
 export * from './main/main'
-export * from './catalog/catalog'
+export * from './catalog/category/catalog'
+export * from './catalog/category/accessory'
+export * from './catalog/category/top'
+export * from './catalog/category/bottom'
+export * from './catalog/category/shoes'

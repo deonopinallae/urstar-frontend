@@ -19,7 +19,7 @@ export const Card = ({ productData: { imageUrl, name, brand, type, price } }) =>
 					<img src="src/assets/icons/cart.svg" alt="cart" />
 				</button>
 				<button className={styles.card__button} onClick={addToFavorite}>
-					<img src="src/assets/icons/like.svg" alt="cart" />
+					<img src="src/assets/icons/like.svg" alt="like" />
 				</button>
 				<button>fast combine</button>
 				<button>combine</button>

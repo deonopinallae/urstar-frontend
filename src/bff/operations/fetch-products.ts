@@ -1,19 +1,24 @@
 import { getProducts } from '../api'
 
 export const fetchProducts = async () => {
-		const products = await getProducts()
-			console.log(products)
-
-		if (products === 'error') {
-			return {
-				error: 'products was not loaded',
-				res: [],
-			}
+	try {
+		const responce = await getProducts()
+		if (!responce.ok) {
+			throw new Error('products not found')
 		}
-	
+		const loadedProducts = await responce.json()
 		return {
 			error: null,
-			res: products,
+			res: loadedProducts,
 		}
-	
+	} catch (error) {
+		let errorMessage = 'server error'
+		if (error.message === 'products not found') {
+			errorMessage = 'products not found'
+		}
+		return {
+			error: errorMessage,
+			res: null,
+		}
+	}
 }
