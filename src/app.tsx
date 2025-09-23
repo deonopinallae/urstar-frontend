@@ -1,8 +1,9 @@
 import { Routes, Route } from 'react-router'
 import { AppColumn, Header, Footer, Page } from './components/layout'
-import { Main, Catalog, Top, Bottom, Accessory, Shoes } from './components/pages'
+import { Main, Catalog, Top, Bottom, Accessory, Shoes, Product } from './components/pages'
 
 export const App = () => {
+
 	return (
 		<AppColumn>
 			<Header />
@@ -14,7 +15,7 @@ export const App = () => {
 					<Route path="/catalog/bottom" element={<Bottom />} />
 					<Route path="/catalog/accessory" element={<Accessory />} />
 					<Route path="/catalog/shoes" element={<Shoes />} />
-					<Route path="/product" element="" />
+					<Route path="/product/:id" element={<Product />} />
 					<Route path="/favorite" element="" />
 					<Route path="/combine" element="" />
 					<Route path="/cart" element="" />

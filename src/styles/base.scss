@@ -11,7 +11,7 @@ html {
 body {
 	font-family: 'Zain', sans-serif;
 	font-weight: 400;
-	font-size: clamp(18px, 1.73vw, 26px);
+	font-size: clamp(20px, 2.08vw, 30px);
 	color: var(--main-font-color);
 }
 body,
@@ -22,8 +22,11 @@ section {
 	min-width: 100%;
 }
 h1 {
-	font-size: clamp(18px, 1.39vw, 20px);
+	font-size: clamp(33px, 3.47vw, 50px);
 	font-weight: inherit;
+}
+h2{
+	font-size: clamp(27px, 2.78vw, 40px);
 }
 a {
 	color: inherit;

@@ -1,0 +1,24 @@
+.product {
+	background-color: var(--bg-color);
+	&__image {
+		width: 50%;
+		height: 200px;
+	}
+	&__info {
+		gap: 30px;
+	}
+	&__size {
+		gap: 10px;
+		width: fit-content;
+		&Btn {
+			width: clamp(50px, 4.17vw, 60px);
+			height: clamp(50px, 4.17vw, 60px);
+			border: 1px solid;
+		}
+	}
+	&__reviews{
+		margin-top: 100px;
+		gap: 30px;
+		
+	}
+}

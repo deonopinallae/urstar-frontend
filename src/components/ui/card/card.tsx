@@ -1,10 +1,10 @@
+import { Link } from 'react-router-dom'
 import styles from './styles.module.scss'
+import { Cart, Combine, Like } from '../'
 
-export const Card = ({ productData: { imageUrl, name, brand, type, price } }) => {
-	const addToCart = () => {}
-	const addToFavorite = () => {}
+export const Card = ({ productData: { imageUrl, name, brand, type, price }, id }) => {
 	return (
-		<div className={`${styles.card} flex flex-col justify-between`}>
+		<Link to={`/product/${id}`} className={`${styles.card} flex flex-col justify-between`}>
 			<div className={`${styles.card__image}`} style={{backgroundImage: `url(${imageUrl})`}}/>
 			<div className="flex justify-between">
 				<p className={`${styles.card__name}`}>{name}</p>
@@ -14,16 +14,12 @@ export const Card = ({ productData: { imageUrl, name, brand, type, price } }) =>
 				<p className={`${styles.card__brand}`}>{brand}</p>
 				<p className={`${styles.card__type}`}>{type}</p>
 			</div>
-			<div className={`${styles.card__buttons} flex justify-between`}>
-				<button className={styles.card__button} onClick={addToCart}>
-					<img src="src/assets/icons/cart.svg" alt="cart" />
-				</button>
-				<button className={styles.card__button} onClick={addToFavorite}>
-					<img src="src/assets/icons/like.svg" alt="like" />
-				</button>
+			<div className={`${styles.card__buttons} flex justify-between flex-wrap`}>
+				<Cart productId={id}/>
+				<Like productId={id}/>
 				<button>fast combine</button>
-				<button>combine</button>
+				<Combine productId={id}/>
 			</div>
-		</div>
+		</Link>
 	)
 }

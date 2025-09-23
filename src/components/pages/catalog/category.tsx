@@ -17,7 +17,7 @@ export const Category = ({ products, error }) => {
 						'products are out of stock yet'
 					) : error === '' ? (
 						products.map(({ id, ...productData }) => (
-							<Card {...{ productData }} key={id} />
+							<Card {...{ id, productData }} key={id} />
 						))
 					) : (
 						<p>{error}</p>

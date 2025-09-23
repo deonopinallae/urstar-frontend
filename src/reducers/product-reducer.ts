@@ -1,4 +1,4 @@
-import { ACTION_TYPE } from "../actions/action-types"
+import { ACTION_TYPE } from "../bff/actions/action-types"
 
 const initialState: stateTypes = {
 	id: '',
