@@ -8,7 +8,7 @@ export const Header = () => {
 		<header className={`${styles.header} flex justify-between items-center`}>
 
 			<Link to="/" className="logo">
-				<img src="src/assets/icons/logo.svg" alt="logo" />
+				<img src="/assets/icons/logo.svg" alt="logo" />
 			</Link>
 			<nav
 				className={`${styles.header__nav} flex grow items-center justify-center ${/*${isBurgerNavOpen ? styles.closedNav : styles.opendNav}*/ null}`}
@@ -31,8 +31,8 @@ export const Header = () => {
 				<Link
 					to="/favorites"
 					className={`${styles.header__button} favorite-button icon-button`}
-				><img src="src/assets/icons/like.svg" alt="favorite" /></Link>
-				<Link to="/cart" className={`${styles.header__button} cart-button icon-button`} ><img src="src/assets/icons/cart.svg" alt="cart" /></Link>
+				><img src="/assets/icons/like.svg" alt="favorite" /></Link>
+				<Link to="/cart" className={`${styles.header__button} cart-button icon-button`} ><img src="/assets/icons/cart.svg" alt="cart" /></Link>
 				<Link
 					to="/login"
 					className={`${styles.header__button} ${styles.header__buttonLogin}`}

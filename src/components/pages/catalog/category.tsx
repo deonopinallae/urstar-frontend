@@ -8,7 +8,7 @@ export const Category = ({ products, error }) => {
 			<div className={`${styles.category__search} flex`}>
 				<input id="search" type="text" placeholder="find your color..." />
 				<label htmlFor="search">
-					<img src="src/assets/icons/search.svg" alt="search" />
+					<img src="/assets/icons/search.svg" alt="search" />
 				</label>
 			</div>
 			<div className="grow">

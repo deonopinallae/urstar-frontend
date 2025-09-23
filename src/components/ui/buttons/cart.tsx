@@ -5,7 +5,7 @@ export const Cart = ({productId}) => {
 
 	return (
 		<button className={styles.button} onClick={addToCart}>
-			<img src="src/assets/icons/cart.svg" alt="cart" />
+			<img src="/assets/icons/cart.svg" alt="cart" />
 		</button>
 	)
 }

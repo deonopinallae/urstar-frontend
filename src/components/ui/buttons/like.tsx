@@ -5,7 +5,7 @@ export const Like = ({productId}) => {
 
 	return (
 		<button className={styles.button} onClick={addToFavorite}>
-			<img src="src/assets/icons/like.svg" alt="like" />
+			<img src="/assets/icons/like.svg" alt="like" />
 		</button>
 	)
 }

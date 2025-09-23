@@ -2,7 +2,7 @@
 	"products": [
 		{
 			"id": "001",
-			"imageUrl": "src/assets/products/tshirt.jpg",
+			"imageUrl": "/assets/products/tshirt.jpg",
 			"name": "star t-shirt",
 			"type": "t-shirt",
 			"brand": "urstar",
@@ -29,7 +29,7 @@
 		},
 		{
 			"id": "002",
-			"imageUrl": "src/assets/products/jorts.jpeg",
+			"imageUrl": "/assets/products/jorts.jpeg",
 			"name": "spider jorts",
 			"type": "jorts",
 			"brand": "urstar",
@@ -40,7 +40,7 @@
 		},
 		{
 			"id": "003",
-			"imageUrl": "src/assets/products/accessory2.jpg",
+			"imageUrl": "/assets/products/accessory2.jpg",
 			"name": " star belt",
 			"type": "belt",
 			"brand": "urstar",
@@ -51,7 +51,7 @@
 		},
 		{
 			"id": "004",
-			"imageUrl": "src/assets/products/tshirt2.webp",
+			"imageUrl": "/assets/products/tshirt2.webp",
 			"name": "nike t-shirt",
 			"type": "t-shirt",
 			"brand": "nike",
@@ -62,7 +62,7 @@
 		},
 		{
 			"id": "005",
-			"imageUrl": "src/assets/products/accessory.jpg",
+			"imageUrl": "/assets/products/accessory.jpg",
 			"name": "star bracelet",
 			"type": "bracelet",
 			"brand": "urstar",

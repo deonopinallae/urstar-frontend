@@ -10,7 +10,7 @@ export const Main = () => {
 				</Link>
 				<img
 					className={`${styles.main__image} relative`}
-					src="src/assets/model.png"
+					src="/assets/model.png"
 					alt=""
 				/>
 			</div>
