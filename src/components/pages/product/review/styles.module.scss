@@ -1,8 +1,8 @@
 .review {
 	border: 1px solid;
 	padding: 10px;
-	&__data{
+	background-color: var(--bg-color);
+	&__data {
 		font-size: clamp(20px, 2.08vw, 30px);
 	}
-
 }
