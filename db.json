@@ -94,6 +94,7 @@
 			"email": "leebit@gmail.com",
 			"password": "allin006",
 			"favoriteProductsId": ["001", "002"],
+			"combineProducts": ["001", "002"],
 			"savedOutfit": [
 				{ "id": "001", "name": "star girl", "imageUrl": "" },
 				{ "id": "001", "name": "star boy", "imageUrl": "" }

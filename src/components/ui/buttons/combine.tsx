@@ -4,7 +4,7 @@ export const Combine = ({ productId }) => {
 	const addToCombine = () => {}
 
 	return (
-		<button className={styles.button} onClick={addToCombine}>
+		<button className={styles.iconButton} onClick={addToCombine}>
 			combine
 		</button>
 	)

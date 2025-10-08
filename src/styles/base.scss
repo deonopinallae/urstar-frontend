@@ -13,6 +13,7 @@ body {
 	font-weight: 400;
 	font-size: clamp(20px, 2.08vw, 30px);
 	color: var(--main-font-color);
+	background-color: var(--bg-color);
 }
 body,
 #root {

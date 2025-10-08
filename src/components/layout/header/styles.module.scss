@@ -3,21 +3,14 @@
 	top: 0;
 	padding: clamp(3px, 0.37vw, 7px) clamp(20px, 2vw, 30px);
 	background-color: var(--bg-color);
-	box-shadow:  0 20px 20px 1px var(--bg-color);
+	box-shadow:  0 20px 25px 20px var(--bg-color);
 	z-index: 30px;
 	&__nav {
 		display: block;
-		// transition: 1s;
 		&Links {
 			display: flex;
 			gap: clamp(10px, 3.33vw, 50px);
 			justify-content: center;
-
-			// @media (max-width: 700px) {
-			// 	display: block;
-			// 	flex-direction: column;
-			// 	justify-content: start;
-			// }
 		}
 		&CloseButton{
 			display: none;

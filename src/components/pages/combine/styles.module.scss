@@ -1,0 +1,46 @@
+.combine {
+	margin-top: 10px;
+	&__combiner {
+		gap: 20px;
+	}
+	&__combiner {
+		&Scene {
+			width: 500px;
+			height: 600px;
+			background-color: var(--bg-color);
+			box-shadow: inset 0 0 10px 5px grey;
+		}
+		&Name {
+			border-bottom: 1px solid var(--main-color);
+			& input {
+				width: 100%;
+			}
+		}
+		&Buttons {
+			gap: 10px;
+		}
+	}
+
+	&__products {
+		&List {
+			gap: 20px;
+		}
+		&Item {
+			width: 200px;
+			height: 200px;
+			border: 1px solid var(--main-color);
+		}
+	}
+
+	&__outfits {
+		margin: 100px 0;
+		&List {
+			gap: 20px;
+		}
+		&Item {
+			width: 200px;
+			height: 200px;
+			border: 1px solid var(--main-color);
+		}
+	}
+}

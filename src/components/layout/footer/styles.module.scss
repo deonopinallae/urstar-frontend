@@ -1,7 +1,7 @@
 .footer{
 	padding: clamp(10px, 1.00vw, 15px) clamp(20px, 2vw, 30px);
 	background-color: var(--bg-color);
-	box-shadow:  0px -20px 20px 1px var(--bg-color);
+	box-shadow:  0 -20px 25px 20px var(--bg-color);
 	z-index: 30px;
     &__social{
         gap: 10px;

@@ -4,7 +4,7 @@ export const Cart = ({productId}) => {
 	const addToCart = () => {}
 
 	return (
-		<button className={styles.button} onClick={addToCart}>
+		<button className={styles.iconButton} onClick={addToCart}>
 			<img src="/assets/icons/cart.svg" alt="cart" />
 		</button>
 	)

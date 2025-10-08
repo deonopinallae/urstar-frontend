@@ -1,0 +1,1 @@
+export const getCombineProductsId = () => fetch('http://localhost:3000/users?combineProducts')
