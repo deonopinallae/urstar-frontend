@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom'
 import styles from './styles.module.scss'
-import { useGetProducts } from '../../../hook'
-import { Cart, Combine, Like, Loader } from '../../ui'
-import { Review } from '../'
+import { useGetProducts } from '../../hook'
+import { Cart, Combine, Like, Loader } from '../../components/ui'
+import { Review } from '..'
 
 export const Product = () => {
 	const { id: productId } = useParams()

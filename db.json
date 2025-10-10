@@ -93,14 +93,80 @@
 			"login": "leebit",
 			"email": "leebit@gmail.com",
 			"password": "allin006",
-			"favoriteProductsId": ["001", "002"],
-			"combineProducts": ["001", "002"],
-			"savedOutfit": [
-				{ "id": "001", "name": "star girl", "imageUrl": "" },
-				{ "id": "001", "name": "star boy", "imageUrl": "" }
+			"favoriteProductsId": [
+				{
+					"id": "001",
+					"imageURL": "/assets/products/tshirt.jpg",
+					"name": "star t-shirt",
+					"price": "1234",
+					"brand": "urstar",
+					"category": "top"
+				},
+				{
+					"id": "002",
+					"imageUrl": "/assets/products/jorts.jpeg",
+					"name": "spider jorts",
+					"price": "1234",
+					"brand": "urstar",
+					"category": "bottom"
+				}
 			],
-			"ordersId": ["002"],
-			"productsInCartId": ["001"]
+			"combineProducts": [
+				{
+					"id": "001",
+					"imageURL": "/assets/products/tshirt.jpg",
+					"name": "star t-shirt",
+					"price": "1234",
+					"brand": "urstar",
+					"category": "top"
+				},
+				{
+					"id": "002",
+					"imageUrl": "/assets/products/jorts.jpeg",
+					"name": "spider jorts",
+					"price": "1234",
+					"brand": "urstar",
+					"category": "bottom"
+				}
+			],
+			"savedOutfit": [
+				{
+					"id": "001",
+					"name": "star girl",
+					"scene": [
+						{ "id": "001", "imageURL": "/assets/products/tshirt.jpg" },
+						{ "id": "002", "imageUrl": "/assets/products/jorts.jpeg" }
+					]
+				},
+				{
+					"id": "001",
+					"name": "star boy",
+					"scene": [
+						{ "id": "001", "imageURL": "/assets/products/tshirt.jpg" },
+						{ "id": "002", "imageUrl": "/assets/products/jorts.jpeg" }
+					]
+				}
+			],
+			"orders": [
+				{
+					"id": "001",
+					"imageURL": "/assets/products/tshirt.jpg",
+					"name": "star t-shirt",
+					"price": "1234",
+					"brand": "urstar",
+					"category": "top"
+				}
+			],
+			"productsInCart": [
+				{
+					"id": "002",
+					"imageUrl": "/assets/products/jorts.jpeg",
+					"name": "spider jorts",
+					"price": "1234",
+					"brand": "urstar",
+					"category": "bottom"
+				}
+			]
 		}
 	]
 }

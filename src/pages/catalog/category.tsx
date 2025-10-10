@@ -1,6 +1,6 @@
 import styles from './styles.module.scss'
-import { Card, Pagination } from '../../ui'
-import { useGetProducts } from '../../../hook'
+import { Card, Pagination } from '../../components/ui'
+import { useGetProducts } from '../../hook'
 
 export const Category = ({ products, error }) => {
 	return (
