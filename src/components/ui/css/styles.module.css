@@ -1,0 +1,18 @@
+.pagination {
+  gap: 10px;
+}/*# sourceMappingURL=styles.module.css.map */px, 0.67vw, 10px);
+  box-shadow: 0 0 10px 3px var(--main-color);
+  padding: 10px;
+  box-sizing: content-box;
+  background-color: var(--bg-color);
+}
+.card__buttons {
+  gap: clamp(5px, 0.67vw, 10px);
+}
+.card__image {
+  width: 200px;
+  height: 200px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}/*# sourceMappingURL=styles.module.css.map */

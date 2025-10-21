@@ -1,0 +1,8 @@
+.review {
+  border: 1px solid;
+  padding: 10px;
+  background-color: var(--bg-color);
+}
+.review__data {
+  font-size: clamp(20px, 2.08vw, 30px);
+}/*# sourceMappingURL=styles.module.css.map */

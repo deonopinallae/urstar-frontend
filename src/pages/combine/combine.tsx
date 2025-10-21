@@ -1,6 +1,13 @@
 import styles from './styles.module.scss'
 import { Button } from '../../components/ui/buttons/button'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { Link } from 'react-router-dom';
+
+
+/*
+get combineProducts, savedOutfits
+change savedOutfits
+*/
 
 const combineProducts = [
 	{
@@ -140,7 +147,7 @@ export const Combine = () => {
 				<h3>saved outfits</h3>
 				<div className={`${styles.combine__cardsList} flex flex-wrap`}>
 					{savedOutfits.map(({ id, scene, name }) => (
-						<div key={id} className={styles.combine__cardsItem}>
+						<Link to={`/combine/${id}`} key={id} className={styles.combine__cardsItem}>
 							<div
 								className={`${styles.combine__outfitsCardContainer} flex flex-col items-center`}
 							>
@@ -153,7 +160,7 @@ export const Combine = () => {
 								))}
 							</div>
 							<div className={styles.combine__cardsItemName}>{name}</div>
-						</div>
+						</Link>
 					))}
 				</div>
 			</div>

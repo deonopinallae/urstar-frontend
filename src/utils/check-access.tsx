@@ -1,0 +1,1 @@
+export const checkAccess = (access, useRole) => access.includes(useRole)

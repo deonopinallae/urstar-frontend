@@ -13,14 +13,14 @@ export const Category = ({ products, error }) => {
 			</div>
 			<div className="grow">
 				<div className={`${styles.category__list} grid items-center`}>
-					{products.length === 0 ? (
+					{error !== '' ? (
+						<div>{error}</div>
+					) : products.length === 0 ? (
 						'products are out of stock yet'
-					) : error === '' ? (
+					) : (
 						products.map(({ id, ...productData }) => (
 							<Card {...{ id, productData }} key={id} />
 						))
-					) : (
-						<p>{error}</p>
 					)}
 				</div>
 			</div>
@@ -31,6 +31,7 @@ export const Category = ({ products, error }) => {
 
 export const CategoryFilter = ({ categoryName }) => {
 	const { products, error } = useGetProducts()
-	const filteredProducts = products.filter(({ category }) => category === categoryName)
+	const lowerCaseCategoryName = categoryName?.toLowerCase()
+	const filteredProducts = products.filter(({ category }) => category?.toLowerCase() === lowerCaseCategoryName)
 	return <Category products={filteredProducts} error={error} />
 }
