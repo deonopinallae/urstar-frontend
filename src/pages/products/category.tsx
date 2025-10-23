@@ -1,8 +1,8 @@
 import styles from './styles.module.scss'
 import { Card, Pagination } from '../../components/ui'
-import { useGetProducts } from '../../hook'
+import { useGetProducts } from '../../hooks'
 
-export const Category = ({ products, error }) => {
+export const Category = ({ products, error }: { products: any, error: string}) => {
 	return (
 		<section className={`${styles.category} flex flex-col justify-between container`}>
 			<div className={`${styles.category__search} flex`}>

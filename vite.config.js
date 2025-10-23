@@ -8,8 +8,8 @@ export default defineConfig({
 		proxy: {
 			'/api': {
 				target: 'http://localhost:3001',
-				changeOrigin: true, // Необходимо для корректной работы CORS
-				secure: false, // Для http
+				changeOrigin: true,
+				secure: false,
 			},
 		},
 	},

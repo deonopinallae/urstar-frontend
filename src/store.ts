@@ -1,10 +1,11 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux'
-import { appReducer } from './reducers'
+import { appReducer, productReducer, userReducer } from './reducers'
 import { thunk } from 'redux-thunk'
-import { productReducer } from './reducers';
 
 const reducer = combineReducers({
-    product: productReducer
+    app: appReducer,
+    product: productReducer,
+    user: userReducer
 })
 
 export const store = createStore(reducer, applyMiddleware(thunk))

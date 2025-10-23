@@ -1,9 +1,34 @@
 import { Routes, Route } from 'react-router'
 import { AppColumn, Header, Footer, Page } from './components/layout'
-import { Main, Catalog, Top, Bottom, Accessory, Shoes, Product, Combine, Outfit } from './pages'
+import {
+	Main,
+	Catalog,
+	Top,
+	Bottom,
+	Accessory,
+	Shoes,
+	Product,
+	Combine,
+	Outfit,
+	Registration,
+	Authorization,
+	Error,
+} from './pages'
+import { useLayoutEffect } from 'react'
+import { setUser } from './actions'
+import { useDispatch } from 'react-redux'
 
 export const App = () => {
+	const dispatch = useDispatch()
+	useLayoutEffect(() => {
+		const currentUserDataJSON = sessionStorage.getItem('userData')
 
+		if (!currentUserDataJSON) return
+
+		const currentUserData = JSON.parse(currentUserDataJSON)
+
+		dispatch(setUser({ ...currentUserData, roleId: Number(currentUserData.roleId) }))
+	}, [dispatch])
 	return (
 		<AppColumn>
 			<Header />
@@ -17,14 +42,14 @@ export const App = () => {
 					<Route path="/catalog/shoes" element={<Shoes />} />
 					<Route path="/catalog/:id" element={<Product />} />
 					<Route path="/favorite" element="" />
-					<Route path="/combine" element={<Combine/>}/>
+					<Route path="/combine" element={<Combine />} />
 					<Route path="/combine/:id" element={<Outfit />} />
 					<Route path="/cart" element="" />
-					{/* <Route path="/registration" element={<Registration/>} /> */}
-					<Route path="/login" element="" />
+					<Route path="/registration" element={<Registration />} />
+					<Route path="/login" element={<Authorization />} />
 					<Route path="/user" element="" />
 					<Route path="/add-product" element="" />
-					<Route path="*" element="" />
+					<Route path="*" element={<Error/>} />
 				</Routes>
 			</Page>
 			<Footer />

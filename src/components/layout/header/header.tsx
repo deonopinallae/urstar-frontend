@@ -1,12 +1,22 @@
-import { useState } from 'react'
 import styles from './styles.module.scss'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectUserLogin, selectUserRole } from '../../../selectors'
+import { ROLE } from '../../../constants'
+import { logout } from '../../../actions'
 
 export const Header = () => {
+	const dispatch = useDispatch()
+	const roleId = useSelector(selectUserRole)
+	const login = useSelector(selectUserLogin)
+
+	const onLogout = () => {
+		dispatch(logout())
+		sessionStorage.removeItem('userData')
+	}
 
 	return (
 		<header className={`${styles.header} flex justify-between items-center`}>
-
 			<Link to="/" className="logo">
 				<img src="/assets/icons/logo.svg" alt="logo" />
 			</Link>
@@ -29,16 +39,30 @@ export const Header = () => {
 			</nav>
 			<div className={`${styles.header__buttons} flex items-center`}>
 				<Link
-					to="/favorites"
+					to={roleId === ROLE.GUEST ? `/login` : `/favorites`}
 					className={`${styles.header__button} favorite-button icon-button`}
-				><img src="/assets/icons/like.svg" alt="favorite" /></Link>
-				<Link to="/cart" className={`${styles.header__button} cart-button icon-button`} ><img src="/assets/icons/cart.svg" alt="cart" /></Link>
-				<Link
-					to="/login"
-					className={`${styles.header__button} ${styles.header__buttonLogin}`}
 				>
-					sign in
+					<img src="/assets/icons/like.svg" alt="favorite" />
 				</Link>
+				<Link
+					to={roleId === ROLE.GUEST ? `/login` : `/cart`}
+					className={`${styles.header__button} cart-button icon-button`}
+				>
+					<img src="/assets/icons/cart.svg" alt="cart" />
+				</Link>
+				{roleId === ROLE.GUEST ? (
+					<Link
+						to="/login"
+						className={`${styles.header__button} ${styles.header__buttonLogin}`}
+					>
+						sign in
+					</Link>
+				) : (
+					<div>
+						<div>{login}</div>
+						<div onClick={onLogout}>logout</div>
+					</div>
+				)}
 			</div>
 		</header>
 	)

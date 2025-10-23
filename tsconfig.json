@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "commonjs",
+    "jsx": "react-jsx",
+    "rootDir": "./src",
+    "resolveJsonModule": true,
+    "allowJs": true, 
+    "checkJs": true,
+    "sourceMap": true,
+    "outDir": "dist",
+    "noEmitOnError": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+  },
+  "include": ["src/**/*", "declarations.d.ts"],
+  "exclude": ["**/*.spec.ts", "node_modules"]
+}

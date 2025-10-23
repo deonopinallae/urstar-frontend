@@ -1,4 +1,4 @@
-export const request = (url, method = 'GET', data = undefined) => {
+export const request = (url, method = 'GET', data: object | undefined = undefined) => {
 	return fetch(url, {
 		headers: {
 			'content-type': 'application/json',

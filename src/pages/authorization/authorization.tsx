@@ -1,8 +1,7 @@
 import styles from './styles.module.scss'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useForm } from 'react-hook-form'
-import { Navigate, useNavigate } from 'react-router'
+import { Link, Navigate, useNavigate } from 'react-router'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Input } from '../../components/ui'
@@ -11,8 +10,9 @@ import { selectUserRole } from '../../selectors'
 import { ROLE } from '../../constants'
 import { useResetForm } from '../../hooks'
 import { request } from '../../utils'
+import { useForm } from 'react-hook-form'
 
-const regFormSchema = yup.object().shape({
+const authFormSchema = yup.object().shape({
 	login: yup
 		.string()
 		.required('введите логин')
@@ -24,19 +24,13 @@ const regFormSchema = yup.object().shape({
 		.required('введите пароль')
 		.matches(
 			/^[\w#%]+$/,
-			'неверно заполнен пароль. допускаются буквы, цифры и знаки #, %'
+			'неверно заполнен пароль. допускаются буквы, цифры и знаки #, %',
 		)
 		.min(8, 'неверно заполнен пароль. минимум 8 символов.')
 		.max(20, 'неверно заполнен пароль. максимум 20 символов.'),
-	confirmPassword: yup
-		.string()
-		.required('подтвердите пароль')
-		.oneOf([yup.ref('password')], 'пароли не совпадают')
 })
 
-
-
-export const Registration = () => {
+export const Authorization = () => {
 	const {
 		register,
 		reset,
@@ -44,20 +38,19 @@ export const Registration = () => {
 		formState: { errors },
 	} = useForm({
 		defaultValues: {
-			login: '',
-			password: '',
-			confirmPassword: '',
+			login: 'leebit',
+			password: 'allin006',
 		},
-		resolver: yupResolver(regFormSchema),
+		resolver: yupResolver(authFormSchema),
 	})
 	const [serverError, setServerError] = useState('')
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 
-    useResetForm(reset)
+	useResetForm(reset)
 
-	const onSubmit = ({ login, password }: {login: string, password: string}) => {
-		request('/api/register', 'POST', {login, password}).then(({ error, user }) => {
+	const onSubmit = ({ login, password }) => {
+		request('/api/login', 'POST', { login, password }).then(({ error, user }) => {
 			if (error) {
 				setServerError(`${error}`)
 				return
@@ -67,17 +60,17 @@ export const Registration = () => {
 			navigate(-1)
 		})
 	}
-	const formError = errors?.login?.message || errors?.password?.message || errors?.confirmPassword?.message
+	const formError = errors?.login?.message || errors?.password?.message
 	const errorMessage = formError || serverError
 	const roleId = useSelector(selectUserRole)
 
 	if (roleId !== ROLE.GUEST) {
-		return <Navigate to="/" />
+		return <Navigate to="/"></Navigate>
 	}
 
 	return (
 		<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-			<h2>регистрация</h2>
+			<h2>авторизация</h2>
 			<Input
 				{...register('login', { onChange: () => setServerError('') })}
 				placeholder="логин"
@@ -88,15 +81,14 @@ export const Registration = () => {
 				placeholder="пароль"
 				type="password"
 			/>
-			<Input
-				{...register('confirmPassword', { onChange: () => setServerError('') })}
-				placeholder="подтвердите пароль"
-				type="password"
-			/>
 			<button type="submit" disabled={!!formError}>
-				зарегестрироваться
+				авторизоваться
 			</button>
 			{errorMessage && <div className={styles.form__error}>{errorMessage}</div>}
+
+			<Link className="link" to={'/registration'}>
+				регистрация
+			</Link>
 		</form>
 	)
 }

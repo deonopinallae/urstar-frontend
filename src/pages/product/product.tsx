@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom'
 import styles from './styles.module.scss'
-import { useGetProducts } from '../../hook'
+import { useGetProducts } from '../../hooks'
 import { Cart, Combine, Like, Loader } from '../../components/ui'
 import { Review } from '..'
 

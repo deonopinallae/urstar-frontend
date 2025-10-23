@@ -1,4 +1,4 @@
-import { ACTION_TYPE } from "../bff/actions/action-types"
+import { ACTION_TYPE } from "../actions"
 
 const initialState: stateTypes = {
 	id: '',
@@ -6,6 +6,7 @@ const initialState: stateTypes = {
 	name: '',
 	type: '',
 	brand: '',
+	category: '',
 	price: '',
 	description: '',
 	rating: '',
@@ -31,8 +32,9 @@ interface stateTypes {
 	name: string,
 	type: string,
 	brand: string,
+	category: string,
 	price: string,
 	description: string,
 	rating: string,
-	reviews: Array<string>
+	reviews: object[]
 }
