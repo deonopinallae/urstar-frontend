@@ -1,0 +1,17 @@
+.form {
+	margin: clamp(20px, 2.08vw, 30px) auto;
+	width: clamp(250px, 20.83vw, 300px);
+	display: flex;
+	flex-direction: column;
+	gap: clamp(1px, 1.39vw, 20px);
+	text-align: center;
+
+
+		&__error {
+			background-color: #fcadad;
+			padding: clamp(7px, 0.69vw, 10px);
+			width: 100%;
+			text-align: left;
+		}
+	
+}

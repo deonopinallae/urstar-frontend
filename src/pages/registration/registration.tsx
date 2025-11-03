@@ -24,17 +24,15 @@ const regFormSchema = yup.object().shape({
 		.required('введите пароль')
 		.matches(
 			/^[\w#%]+$/,
-			'неверно заполнен пароль. допускаются буквы, цифры и знаки #, %'
+			'неверно заполнен пароль. допускаются буквы, цифры и знаки #, %',
 		)
 		.min(8, 'неверно заполнен пароль. минимум 8 символов.')
 		.max(20, 'неверно заполнен пароль. максимум 20 символов.'),
 	confirmPassword: yup
 		.string()
 		.required('подтвердите пароль')
-		.oneOf([yup.ref('password')], 'пароли не совпадают')
+		.oneOf([yup.ref('password')], 'пароли не совпадают'),
 })
-
-
 
 export const Registration = () => {
 	const {
@@ -54,10 +52,10 @@ export const Registration = () => {
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 
-    useResetForm(reset)
+	useResetForm(reset)
 
-	const onSubmit = ({ login, password }: {login: string, password: string}) => {
-		request('/api/register', 'POST', {login, password}).then(({ error, user }) => {
+	const onSubmit = ({ login, password }: { login: string; password: string }) => {
+		request('/api/register', 'POST', { login, password }).then(({ error, user }) => {
 			if (error) {
 				setServerError(`${error}`)
 				return
@@ -67,7 +65,10 @@ export const Registration = () => {
 			navigate(-1)
 		})
 	}
-	const formError = errors?.login?.message || errors?.password?.message || errors?.confirmPassword?.message
+	const formError =
+		errors?.login?.message ||
+		errors?.password?.message ||
+		errors?.confirmPassword?.message
 	const errorMessage = formError || serverError
 	const roleId = useSelector(selectUserRole)
 

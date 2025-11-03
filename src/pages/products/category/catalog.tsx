@@ -1,7 +1,20 @@
-import { Category } from '../category'
-import { useGetProducts } from '../../../hooks'
+import { useSelector } from 'react-redux'
+import { Products } from '../products'
+import { selectProducts } from '../../../selectors'
+import { request } from '../../../utils'
+import { useEffect, useState } from 'react'
+import { Loader } from '../../../components/ui'
 
 export const Catalog = () => {
-	const { products, error } = useGetProducts()
-	return <Category {...{ products, error}}/>	
+	const [products, setProducts] = useState([])
+	const [isLoading, setIsLoading] = useState(true)
+
+	useEffect(() => {
+		request('/api/products').then(({ data: { products } }) => {
+			setProducts(products)
+			setIsLoading(false)
+		})
+	}, [])
+
+	return isLoading ? <Loader/> : <Products {...{ products }} />
 }

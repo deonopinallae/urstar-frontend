@@ -5,7 +5,9 @@ const initialUserState = {
 	id: '',
 	login: '',
 	roleId: ROLE.GUEST,
-	session: '',
+	inCart: [],
+	favorites: [],
+	toCombine: [],
 }
 
 export const userReducer = (state = initialUserState, action) => {
@@ -14,6 +16,12 @@ export const userReducer = (state = initialUserState, action) => {
 			return {
 				...state,
 				...action.payload,
+			}
+		}
+		case ACTION_TYPE.ADD_TO_CART: {
+			return {
+				...state,
+				inCart: [...state.inCart, ...action.payload],
 			}
 		}
 		case ACTION_TYPE.LOGOUT:

@@ -1,2 +1,2 @@
-import { CategoryFilter } from '../category'
-export const Shoes = () => <CategoryFilter categoryName="shoes" />
+import { ProductsFilter } from '../products'
+export const Shoes = () => <ProductsFilter categoryName="shoes" />

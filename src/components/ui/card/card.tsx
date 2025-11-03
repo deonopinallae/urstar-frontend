@@ -4,7 +4,7 @@ import { Cart, Combine, Like } from '../'
 
 export const Card = ({ productData: { imageUrl, name, brand, type, price }, id }) => {
 	return (
-		<Link to={`/product/${id}`} className={`${styles.card} flex flex-col justify-between`}>
+		<Link to={`/products/${id}`} className={`${styles.card} flex flex-col justify-between`}>
 			<div className={`${styles.card__image}`} style={{backgroundImage: `url(${imageUrl})`}}/>
 			<div className="flex justify-between">
 				<p className={`${styles.card__name}`}>{name}</p>

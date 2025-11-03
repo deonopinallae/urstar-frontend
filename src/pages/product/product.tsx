@@ -1,29 +1,46 @@
-import { useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import styles from './styles.module.scss'
-import { useGetProducts } from '../../hooks'
 import { Cart, Combine, Like, Loader } from '../../components/ui'
 import { Review } from '..'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectProduct, selectUserRole } from '../../selectors'
+import { useEffect, useState } from 'react'
+import { useGetProductRating } from '../../hooks'
+import { addToCartAsync, loadProductAsync } from '../../actions'
+import { checkAccess } from '../../utils'
+import { CATEGORIES, ROLE } from '../../constants'
+import { selectUserId } from '../../selectors/select-user-id'
 
 export const Product = () => {
+	const productData = useSelector(selectProduct)
+	const { imageUrl, name, brand, price, category, description, reviews } = productData
+	const dispatch = useDispatch()
 	const { id: productId } = useParams()
-	const { products, error } = useGetProducts()
-	const productData = products.find(({ id }) => id === productId)
+	const [isLoading, setIsLoading] = useState(true)
+	const roleId = useSelector(selectUserRole)
+	const isAdmin = checkAccess([ROLE.ADMIN], roleId)
+	const isGuest = checkAccess([ROLE.GUEST], roleId)
+	const navigate = useNavigate()
+	const [size, setSize] = useState(null)
+	const [chooseSizeAlert, setChooseSizeAlert] = useState(false)
+	const sizes = ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl']
 
-	if (!productData) return <Loader />
+	useEffect(() => {
+		dispatch(loadProductAsync(productId)).then(() => {
+			setIsLoading(false)
+		})
+	}, [dispatch, productId])
 
-	const { id, imageUrl, name, brand, price, description, reviews } = productData
-
-	const productRating = () => {
-		if (reviews.length === 0) return 'no rating yet'
-		const sumOfReviewsRating = reviews.reduce(
-			(acc, curr) => acc + Number(curr.rating),
-			0,
-		)
-		return sumOfReviewsRating / reviews.length
+	const chooseSize = (size) => {
+		setSize(size)
+		isGuest && navigate('/login')
 	}
-	console.log(productRating())
 
-	return (
+	const productDataAndSize = { ...productData, size: size }
+
+	return isLoading ? (
+		<Loader />
+	) : (
 		<section className={`${styles.product} container flex flex-col`}>
 			<div className={`${styles.product__imageInfo} flex flex-wrap`}>
 				<div
@@ -34,17 +51,38 @@ export const Product = () => {
 					<h1 className={`${styles.product__name}`}>{name}</h1>
 					<h2 className={`${styles.product__brand}`}>{brand}</h2>
 					<div className={`${styles.product__price}`}>{price}$</div>
-					<div className={`${styles.product__size} flex`}>
-						<button className={styles.product__sizeBtn}>xxs</button>
-						<button className={styles.product__sizeBtn}>s</button>
-						<button className={styles.product__sizeBtn}>m</button>
-						<button className={styles.product__sizeBtn}>l</button>
-						<button className={styles.product__sizeBtn}>xl</button>
-					</div>
+					<div>choosed size: {size ? size : "size isn't choosed yet"}</div>
+					{[category].includes(CATEGORIES.TOP) ||
+					[category].includes(CATEGORIES.BOTTOM) ? (
+						<div className={`${styles.product__size} flex`}>
+							{sizes.map((size) => (
+								<button
+									key={Math.random()}
+									onClick={() => chooseSize(size)}
+									className={styles.product__sizeBtn}
+								>
+									{size}
+								</button>
+							))}
+						</div>
+					) : (
+						<div>no size</div>
+					)}
+					{chooseSizeAlert && (
+						<div className={styles.product__chooseSizeAlert}>choose size</div>
+					)}
 					<div className={`${styles.product__buttons} flex`}>
-						<Cart productId={id} />
-						<Like productId={id} />
-						<Combine productId={id} />
+						<Cart {...{ productDataAndSize}} />
+						<Like productId={productId} />
+						<Combine productId={productId} />
+						{isAdmin && (
+							<Link
+								className={`${styles.product__editButton}`}
+								to={`/products/${productId}/edit`}
+							>
+								edit product
+							</Link>
+						)}
 					</div>
 				</div>
 			</div>
@@ -52,7 +90,9 @@ export const Product = () => {
 				<div>Description</div>
 				{description}
 			</div>
-			<div className={`${styles.product__rating}`}>Rating: {productRating()}</div>
+			<div className={`${styles.product__rating}`}>
+				Rating: {useGetProductRating(reviews)}
+			</div>
 			<div className={`${styles.product__reviews} flex flex-col`}>
 				<div>Reviews</div>
 				{reviews.length === 0

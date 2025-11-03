@@ -8,10 +8,12 @@ import {
 	Accessory,
 	Shoes,
 	Product,
+	ProductEdit,
 	Combine,
 	Outfit,
 	Registration,
 	Authorization,
+	Cart,
 	Error,
 } from './pages'
 import { useLayoutEffect } from 'react'
@@ -40,11 +42,12 @@ export const App = () => {
 					<Route path="/catalog/bottom" element={<Bottom />} />
 					<Route path="/catalog/accessory" element={<Accessory />} />
 					<Route path="/catalog/shoes" element={<Shoes />} />
-					<Route path="/catalog/:id" element={<Product />} />
+					<Route path="/products/:id" element={<Product />} />
+					<Route path="/products/:id/edit" element={<ProductEdit />} />
 					<Route path="/favorite" element="" />
 					<Route path="/combine" element={<Combine />} />
 					<Route path="/combine/:id" element={<Outfit />} />
-					<Route path="/cart" element="" />
+					<Route path="/:id/cart" element={<Cart/>} />
 					<Route path="/registration" element={<Registration />} />
 					<Route path="/login" element={<Authorization />} />
 					<Route path="/user" element="" />
