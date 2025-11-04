@@ -55,7 +55,7 @@ export const Registration = () => {
 	useResetForm(reset)
 
 	const onSubmit = ({ login, password }: { login: string; password: string }) => {
-		const registeredAt = new Date()
+		const registeredAt = new Date().toDateString()
 		request('/api/register', 'POST', { login, password, registeredAt }).then(({ error, user }) => {
 			if (error) {
 				setServerError(`${error}`)

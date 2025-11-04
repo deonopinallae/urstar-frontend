@@ -2,7 +2,6 @@ import { request } from '../../utils'
 import styles from './styles.module.scss'
 import { useState } from 'react'
 
-
 export const UserRow = ({
 	className,
 	id,
@@ -20,7 +19,7 @@ export const UserRow = ({
 		setSelectedRole(Number(target.value))
 	}
 	const onRoleSave = (userId, newUserRole) => {
-		request(`/api/users/${userId}`, 'PATCH', {roleId: newUserRole}).then(() => {
+		request(`/api/users/${userId}`, 'PATCH', { roleId: newUserRole }).then(() => {
 			setInitialRole(newUserRole)
 		})
 	}
@@ -29,7 +28,7 @@ export const UserRow = ({
 
 	return (
 		<div className="flex between items-center">
-			<div className={className}>
+			<div className={`${styles.userRow__info} flex justify-between`}>
 				<div>{login}</div>
 				<div>{registeredAt}</div>
 				<div className="flex">
@@ -41,17 +40,21 @@ export const UserRow = ({
 						))}
 					</select>
 					<button
-						margin="0 15px"
+						className={`${styles.userRow__buttons}`}
 						disabled={isSaveButtonDisabled}
 						onClick={() => onRoleSave(id, selectedRole)}
-					>save</button>
+					>
+						save
+					</button>
 				</div>
 			</div>
 			<button
-				margin="0 11px"
+				className={`${styles.userRow__buttons}`}
 				disabled={isDeleting}
 				onClick={onUserRemove}
-			>delete</button>
+			>
+				delete
+			</button>
 		</div>
 	)
 }

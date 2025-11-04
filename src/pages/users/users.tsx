@@ -42,15 +42,15 @@ export const Users = () => {
 	}
 
 	return (
-		<div className={`${styles.users} container`}>
+		<section className={`${styles.users} container`}>
             <h2>users</h2>
-			<div className="table">
-				<div className="table-header">
+			<div className={styles.table}>
+				<div className={styles.table__header}>
 					<div>login</div>
 					<div>registered at</div>
 					<div>role</div>
 				</div>
-				<div className="table-body">
+				<div className={styles.table__body}>
 					{users.map(({ id, login, registeredAt, roleId }) => (
 						<UserRow
 							key={login}
@@ -63,6 +63,6 @@ export const Users = () => {
 					))}
 				</div>
 			</div>
-		</div>
+		</section>
 	)
 }
