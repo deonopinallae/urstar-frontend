@@ -55,6 +55,7 @@ export const Authorization = () => {
 				setServerError(`${error}`)
 				return
 			}
+			
 			dispatch(setUser(user))
 			sessionStorage.setItem('userData', JSON.stringify(user))
 			navigate(-1)

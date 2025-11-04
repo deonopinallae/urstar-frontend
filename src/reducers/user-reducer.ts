@@ -5,9 +5,11 @@ const initialUserState = {
 	id: '',
 	login: '',
 	roleId: ROLE.GUEST,
+	registeredAt: '',
 	inCart: [],
 	favorites: [],
-	toCombine: [],
+	combinerProducts: [],
+	outfits: [],
 }
 
 export const userReducer = (state = initialUserState, action) => {
@@ -19,6 +21,18 @@ export const userReducer = (state = initialUserState, action) => {
 			}
 		}
 		case ACTION_TYPE.ADD_TO_CART: {
+			return {
+				...state,
+				inCart: [...state.inCart, ...action.payload],
+			}
+		}
+		case ACTION_TYPE.ADD_TO_COMBINER: {
+			return {
+				...state,
+				combinerProducts: [...state.combinerProducts, action.payload],
+			}
+		}
+		case ACTION_TYPE.SAVE_OUTFIT: {
 			return {
 				...state,
 				inCart: [...state.inCart, ...action.payload],

@@ -9,19 +9,23 @@ import {
 	Shoes,
 	Product,
 	ProductEdit,
-	Combine,
+	Combiner,
 	Outfit,
+	Outfits,
 	Registration,
 	Authorization,
 	Cart,
+	Users,
 	Error,
 } from './pages'
 import { useLayoutEffect } from 'react'
 import { setUser } from './actions'
 import { useDispatch } from 'react-redux'
+import { request } from './utils'
 
 export const App = () => {
 	const dispatch = useDispatch()
+	
 	useLayoutEffect(() => {
 		const currentUserDataJSON = sessionStorage.getItem('userData')
 
@@ -29,8 +33,18 @@ export const App = () => {
 
 		const currentUserData = JSON.parse(currentUserDataJSON)
 
-		dispatch(setUser({ ...currentUserData, roleId: Number(currentUserData.roleId) }))
+		request(`/api/users/${currentUserData.id}`)
+			.then(({ data }) => {
+				data ? 
+				dispatch(setUser({ ...data, roleId: Number(data.roleId) }))
+				: dispatch(setUser({ ...currentUserData, roleId: Number(currentUserData.roleId) }))
+			})
+			.catch((err) => {
+				console.error('user load error: ', err)
+			})
+
 	}, [dispatch])
+
 	return (
 		<AppColumn>
 			<Header />
@@ -45,14 +59,15 @@ export const App = () => {
 					<Route path="/products/:id" element={<Product />} />
 					<Route path="/products/:id/edit" element={<ProductEdit />} />
 					<Route path="/favorite" element="" />
-					<Route path="/combine" element={<Combine />} />
-					<Route path="/combine/:id" element={<Outfit />} />
-					<Route path="/:id/cart" element={<Cart/>} />
+					<Route path="/users/:id/combiner" element={<Combiner />} />
+					<Route path="/:id/outfits" element={<Outfits />} />
+					<Route path="/:id/outfit" element={<Outfit />} />
+					<Route path="/:id/cart" element={<Cart />} />
 					<Route path="/registration" element={<Registration />} />
 					<Route path="/login" element={<Authorization />} />
-					<Route path="/user" element="" />
+					<Route path="/users" element={<Users/>} />
 					<Route path="/add-product" element="" />
-					<Route path="*" element={<Error/>} />
+					<Route path="*" element={<Error />} />
 				</Routes>
 			</Page>
 			<Footer />

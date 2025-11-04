@@ -1,14 +1,17 @@
 import styles from './styles.module.scss'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectUserLogin, selectUserRole } from '../../../selectors'
+import { selectUserLogin, selectUserRole, selectUserId } from '../../../selectors'
 import { ROLE } from '../../../constants'
 import { logout } from '../../../actions'
+import { checkAccess } from '../../../utils'
 
 export const Header = () => {
 	const dispatch = useDispatch()
 	const roleId = useSelector(selectUserRole)
 	const login = useSelector(selectUserLogin)
+	const userId = useSelector(selectUserId)
+	const isAdmin = checkAccess([ROLE.ADMIN], roleId)
 
 	const onLogout = () => {
 		dispatch(logout())
@@ -31,13 +34,14 @@ export const Header = () => {
 					<Link to="/catalog/bottom">bottom</Link>
 					<Link to="/catalog/shoes">shoes</Link>
 					<Link to="/catalog/accessory">accessory</Link>
-					<Link to="/combine">
+					<Link to={`/users/${userId}/combiner`}>
 						<div>combine</div>
 						<div>clothes</div>
 					</Link>
 				</div>
 			</nav>
 			<div className={`${styles.header__buttons} flex items-center`}>
+				{isAdmin && <Link to="/users">users</Link>}
 				<Link
 					to={roleId === ROLE.GUEST ? `/login` : `/favorites`}
 					className={`${styles.header__button} favorite-button icon-button`}

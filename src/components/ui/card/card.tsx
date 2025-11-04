@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
 import styles from './styles.module.scss'
-import { Cart, Combine, Like } from '../'
+import { AddToCombinerButton, Cart, Like } from '../'
 
-export const Card = ({ productData: { imageUrl, name, brand, type, price }, id }) => {
+export const Card = ({productData, productData: { imageUrl, name, brand, type, price }, id}) => {
 	return (
 		<Link to={`/products/${id}`} className={`${styles.card} flex flex-col justify-between`}>
 			<div className={`${styles.card__image}`} style={{backgroundImage: `url(${imageUrl})`}}/>
@@ -18,7 +18,7 @@ export const Card = ({ productData: { imageUrl, name, brand, type, price }, id }
 				<Cart productId={id}/>
 				<Like productId={id}/>
 				<button>fast combine</button>
-				<Combine productId={id}/>
+				<AddToCombinerButton productData={productData}/>
 			</div>
 		</Link>
 	)

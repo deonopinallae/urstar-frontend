@@ -1,6 +1,6 @@
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import styles from './styles.module.scss'
-import { Cart, Combine, Like, Loader } from '../../components/ui'
+import { AddToCombinerButton, Cart, Like, Loader } from '../../components/ui'
 import { Review } from '..'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectProduct, selectUserRole } from '../../selectors'
@@ -13,7 +13,7 @@ import { selectUserId } from '../../selectors/select-user-id'
 
 export const Product = () => {
 	const productData = useSelector(selectProduct)
-	const { imageUrl, name, brand, price, category, description, reviews } = productData
+	const { id, imageUrl, name, brand, price, category, description, reviews } = productData
 	const dispatch = useDispatch()
 	const { id: productId } = useParams()
 	const [isLoading, setIsLoading] = useState(true)
@@ -74,7 +74,7 @@ export const Product = () => {
 					<div className={`${styles.product__buttons} flex`}>
 						<Cart {...{ productDataAndSize}} />
 						<Like productId={productId} />
-						<Combine productId={productId} />
+						<AddToCombinerButton productData={{id, imageUrl, name, brand, price}} />
 						{isAdmin && (
 							<Link
 								className={`${styles.product__editButton}`}
