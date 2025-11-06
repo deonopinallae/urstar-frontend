@@ -3,12 +3,13 @@ import { Button } from '../../components/ui/buttons/button'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Card } from '../../components/ui/card/card'
-import { selectCombinerProducts } from '../../selectors'
+import { selectCombinerProducts, selectUser } from '../../selectors'
 import { useSelector } from 'react-redux'
 
 export const Combiner = () => {
 	const [scene, setScene] = useState({ top: '', accessory: '', bottom: '', shoes: '' })
 	const combinerProducts = useSelector(selectCombinerProducts)
+	const user = useSelector(selectUser)
 
 	// 	setScene((prevScene) => ({
 	// 		...prevScene,
@@ -54,6 +55,7 @@ export const Combiner = () => {
 					{combinerProducts.map((combinerProductData) => (
 						console.log(combinerProductData)
 					))}
+					
 				</div>
 			</div>
 			<div className={`${styles.combiner__outfits}`}>

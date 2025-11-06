@@ -18,32 +18,52 @@ import {
 	Users,
 	Error,
 } from './pages'
-import { useLayoutEffect } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import { setUser } from './actions'
 import { useDispatch } from 'react-redux'
 import { request } from './utils'
+import { ROLE } from './constants'
+import { Loader } from './components/ui'
 
 export const App = () => {
+	const [isUserLoaded, setIsUserLoaded] = useState(false)
 	const dispatch = useDispatch()
-	
+
 	useLayoutEffect(() => {
 		const currentUserDataJSON = sessionStorage.getItem('userData')
 
-		if (!currentUserDataJSON) return
-
 		const currentUserData = JSON.parse(currentUserDataJSON)
 
-		request(`/api/users/${currentUserData.id}`)
-			.then(({ data }) => {
-				data ? 
-				dispatch(setUser({ ...data, roleId: Number(data.roleId) }))
-				: dispatch(setUser({ ...currentUserData, roleId: Number(currentUserData.roleId) }))
-			})
-			.catch((err) => {
-				console.error('user load error: ', err)
-			})
-
+		if (currentUserData?.id) {
+			request(`/api/users/${currentUserData.id}`)
+				.then(({ data }) => {
+					if (data) {
+						dispatch(setUser({ ...data, roleId: Number(data.roleId) }))
+						setIsUserLoaded(true)
+					} else {
+						dispatch(
+							setUser({
+								...currentUserData,
+								roleId: Number(currentUserData.roleId),
+							}),
+						)
+					}
+				})
+				.catch((err) => {
+					console.error('user load error: ', err)
+					dispatch(
+						setUser({
+							...currentUserData,
+							roleId: Number(currentUserData.roleId),
+						}),
+					)
+				})
+		}
 	}, [dispatch])
+
+	if (!isUserLoaded) {
+		return <Loader />
+	}
 
 	return (
 		<AppColumn>
@@ -65,7 +85,7 @@ export const App = () => {
 					<Route path="/:id/cart" element={<Cart />} />
 					<Route path="/registration" element={<Registration />} />
 					<Route path="/login" element={<Authorization />} />
-					<Route path="/users" element={<Users/>} />
+					<Route path="/users" element={<Users />} />
 					<Route path="/add-product" element="" />
 					<Route path="*" element={<Error />} />
 				</Routes>

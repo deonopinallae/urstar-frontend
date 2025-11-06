@@ -4,7 +4,7 @@ import { selectCombinerProducts } from '../../../selectors'
 
 export const CombinerProductsCard = ({combinerProductData: {id, imageUrl, category, price}}) => {
 
-	const addProductToScene = (productCategory, productImage) => {
+	const addProductToScene = (productCategory, productImage) => {}
 
 	return (
 		<div

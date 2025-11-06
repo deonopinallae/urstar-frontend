@@ -8,7 +8,6 @@ export const Cart = ({ productDataAndSize }) => {
 	const userId = useSelector(selectUserId)
 
 	const addToCart =  () => {
-		console.log(productDataAndSize, 'fdvf')
 		dispatch(addToCartAsync(userId, productDataAndSize))
 	}
 

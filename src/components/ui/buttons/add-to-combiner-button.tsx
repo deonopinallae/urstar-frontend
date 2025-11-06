@@ -1,29 +1,23 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCombinerAsync } from '../../../actions/add-to-combiner-async'
 import styles from './styles.module.scss'
-import { selectUserId } from '../../../selectors/select-user-id'
+import { selectUserId } from '../../../selectors'
 import { selectUser, selectCombinerProducts } from '../../../selectors'
 
 export const AddToCombinerButton = ({ productData }) => {
 	const userId = useSelector(selectUserId)
 	const user = useSelector(selectUser)
+	const combinerProducts = user.combinerProducts
 	const dispatch = useDispatch()
-
-	const combinerProducts = useSelector(selectCombinerProducts)
-
-	const alreadyAdded = combinerProducts?.some(
-		(el) => String(el._id) === String(productData.id)
+	
+	const alreadyAdded = combinerProducts.some(
+		(p) => p._id === productData.id,
 	)
-
 	const addToCombiner = () => {
-		if (alreadyAdded) {
-			return
-		}
-		dispatch(addToCombinerAsync(userId, productData))
+		dispatch(addToCombinerAsync(userId, productData.id))
 	}
-
 	return (
-		<button className={styles.iconButton} onClick={addToCombiner}>
+		<button disabled={alreadyAdded} className={styles.iconButton} onClick={addToCombiner}>
 			{alreadyAdded ? 'already added' : 'add to combiner'}
 		</button>
 	)
