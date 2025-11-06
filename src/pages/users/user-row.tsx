@@ -3,7 +3,6 @@ import styles from './styles.module.scss'
 import { useState } from 'react'
 
 export const UserRow = ({
-	className,
 	id,
 	login,
 	registeredAt,

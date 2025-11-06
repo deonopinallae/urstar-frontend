@@ -5,8 +5,10 @@ import { ROLE } from '../../constants'
 import { useSelector } from 'react-redux'
 import { selectUserRole } from '../../selectors'
 import { UserRow } from './user-row'
+import { Loader } from '../../components/ui'
 
 export const Users = () => {
+	const [isLoading, setIsLoading] = useState(true)
 	const [users, setUsers] = useState([])
 	const [roles, setRoles] = useState([])
 	const [errorMessage, setErrorMessage] = useState('')
@@ -26,6 +28,7 @@ export const Users = () => {
 				}
 				setUsers(usersRes.data)
 				setRoles(rolesRes.data)
+				setIsLoading(false)
 			},
 		)
 	}, [shouldUpdateUserList, userRole])
@@ -42,27 +45,33 @@ export const Users = () => {
 	}
 
 	return (
-		<section className={`${styles.users} container`}>
-            <h2>users</h2>
-			<div className={styles.table}>
-				<div className={styles.table__header}>
-					<div>login</div>
-					<div>registered at</div>
-					<div>role</div>
-				</div>
-				<div className={styles.table__body}>
-					{users.map(({ id, login, registeredAt, roleId }) => (
-						<UserRow
-							key={login}
-							{...{ id, login, registeredAt, roleId, isDeleting }}
-							roles={roles.filter(
-								({ id: roleId }) => Number(roleId) !== ROLE.GUEST,
-							)}
-							onUserRemove={() => onUserRemove(id)}
-						/>
-					))}
-				</div>
-			</div>
-		</section>
+		<>
+			{isLoading ? (
+				<Loader />
+			) : (
+				<section className={`${styles.users} container`}>
+					<h2>users</h2>
+					<div className={styles.table}>
+						<div className={styles.table__header}>
+							<div>login</div>
+							<div>registered at</div>
+							<div>role</div>
+						</div>
+						<div className={styles.table__body}>
+							{users.map(({ id, login, registeredAt, roleId }) => (
+								<UserRow
+									key={login}
+									{...{ id, login, registeredAt, roleId, isDeleting }}
+									roles={roles.filter(
+										({ id: roleId }) => Number(roleId) !== ROLE.GUEST,
+									)}
+									onUserRemove={() => onUserRemove(id)}
+								/>
+							))}
+						</div>
+					</div>
+				</section>
+			)}
+		</>
 	)
 }

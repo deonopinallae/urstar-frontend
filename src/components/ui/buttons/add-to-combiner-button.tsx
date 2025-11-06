@@ -4,18 +4,22 @@ import styles from './styles.module.scss'
 import { selectUserId } from '../../../selectors'
 import { selectUser, selectCombinerProducts } from '../../../selectors'
 
-export const AddToCombinerButton = ({ productData }) => {
+export const AddToCombinerButton = ({ productId }) => {
 	const userId = useSelector(selectUserId)
 	const user = useSelector(selectUser)
 	const combinerProducts = user.combinerProducts
 	const dispatch = useDispatch()
-	
 	const alreadyAdded = combinerProducts.some(
-		(p) => p._id === productData.id,
+		(p) => p._id === productId,
 	)
+
 	const addToCombiner = () => {
-		dispatch(addToCombinerAsync(userId, productData.id))
+		if(alreadyAdded){
+			return
+		}
+		dispatch(addToCombinerAsync(userId, productId))
 	}
+
 	return (
 		<button disabled={alreadyAdded} className={styles.iconButton} onClick={addToCombiner}>
 			{alreadyAdded ? 'already added' : 'add to combiner'}

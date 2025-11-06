@@ -51,19 +51,28 @@
 	}
 	&__cards {
 		&List {
-			gap: clamp(25px, 2.08vw, 30px);
+			gap: clamp(50px, 4.86vw, 70px);
 			align-content: flex-start;
 		}
 		&Item {
 			align-items: center;
-			width: clamp(100px, 10.42vw, 150px);
-			height: clamp(100px, 10.42vw, 150px);
+			width: clamp(150px, 12.5vw, 180px);
+			height: clamp(150px, 12.5vw, 180px);
 			&Image {
 				background-position: center;
 				background-size: cover;
 				background-repeat: no-repeat;
 				width: 90%;
 				height: 90%;
+				cursor: pointer;
+
+				&:hover p {
+					display: flex;
+				}
+				p{
+					display: none;
+					background-color: rgba(128, 128, 128, 0.449);
+				}
 			}
 		}
 	}

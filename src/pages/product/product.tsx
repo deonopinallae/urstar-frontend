@@ -74,7 +74,7 @@ export const Product = () => {
 					<div className={`${styles.product__buttons} flex`}>
 						<Cart {...{ productDataAndSize}} />
 						<Like productId={productId} />
-						<AddToCombinerButton productData={{id, imageUrl, name, brand, price}} />
+						<AddToCombinerButton productId={productId} />
 						{isAdmin && (
 							<Link
 								className={`${styles.product__editButton}`}
