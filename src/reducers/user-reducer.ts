@@ -32,6 +32,13 @@ export const userReducer = (state = initialUserState, action) => {
 				combinerProducts: [...state.combinerProducts, action.payload],
 			}
 		}
+		case ACTION_TYPE.REMOVE_FROM_COMBINER:
+			return {
+				...state,
+				combinerProducts: state.combinerProducts.filter(
+					(p) => p.id !== action.payload,
+				),
+			}
 		case ACTION_TYPE.SAVE_OUTFIT: {
 			return {
 				...state,

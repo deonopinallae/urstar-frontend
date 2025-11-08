@@ -1,7 +1,7 @@
 import styles from './styles.module.scss'
 import { Button } from '../../components/ui/buttons/button'
-import { useState } from 'react'
-import { selectUser } from '../../selectors'
+import { useEffect, useState } from 'react'
+import { selectUserId } from '../../selectors'
 import { useSelector } from 'react-redux'
 import { request } from '../../utils'
 import { CombinerProductsCard } from './components/combiner-products-card'
@@ -9,21 +9,46 @@ import { Loader } from '../../components/ui'
 
 export const Combiner = () => {
 	const [isLoading, setIsLoading] = useState(true)
-	const [scene, setScene] = useState({ top: '', accessory: '', bottom: '', shoes: '' })
-	const user = useSelector(selectUser)
-	const [combinerProducts, setCombinerProducts] = useState([])
-
-	request(`/api/users/${user.id}/combiner`).then(({ data }) => {
-		setCombinerProducts(data)
-		setIsLoading(false)
+	const [scene, setScene] = useState(() => {
+		const savedScene = sessionStorage.getItem('combinerScene')
+		return savedScene
+			? JSON.parse(savedScene)
+			: { top: '', accessory: '', bottom: '', shoes: '' }
 	})
 
-	// 	setScene((prevScene) => ({
-	// 		...prevScene,
-	// 		[productCategory]: productImage,
-	// 	}))
-	// 	console.log(scene)
-	// }
+	const userId = useSelector(selectUserId)
+	const [combinerProducts, setCombinerProducts] = useState([])
+
+	useEffect(() => {
+		if (!userId) return
+		request(`/api/users/${userId}/combiner`)
+			.then(({ data }) => setCombinerProducts(data))
+			.finally(() => setIsLoading(false))
+	}, [userId, combinerProducts])
+
+	useEffect(() => {
+		sessionStorage.setItem('combinerScene', JSON.stringify(scene))
+	}, [scene])
+
+	const addProductToScene = (category, imageUrl) => {
+		setScene((prev) => ({
+			...prev,
+			[category]: imageUrl,
+		}))
+	}
+
+	const handleRemoveProduct = async (productId) => {
+		const { data } = await request(
+			`/api/users/${userId}/combiner/${productId}`,
+			'DELETE',
+		)
+		setCombinerProducts(data)
+	}
+
+	const clearScene = () => {
+		sessionStorage.removeItem('combinerScene')
+		setScene({ top: '', accessory: '', bottom: '', shoes: '' })
+	}
 
 	return (
 		<>
@@ -42,27 +67,40 @@ export const Combiner = () => {
 								/>
 								<Button>save</Button>
 							</div>
-							<div className={`${styles.combiner__scene}`}>
+							<div className={`${styles.combiner__scene} `}>
 								<div
-									className={styles.combiner__item}
-									style={{ backgroundImage: `url(${scene.top})` }}
+									className={`${styles.combiner__sceneItem} ${styles.combiner__sceneItemTop} `}
+									style={{
+										backgroundImage: `url(${scene.top})`,
+										display: `${scene.top !== '' ? 'block' : 'none'}`,
+									}}
 								/>
 								<div
-									className={styles.combiner__item}
-									style={{ backgroundImage: `url(${scene.accessory})` }}
+									className={`${styles.combiner__sceneItem} ${styles.combiner__sceneItemAccessory} `}
+									style={{
+										backgroundImage: `url(${scene.accessory})`,
+										display: `${scene.top !== '' ? 'block' : 'none'}`,
+									}}
 								/>
 								<div
-									className={styles.combiner__item}
-									style={{ backgroundImage: `url(${scene.bottom})` }}
+									className={`${styles.combiner__sceneItem} ${styles.combiner__sceneItemBottom} `}
+									style={{
+										backgroundImage: `url(${scene.bottom})`,
+										display: `${scene.top !== '' ? 'block' : 'none'}`,
+									}}
 								/>
 								<div
-									className={styles.combiner__item}
-									style={{ backgroundImage: `url(${scene.shoes})` }}
+									className={`${styles.combiner__sceneItem} ${styles.combiner__sceneItemShoes} `}
+									style={{
+										backgroundImage: `url(${scene.shoes})`,
+										display: `${scene.top !== '' ? 'block' : 'none'}`,
+									}}
 								/>
 							</div>
 							<div className={`${styles.combiner__buttons} flex`}>
-								<Button>save outfit</Button>
-								<Button>share</Button>
+								<button>save outfit</button>
+								<button>share</button>
+								<button onClick={clearScene}>clear</button>
 							</div>
 						</div>
 						<div
@@ -71,7 +109,12 @@ export const Combiner = () => {
 							{combinerProducts.map((combinerProductData) => (
 								<CombinerProductsCard
 									key={Math.random()}
-									productData={combinerProductData}
+									{...{
+										combinerProductData,
+										addProductToScene,
+										userId,
+										handleRemoveProduct
+									}}
 								/>
 							))}
 						</div>

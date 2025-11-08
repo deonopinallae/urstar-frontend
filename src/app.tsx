@@ -61,9 +61,9 @@ export const App = () => {
 		}
 	}, [dispatch])
 
-	if (!isUserLoaded) {
-		return <Loader />
-	}
+	// if (!isUserLoaded) {
+	// 	return <Loader />
+	// }
 
 	return (
 		<AppColumn>

@@ -34,7 +34,7 @@ export const Header = () => {
 					<Link to="/catalog/bottom">bottom</Link>
 					<Link to="/catalog/shoes">shoes</Link>
 					<Link to="/catalog/accessory">accessory</Link>
-					<Link to={`/users/${userId}/combiner`}>
+					<Link to={roleId === ROLE.GUEST ? `/login` : `/users/${userId}/combiner`}>
 						<div>combine</div>
 						<div>clothes</div>
 					</Link>

@@ -3,11 +3,20 @@ import { addToCombinerAsync } from '../../../actions/add-to-combiner-async'
 import styles from './styles.module.scss'
 import { selectUserId } from '../../../selectors'
 import { selectUser, selectCombinerProducts } from '../../../selectors'
+import { useEffect, useState } from 'react'
+import { request } from '../../../utils'
 
 export const AddToCombinerButton = ({ productId }) => {
 	const userId = useSelector(selectUserId)
 	const user = useSelector(selectUser)
-	const combinerProducts = user.combinerProducts
+	const [combinerProducts, setCombinerProducts] = useState([])
+
+
+	useEffect(()=>{
+		request(`/api/users/${userId}/combiner`).then(({data}) => {
+			setCombinerProducts(data)})
+	}, [combinerProducts])
+	// const combinerProducts = user.combinerProducts
 	const dispatch = useDispatch()
 	const alreadyAdded = combinerProducts.some(
 		(p) => p._id === productId,
