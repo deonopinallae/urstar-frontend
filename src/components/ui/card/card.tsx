@@ -16,10 +16,9 @@ export const Card = ({productData: { imageUrl, name, brand, type, price }, id}) 
 				<p className={`${styles.card__type}`}>{type}</p>
 			</div>			
 			</Link>
-			<div className={`${styles.card__buttons} flex justify-between flex-wrap`}>
+			<div className={`${styles.card__buttons} flex flex-wrap`}>
 				<Cart productId={id}/>
 				<Like productId={id}/>
-				<button>fast combine</button>
 				<AddToCombinerButton productId={id} />
 			</div>
 		</div>

@@ -29,8 +29,12 @@ export const Users = () => {
 				setUsers(usersRes.data)
 				setRoles(rolesRes.data)
 				setIsLoading(false)
+					console.log(errorMessage)
+
 			},
-		)
+		).catch((error) => {
+			console.log(error.message)
+		})
 	}, [shouldUpdateUserList, userRole])
 
 	const onUserRemove = async (userId) => {
@@ -46,7 +50,7 @@ export const Users = () => {
 
 	return (
 		<>
-			{isLoading ? (
+			{errorMessage ? <div>errorMessage</div> : isLoading ? (
 				<Loader />
 			) : (
 				<section className={`${styles.users} container`}>

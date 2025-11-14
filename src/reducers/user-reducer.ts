@@ -23,7 +23,7 @@ export const userReducer = (state = initialUserState, action) => {
 		case ACTION_TYPE.ADD_TO_CART: {
 			return {
 				...state,
-				inCart: [...state.inCart, ...action.payload],
+				inCart: [...state.inCart, action.payload],
 			}
 		}
 		case ACTION_TYPE.ADD_TO_COMBINER: {
@@ -42,7 +42,13 @@ export const userReducer = (state = initialUserState, action) => {
 		case ACTION_TYPE.SAVE_OUTFIT: {
 			return {
 				...state,
-				inCart: [...state.inCart, ...action.payload],
+				outfits: [...state.outfits, action.payload],
+			}
+		}
+		case ACTION_TYPE.SET_OUTFITS: {
+			return {
+				...state,
+				outfits: action.payload,
 			}
 		}
 		case ACTION_TYPE.LOGOUT:

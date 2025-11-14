@@ -1,1 +1,1 @@
-export const selectUserOutfits = ({user}) => user.outfits
+export const selectUserOutfits = (state) => state.user.outfits

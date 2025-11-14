@@ -1,6 +1,4 @@
-import { useSelector } from 'react-redux'
 import { Products } from '../products'
-import { selectProducts } from '../../../selectors'
 import { request } from '../../../utils'
 import { useEffect, useState } from 'react'
 import { Loader } from '../../../components/ui'

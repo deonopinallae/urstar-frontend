@@ -22,8 +22,6 @@ import { useLayoutEffect, useState } from 'react'
 import { setUser } from './actions'
 import { useDispatch } from 'react-redux'
 import { request } from './utils'
-import { ROLE } from './constants'
-import { Loader } from './components/ui'
 
 export const App = () => {
 	const [isUserLoaded, setIsUserLoaded] = useState(false)
@@ -61,9 +59,6 @@ export const App = () => {
 		}
 	}, [dispatch])
 
-	// if (!isUserLoaded) {
-	// 	return <Loader />
-	// }
 
 	return (
 		<AppColumn>
@@ -81,13 +76,14 @@ export const App = () => {
 					<Route path="/favorite" element="" />
 					<Route path="/users/:id/combiner" element={<Combiner />} />
 					<Route path="/:id/outfits" element={<Outfits />} />
-					<Route path="/:id/outfit" element={<Outfit />} />
+					<Route path="/outfits/:id" element={<Outfit />} />
 					<Route path="/:id/cart" element={<Cart />} />
 					<Route path="/registration" element={<Registration />} />
 					<Route path="/login" element={<Authorization />} />
 					<Route path="/users" element={<Users />} />
 					<Route path="/add-product" element="" />
 					<Route path="*" element={<Error />} />
+					<Route path="/error" element={<Error />} />
 				</Routes>
 			</Page>
 			<Footer />
