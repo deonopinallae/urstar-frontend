@@ -1,6 +1,7 @@
 import styles from './styles.module.scss'
 import { useEffect, useState } from 'react'
 import {
+	selectCombinerProducts,
 	selectUser,
 	selectUserId,
 	selectUserLogin,
@@ -14,6 +15,7 @@ import { saveOutfit } from '../../actions'
 import { Error } from '../error/error'
 import { setOutfits } from '../../actions/set-outfits'
 import { CombinerOutfitCard } from './components/combiner-outfit-card'
+import { removeFromCombinerAsync } from '../../actions'
 
 export const Combiner = () => {
 	const [isLoading, setIsLoading] = useState(true)
@@ -25,25 +27,28 @@ export const Combiner = () => {
 	const user = useSelector(selectUser)
 	const userId = useSelector(selectUserId)
 	const userLogin = useSelector(selectUserLogin)
-	const [combinerProducts, setCombinerProducts] = useState([])
-	const [outfitName, setOutfitName] = useState('outfit')
-	const dispatch = useDispatch()
-	const [alert, setAlert] = useState('')
+	const combinerProducts = useSelector(selectCombinerProducts)
 	const outfits = useSelector(selectUserOutfits)
+	const [outfitName, setOutfitName] = useState('')
+	const [alert, setAlert] = useState('')
+	const dispatch = useDispatch()
 
 	useEffect(() => {
 		if (!userId) return
-		Promise.all([
-			request(`/api/users/${userId}/combiner`),
-			request(`/api/users/${userId}/outfits`),
-		]).then(([combinerRes, outfitsRes]) => {
-			if (combinerRes.error || outfitsRes.error) {
-				return
-			}
-			setCombinerProducts(combinerRes.data)
-			dispatch(setOutfits(outfitsRes.data))
-			setIsLoading(false)
-		})
+		if (!combinerProducts) {
+			Promise.all([
+				request(`/api/users/${userId}/combiner`),
+				request(`/api/users/${userId}/outfits`),
+			]).then(([combinerRes, outfitsRes]) => {
+				if (combinerRes.error || outfitsRes.error) {
+					return
+				}
+				setCombinerProducts(combinerRes.data)
+				dispatch(setOutfits(outfitsRes.data))
+				setIsLoading(false)
+			})
+			return
+		}
 	}, [user])
 
 	useEffect(() => {
@@ -57,12 +62,8 @@ export const Combiner = () => {
 		}))
 	}
 
-	const handleRemoveProduct = async (productId, imageUrl) => {
-		request(`/api/users/${userId}/combiner/${productId}`, 'DELETE').then(
-			({ data }) => {
-				setCombinerProducts(data)
-			},
-		)
+	const handleRemoveProduct = (productId, imageUrl) => {
+		dispatch(removeFromCombinerAsync(userId, productId))
 		setScene((prev) => {
 			const updated = { ...prev }
 			for (const key in prev) {
@@ -70,14 +71,6 @@ export const Combiner = () => {
 			}
 			return updated
 		})
-	}
-
-	const deleteOutfit = async (outfitId) => {
-		request(`/api/users/${userId}/outfits/${outfitId}`, 'DELETE').then(
-			({ data }) => {
-				setOutfits(data)
-			},
-		)
 	}
 
 	const clearScene = () => {
@@ -194,7 +187,10 @@ export const Combiner = () => {
 						>
 							{outfits.length
 								? outfits.map((outfit, index) => (
-										<CombinerOutfitCard key={index} {...{ outfit, deleteOutfit }} />
+										<CombinerOutfitCard
+											key={index}
+											{...{ outfit, userId }}
+										/>
 									))
 								: 'no outfits yet'}
 						</div>

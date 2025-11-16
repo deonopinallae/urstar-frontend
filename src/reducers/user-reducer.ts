@@ -36,7 +36,7 @@ export const userReducer = (state = initialUserState, action) => {
 			return {
 				...state,
 				combinerProducts: state.combinerProducts.filter(
-					(p) => p.id !== action.payload,
+					(product) => product.id !== action.payload,
 				),
 			}
 		case ACTION_TYPE.SAVE_OUTFIT: {
@@ -49,6 +49,14 @@ export const userReducer = (state = initialUserState, action) => {
 			return {
 				...state,
 				outfits: action.payload,
+			}
+		}
+		case ACTION_TYPE.DELETE_OUTFIT: {
+			return {
+				...state,
+				outfits: state.outfits.filter(
+					(outfit) => outfit.id !== action.payload,
+				),
 			}
 		}
 		case ACTION_TYPE.LOGOUT:

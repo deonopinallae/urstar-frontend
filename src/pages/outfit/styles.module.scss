@@ -1,3 +1,57 @@
-.outfit{
+.outfit {
 	
+	&__scene {
+		width: clamp(400px, 41.67vw, 600px);
+		height: clamp(467px, 48.61vw, 700px);
+		background-color: var(--bg-color);
+		box-shadow: inset 0 0 10px 5px grey;
+		padding: 10px;
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-rows: 1fr 1fr 1fr;
+		&Card {
+			height: 200px;
+			background-color: var(--bg-color);
+			box-shadow: inset 0 0 10px 5px grey;
+			padding: 10px;
+			display: grid;
+			grid-template-columns: 1fr 1fr 1fr;
+			grid-template-rows: 1fr 1fr 1fr;
+		}
+		&Item {
+			background-position: center;
+			background-size: contain;
+			background-repeat: no-repeat;
+			width: 100%;
+			height: 100%;
+			&Top {
+				grid-column: 2/2;
+				grid-row: 1/1;
+			}
+			&Accessory {
+				grid-column: 3/3;
+				grid-row: 2/2;
+				width: 50%;
+				height: 50%;
+			}
+			&Bottom {
+				grid-column: 2/2;
+				grid-row: 2/2;
+			}
+			&Shoes {
+				grid-column: 2/2;
+				grid-row: 3/3;
+			}
+		}
+	}
+	&__name {
+		border-bottom: 1px solid var(--main-color);
+		& input {
+			width: 100%;
+		}
+	}
+	&__buttons {
+		gap: 20px;
+	}
+
 }
