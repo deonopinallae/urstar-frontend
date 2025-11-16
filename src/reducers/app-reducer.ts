@@ -1,21 +1,28 @@
 import { ACTION_TYPE } from '../actions'
 
 const initialAppState = {
-	wasLogout: false,
-	modal: {
-		isOpen: false,
-		text: '',
-		onConfirm: () => {},
-		onCancel: () => {},
-	},
+	users: [],
+	roles: [],
+	// modal: {
+	// 	isOpen: false,
+	// 	text: '',
+	// 	onConfirm: () => {},
+	// 	onCancel: () => {},
+	// },
 }
 
 export const appReducer = (state = initialAppState, action) => {
 	switch (action.type) {
-		case ACTION_TYPE.LOGOUT:
+		case ACTION_TYPE.SET_USERS:
 			return {
 				...state,
-				wasLogout: !state.wasLogout,
+				users: action.payload
+			}
+		case ACTION_TYPE.SET_ROLES:
+			return {
+				...state,
+				roles: action.payload
+
 			}
 		// case ACTION_TYPE.OPEN_MODAL:
 		// 	return {

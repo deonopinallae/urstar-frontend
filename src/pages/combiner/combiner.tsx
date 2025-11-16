@@ -4,56 +4,38 @@ import {
 	selectCombinerProducts,
 	selectUser,
 	selectUserId,
-	selectUserLogin,
 	selectUserOutfits,
 } from '../../selectors'
 import { useDispatch, useSelector } from 'react-redux'
-import { request } from '../../utils'
 import { CombinerProductsCard } from './components/combiner-products-card'
 import { Alert, Loader } from '../../components/ui'
-import { saveOutfit } from '../../actions'
-import { Error } from '../error/error'
-import { setOutfits } from '../../actions/set-outfits'
+import {  saveOutfitAsync } from '../../actions'
 import { CombinerOutfitCard } from './components/combiner-outfit-card'
 import { removeFromCombinerAsync } from '../../actions'
 
 export const Combiner = () => {
-	const [isLoading, setIsLoading] = useState(true)
 	const defaultScene = { top: '', accessory: '', bottom: '', shoes: '' }
 	const [scene, setScene] = useState(() => {
 		const savedScene = sessionStorage.getItem('combinerScene')
 		return savedScene ? JSON.parse(savedScene) : defaultScene
 	})
-	const user = useSelector(selectUser)
-	const userId = useSelector(selectUserId)
-	const userLogin = useSelector(selectUserLogin)
-	const combinerProducts = useSelector(selectCombinerProducts)
-	const outfits = useSelector(selectUserOutfits)
 	const [outfitName, setOutfitName] = useState('')
 	const [alert, setAlert] = useState('')
+
+	const user = useSelector(selectUser)
+	const userId = useSelector(selectUserId)
+	const combinerProducts = useSelector(selectCombinerProducts)
+	const outfits = useSelector(selectUserOutfits)
+
 	const dispatch = useDispatch()
 
-	useEffect(() => {
-		if (!userId) return
-		if (!combinerProducts) {
-			Promise.all([
-				request(`/api/users/${userId}/combiner`),
-				request(`/api/users/${userId}/outfits`),
-			]).then(([combinerRes, outfitsRes]) => {
-				if (combinerRes.error || outfitsRes.error) {
-					return
-				}
-				setCombinerProducts(combinerRes.data)
-				dispatch(setOutfits(outfitsRes.data))
-				setIsLoading(false)
-			})
-			return
-		}
-	}, [user])
+	const isUserLoaded = Boolean(userId) && Boolean(user.login)
 
 	useEffect(() => {
 		sessionStorage.setItem('combinerScene', JSON.stringify(scene))
-	}, [userId, scene, combinerProducts])
+	}, [userId, scene])
+
+	if (!isUserLoaded) return <Loader />
 
 	const addProductToScene = (category, imageUrl) => {
 		setScene((prev) => ({
@@ -90,12 +72,11 @@ export const Combiner = () => {
 			setTimeout(() => setAlert(''), 3000)
 			return
 		}
+		const outfitData = { scene, name: outfitName }
 
-		await request(`/api/users/${userId}/outfits`, 'POST', {
-			outfitData: { author: userLogin, scene, name: outfitName },
-		}).then(({ outfit }) => {
-			dispatch(saveOutfit(outfit))
-		})
+		dispatch(
+			saveOutfitAsync(userId, outfitData)
+		)
 
 		clearScene()
 		setAlert('outfit have been saved')
@@ -104,99 +85,89 @@ export const Combiner = () => {
 
 	return (
 		<>
-			{!userId ? (
-				<Error />
-			) : isLoading ? (
-				<Loader />
-			) : (
-				<section className={`${styles.combiner} container`}>
-					{alert && <Alert text={alert} />}
-					<div className={`${styles.combiner__main} flex justify-between`}>
-						<div className={`${styles.combiner__container} flex flex-col`}>
+			<section className={`${styles.combiner} container`}>
+				{alert && <Alert text={alert} />}
+				<div className={`${styles.combiner__main} flex justify-between`}>
+					<div className={`${styles.combiner__container} flex flex-col`}>
+						<div className={`${styles.combiner__name} flex justify-between`}>
+							<input
+								onChange={({ target }) => {
+									setOutfitName(target.value.trim())
+								}}
+								value={outfitName}
+								type="text"
+								placeholder="enter the name of your outfit"
+							/>
+						</div>
+						<div className={`${styles.combiner__scene} `}>
 							<div
-								className={`${styles.combiner__name} flex justify-between`}
+								className={`${styles.combiner__sceneItem} ${styles.combiner__sceneItemTop} `}
+								style={{
+									backgroundImage: `url(${scene.top})`,
+									display: `${scene.top !== '' ? 'block' : 'none'}`,
+								}}
+							/>
+							<div
+								className={`${styles.combiner__sceneItem} ${styles.combiner__sceneItemAccessory} `}
+								style={{
+									backgroundImage: `url(${scene.accessory})`,
+									display: `${scene.accessory !== '' ? 'block' : 'none'}`,
+								}}
+							/>
+							<div
+								className={`${styles.combiner__sceneItem} ${styles.combiner__sceneItemBottom} `}
+								style={{
+									backgroundImage: `url(${scene.bottom})`,
+									display: `${scene.bottom !== '' ? 'block' : 'none'}`,
+								}}
+							/>
+							<div
+								className={`${styles.combiner__sceneItem} ${styles.combiner__sceneItemShoes} `}
+								style={{
+									backgroundImage: `url(${scene.shoes})`,
+									display: `${scene.shoes !== '' ? 'block' : 'none'}`,
+								}}
+							/>
+						</div>
+						<div className={`${styles.combiner__buttons} flex`}>
+							<button
+								disabled={scene == defaultScene}
+								onClick={handleSaveOutfit}
 							>
-								<input
-									onChange={({ target }) => {
-										setOutfitName(target.value.trim())
-									}}
-									value={outfitName}
-									type="text"
-									placeholder="enter the name of your outfit"
-								/>
-							</div>
-							<div className={`${styles.combiner__scene} `}>
-								<div
-									className={`${styles.combiner__sceneItem} ${styles.combiner__sceneItemTop} `}
-									style={{
-										backgroundImage: `url(${scene.top})`,
-										display: `${scene.top !== '' ? 'block' : 'none'}`,
-									}}
-								/>
-								<div
-									className={`${styles.combiner__sceneItem} ${styles.combiner__sceneItemAccessory} `}
-									style={{
-										backgroundImage: `url(${scene.accessory})`,
-										display: `${scene.accessory !== '' ? 'block' : 'none'}`,
-									}}
-								/>
-								<div
-									className={`${styles.combiner__sceneItem} ${styles.combiner__sceneItemBottom} `}
-									style={{
-										backgroundImage: `url(${scene.bottom})`,
-										display: `${scene.bottom !== '' ? 'block' : 'none'}`,
-									}}
-								/>
-								<div
-									className={`${styles.combiner__sceneItem} ${styles.combiner__sceneItemShoes} `}
-									style={{
-										backgroundImage: `url(${scene.shoes})`,
-										display: `${scene.shoes !== '' ? 'block' : 'none'}`,
-									}}
-								/>
-							</div>
-							<div className={`${styles.combiner__buttons} flex`}>
-								<button
-									disabled={scene == defaultScene}
-									onClick={handleSaveOutfit}
-								>
-									save outfit
-								</button>
-								<button onClick={clearScene}>clear</button>
-							</div>
-						</div>
-						<div
-							className={`${styles.combiner__cardsList} flex flex-wrap justify-end items-start`}
-						>
-							{combinerProducts.map((combinerProductData) => (
-								<CombinerProductsCard
-									key={Math.random()}
-									{...{
-										combinerProductData,
-										addProductToScene,
-										handleRemoveProduct,
-									}}
-								/>
-							))}
+								save outfit
+							</button>
+							<button onClick={clearScene}>clear</button>
 						</div>
 					</div>
-					<div className={`${styles.combiner__outfits}`}>
-						<h3>saved outfits</h3>
-						<div
-							className={`${styles.combiner__cardsList} grid items-center`}
-						>
-							{outfits.length
-								? outfits.map((outfit, index) => (
-										<CombinerOutfitCard
-											key={index}
-											{...{ outfit, userId }}
-										/>
-									))
-								: 'no outfits yet'}
-						</div>
+					<div
+						className={`${styles.combiner__cardsList} flex flex-wrap justify-end items-start`}
+					>
+						{combinerProducts.map((combinerProductData) => (
+							<CombinerProductsCard
+								key={Math.random()}
+								{...{
+									combinerProductData,
+									addProductToScene,
+									handleRemoveProduct,
+								}}
+							/>
+						))}
 					</div>
-				</section>
-			)}
+				</div>
+				<div className={`${styles.combiner__outfits}`}>
+					<h3>saved outfits</h3>
+					<div className={`${styles.combiner__cardsList} grid items-center`}>
+						{outfits.length
+							? outfits.map((outfit, index) => (
+									<CombinerOutfitCard
+										key={index}
+										{...{ outfit, userId }}
+									/>
+								))
+							: 'no outfits yet'}
+					</div>
+				</div>
+			</section>
 		</>
 	)
 }

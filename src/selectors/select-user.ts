@@ -1,1 +1,1 @@
-export const selectUser= ({user}) => user
+export const selectUser = ({user}) => user

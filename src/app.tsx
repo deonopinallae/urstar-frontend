@@ -24,7 +24,6 @@ import { useDispatch } from 'react-redux'
 import { request } from './utils'
 
 export const App = () => {
-	const [isUserLoaded, setIsUserLoaded] = useState(false)
 	const dispatch = useDispatch()
 
 	useLayoutEffect(() => {
@@ -37,7 +36,6 @@ export const App = () => {
 				.then(({ data }) => {
 					if (data) {
 						dispatch(setUser({ ...data, roleId: Number(data.roleId) }))
-						setIsUserLoaded(true)
 					} else {
 						dispatch(
 							setUser({
