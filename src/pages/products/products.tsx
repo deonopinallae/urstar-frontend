@@ -18,7 +18,7 @@ export const Products = ({ products }: { products: any }) => {
 						<div className="text-center w-screen">products are out of stock yet</div>
 					) : (
 						products.map(({ id, ...productData }) => (
-							<Card {...{ id, productData }} key={id} />
+							<Card {...{ id, productData }} key={Math.random()} />
 						))
 					)}
 				</div>

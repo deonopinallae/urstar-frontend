@@ -70,7 +70,7 @@ export const userReducer = (state = initialUserState, action) => {
 			return {
 				...state,
 				favorites: state.favorites.filter(
-					(product) => product.id !== action.payload.id,
+					(product) => product.id !== action.payload,
 				),
 			}
 		}

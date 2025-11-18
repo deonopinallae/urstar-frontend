@@ -15,7 +15,7 @@ export const Favorites = () => {
 					</div>
 				) : (
 					favorites.map(({ id, ...productData }) => (
-						<Card {...{ id, productData }} key={id} />
+						<Card key={Math.random()} {...{ id, productData }} />
 					))
 				)}
 			</div>
