@@ -82,6 +82,7 @@ export const Combiner = () => {
 		dispatch(saveOutfitAsync(userId, outfitData))
 
 		clearScene()
+		setOutfitName('')
 		setAlert('outfit have been saved')
 		setTimeout(() => setAlert(''), 3000)
 	}

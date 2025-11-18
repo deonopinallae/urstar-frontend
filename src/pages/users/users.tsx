@@ -28,7 +28,6 @@ export const Users = () => {
 		if (users.length === 0 && roles.length === 0)
 			Promise.all([request('/api/users'), request('/api/users/roles')])
 				.then(([usersRes, rolesRes]) => {
-					console.log(usersRes.data)
 					if (usersRes.error || rolesRes.error) {
 						setErrorMessage(usersRes.error || rolesRes.error)
 						return

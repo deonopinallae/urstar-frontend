@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addToCombinerAsync } from '../../../actions'
 import { selectCombinerProducts, selectUserId } from '../../../selectors'
 import { useEffect, useState } from 'react'
-import { request } from '../../../utils'
 import { useNavigate } from 'react-router-dom'
 
 export const AddToCombinerButton = ({ productId }) => {
@@ -11,9 +10,14 @@ export const AddToCombinerButton = ({ productId }) => {
 	const combinerProducts = useSelector(selectCombinerProducts)
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
-	const [isAdded, setIsAdded] = useState(combinerProducts.some((p) => p._id === productId))
+	const [isAdded, setIsAdded] = useState(
+		combinerProducts.some((p) => p._id === productId),
+	)
 
-	useEffect(() => setIsAdded(combinerProducts.some((p) => p._id === productId)), [combinerProducts])
+	useEffect(
+		() => setIsAdded(combinerProducts.some((p) => p.id === productId)),
+		[combinerProducts],
+	)
 
 	const addToCombiner = () => {
 		if (!userId) navigate('/login')
@@ -25,13 +29,13 @@ export const AddToCombinerButton = ({ productId }) => {
 
 	return (
 		<>
-				<button
-					disabled={isAdded}
-					className={styles.iconButton}
-					onClick={addToCombiner}
-				>
-					{isAdded ? 'in combiner' : 'combine'}
-				</button>
+			<button
+				disabled={isAdded}
+				className={styles.iconButton}
+				onClick={addToCombiner}
+			>
+				{isAdded ? 'in combiner' : 'combine'}
+			</button>
 		</>
 	)
 }

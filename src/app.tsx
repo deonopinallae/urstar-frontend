@@ -16,16 +16,16 @@ import {
 	Cart,
 	Users,
 	Error,
-	Favorites
+	Favorites,
 } from './pages'
 import { useLayoutEffect } from 'react'
-import { setUser } from './actions'
-import { useDispatch } from 'react-redux'
+import { setUser  } from './actions'
+import { useDispatch  } from 'react-redux'
 import { request } from './utils'
+import { Loader } from './components/ui'
 
 export const App = () => {
 	const dispatch = useDispatch()
-
 	useLayoutEffect(() => {
 		const currentUserDataJSON = sessionStorage.getItem('userData')
 
@@ -71,7 +71,7 @@ export const App = () => {
 					<Route path="/catalog/shoes" element={<Shoes />} />
 					<Route path="/products/:id" element={<Product />} />
 					<Route path="/products/:id/edit" element={<ProductEdit />} />
-					<Route path="/favorites" element={<Favorites/>} />
+					<Route path="/favorites" element={<Favorites />} />
 					<Route path="/users/:id/combiner" element={<Combiner />} />
 					<Route path="/users/:id/outfits/:outfitId" element={<Outfit />} />
 					<Route path="/:id/cart" element={<Cart />} />

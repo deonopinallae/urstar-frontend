@@ -1,18 +1,26 @@
 import { Products } from '../products'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectProducts } from '../../../selectors'
 import { request } from '../../../utils'
-import { useEffect, useState } from 'react'
+import { setProducts } from '../../../actions'
 import { Loader } from '../../../components/ui'
+import { useEffect, useState } from 'react'
 
 export const Catalog = () => {
-	const [products, setProducts] = useState([])
 	const [isLoading, setIsLoading] = useState(true)
+	const dispatch = useDispatch()
+	const products = useSelector(selectProducts)
 
 	useEffect(() => {
-		request('/api/products').then(({ data: { products } }) => {
-			setProducts(products)
+		if (products.length === 0) {
+			request('/api/products').then(({ data: { products } }) => {
+				dispatch(setProducts(products))
+				setIsLoading(false)
+			})
+		} else {
 			setIsLoading(false)
-		})
-	}, [])
+		}
+	}, [products.length])
 
-	return isLoading ? <Loader/> : <Products {...{ products }} />
+	return isLoading ? <Loader /> : <Products {...{ products }} />
 }
