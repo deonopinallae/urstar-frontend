@@ -27,16 +27,17 @@ export const userReducer = (state = initialUserState, action) => {
 			}
 		}
 		case ACTION_TYPE.ADD_TO_COMBINER: {
+			if (!action.payload) return state
 			return {
 				...state,
-				combinerProducts: [...state.combinerProducts, action.payload],
+				combinerProducts: [action.payload, ...state.combinerProducts],
 			}
 		}
 		case ACTION_TYPE.REMOVE_FROM_COMBINER:
 			return {
 				...state,
 				combinerProducts: state.combinerProducts.filter(
-					(product) => product.id !== action.payload.id,
+					(product) => product.id !== action.payload,
 				),
 			}
 		case ACTION_TYPE.SAVE_OUTFIT: {
@@ -54,7 +55,23 @@ export const userReducer = (state = initialUserState, action) => {
 		case ACTION_TYPE.DELETE_OUTFIT: {
 			return {
 				...state,
-				outfits: state.outfits.filter((outfit) => outfit.id !== action.payload.id),
+				outfits: state.outfits.filter(
+					(outfit) => outfit.id !== action.payload.id,
+				),
+			}
+		}
+		case ACTION_TYPE.ADD_TO_FAVORITES: {
+			return {
+				...state,
+				favorites: [action.payload, ...state.favorites],
+			}
+		}
+		case ACTION_TYPE.REMOVE_FROM_FAVORITES: {
+			return {
+				...state,
+				favorites: state.favorites.filter(
+					(product) => product.id !== action.payload.id,
+				),
 			}
 		}
 		case ACTION_TYPE.LOGOUT:

@@ -9,7 +9,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import { CombinerProductsCard } from './components/combiner-products-card'
 import { Alert, Loader } from '../../components/ui'
-import {  saveOutfitAsync } from '../../actions'
+import { saveOutfitAsync } from '../../actions'
 import { CombinerOutfitCard } from './components/combiner-outfit-card'
 import { removeFromCombinerAsync } from '../../actions'
 
@@ -45,6 +45,11 @@ export const Combiner = () => {
 	}
 
 	const handleRemoveProduct = (productId, imageUrl) => {
+		if (!productId) {
+			setAlert('product remove error')
+			setTimeout(() => setAlert(''), 3000)
+			return
+		}
 		dispatch(removeFromCombinerAsync(userId, productId))
 		setScene((prev) => {
 			const updated = { ...prev }
@@ -74,9 +79,7 @@ export const Combiner = () => {
 		}
 		const outfitData = { scene, name: outfitName }
 
-		dispatch(
-			saveOutfitAsync(userId, outfitData)
-		)
+		dispatch(saveOutfitAsync(userId, outfitData))
 
 		clearScene()
 		setAlert('outfit have been saved')

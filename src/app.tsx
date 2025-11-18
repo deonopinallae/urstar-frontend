@@ -11,14 +11,14 @@ import {
 	ProductEdit,
 	Combiner,
 	Outfit,
-	Outfits,
 	Registration,
 	Authorization,
 	Cart,
 	Users,
 	Error,
+	Favorites
 } from './pages'
-import { useLayoutEffect, useState } from 'react'
+import { useLayoutEffect } from 'react'
 import { setUser } from './actions'
 import { useDispatch } from 'react-redux'
 import { request } from './utils'
@@ -71,9 +71,8 @@ export const App = () => {
 					<Route path="/catalog/shoes" element={<Shoes />} />
 					<Route path="/products/:id" element={<Product />} />
 					<Route path="/products/:id/edit" element={<ProductEdit />} />
-					<Route path="/favorite" element="" />
+					<Route path="/favorites" element={<Favorites/>} />
 					<Route path="/users/:id/combiner" element={<Combiner />} />
-					{/* <Route path="/:id/outfits" element={<Outfits />} /> */}
 					<Route path="/users/:id/outfits/:outfitId" element={<Outfit />} />
 					<Route path="/:id/cart" element={<Cart />} />
 					<Route path="/registration" element={<Registration />} />

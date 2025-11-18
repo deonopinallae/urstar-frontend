@@ -2,12 +2,12 @@ import { Link } from 'react-router-dom'
 import styles from '../styles.module.scss'
 
 export const CombinerProductsCard = ({
-	combinerProductData: { _id: combinerProductId, imageUrl, category, price },
+	combinerProductData: { id: combinerProductId, imageUrl, category, price },
 	addProductToScene,
 	handleRemoveProduct,
 }) => {
 	return (
-		<div key={combinerProductId} className={`${styles.combiner__cardsItem}`}>
+		<div className={`${styles.combiner__cardsItem}`}>
 			<div
 				onClick={() => addProductToScene(category, imageUrl)}
 				className={`${styles.combiner__cardsItemImage}`}

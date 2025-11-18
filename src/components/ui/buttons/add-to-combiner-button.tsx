@@ -1,27 +1,23 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { addToCombinerAsync } from '../../../actions/add-to-combiner-async'
 import styles from './styles.module.scss'
-import { selectUserId } from '../../../selectors'
+import { useDispatch, useSelector } from 'react-redux'
+import { addToCombinerAsync } from '../../../actions'
+import { selectCombinerProducts, selectUserId } from '../../../selectors'
 import { useEffect, useState } from 'react'
 import { request } from '../../../utils'
 import { useNavigate } from 'react-router-dom'
 
 export const AddToCombinerButton = ({ productId }) => {
 	const userId = useSelector(selectUserId)
-	const [combinerProducts, setCombinerProducts] = useState([])
+	const combinerProducts = useSelector(selectCombinerProducts)
 	const navigate = useNavigate()
-
-	useEffect(() => {
-		request(`/api/users/${userId}/combiner`).then(({ data }) => {
-			setCombinerProducts(data)
-		})
-	}, [combinerProducts])
 	const dispatch = useDispatch()
-	const alreadyAdded = combinerProducts.some((p) => p._id === productId)
+	const [isAdded, setIsAdded] = useState(combinerProducts.some((p) => p._id === productId))
+
+	useEffect(() => setIsAdded(combinerProducts.some((p) => p._id === productId)), [combinerProducts])
 
 	const addToCombiner = () => {
 		if (!userId) navigate('/login')
-		if (alreadyAdded) {
+		if (isAdded) {
 			return
 		}
 		dispatch(addToCombinerAsync(userId, productId))
@@ -30,11 +26,11 @@ export const AddToCombinerButton = ({ productId }) => {
 	return (
 		<>
 				<button
-					disabled={alreadyAdded}
+					disabled={isAdded}
 					className={styles.iconButton}
 					onClick={addToCombiner}
 				>
-					{alreadyAdded ? 'in combiner' : 'combine'}
+					{isAdded ? 'in combiner' : 'combine'}
 				</button>
 		</>
 	)

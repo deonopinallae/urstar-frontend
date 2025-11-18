@@ -3,7 +3,6 @@ import { addToCombiner } from './add-to-combiner'
 
 export const addToCombinerAsync = (userId, productId) => (dispatch) =>
 	request(`/api/users/${userId}/combiner`, 'POST',  {productId})
-		.then((product) => {
+		.then(({product}) => {
 			dispatch(addToCombiner(product))		
-			return product
 		})
