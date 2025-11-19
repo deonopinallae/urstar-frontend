@@ -9,7 +9,7 @@ export const CombinerProductsCard = ({
 	return (
 		<div className={`${styles.combiner__cardsItem}`}>
 			<div
-				onClick={() => addProductToScene(category, imageUrl)}
+				onClick={() => addProductToScene(category, imageUrl, combinerProductId)}
 				className={`${styles.combiner__cardsItemImage}`}
 				style={{ backgroundImage: `url(${imageUrl})` }}
 			>
@@ -17,7 +17,7 @@ export const CombinerProductsCard = ({
 			</div>
 			<div className={`${styles.combiner__cardsItemPrice}`}>{price}$</div>
 			<Link to={`/products/${combinerProductId}`}>info</Link>
-			<button onClick={() => handleRemoveProduct(combinerProductId, imageUrl)} style={{ marginLeft: '15px' }}>
+			<button onClick={() => handleRemoveProduct(combinerProductId, imageUrl, combinerProductId)} style={{ marginLeft: '15px' }}>
 				remove
 			</button>
 		</div>

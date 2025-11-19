@@ -20,6 +20,7 @@ export const Combiner = () => {
 		return savedScene ? JSON.parse(savedScene) : defaultScene
 	})
 	const [outfitName, setOutfitName] = useState('')
+	const [outfitProducts, setOutfitProducts] = useState([])
 	const [alert, setAlert] = useState('')
 
 	const user = useSelector(selectUser)
@@ -37,11 +38,16 @@ export const Combiner = () => {
 
 	if (!isUserLoaded) return <Loader />
 
-	const addProductToScene = (category, imageUrl) => {
+	const addProductToScene = (category, imageUrl, productId) => {
 		setScene((prev) => ({
 			...prev,
 			[category]: imageUrl,
 		}))
+
+		setOutfitProducts((prev) => {
+			if (!prev.includes(productId)) return [...prev, productId]
+			return prev
+		})
 	}
 
 	const handleRemoveProduct = (productId, imageUrl) => {
@@ -58,11 +64,19 @@ export const Combiner = () => {
 			}
 			return updated
 		})
+		setOutfitProducts((prev) => {
+			const updated = { ...prev }
+			for (const key in prev) {
+				if (prev[key] === productId) updated[key] = ''
+			}
+			return updated
+		})
 	}
 
 	const clearScene = () => {
 		sessionStorage.removeItem('combinerScene')
 		setScene(defaultScene)
+		setOutfitProducts([])
 	}
 
 	const handleSaveOutfit = async () => {
@@ -77,8 +91,11 @@ export const Combiner = () => {
 			setTimeout(() => setAlert(''), 3000)
 			return
 		}
-		const outfitData = { scene, name: outfitName }
-
+		const outfitData = {
+			scene,
+			name: outfitName,
+			products: outfitProducts,
+		}
 		dispatch(saveOutfitAsync(userId, outfitData))
 
 		clearScene()

@@ -56,7 +56,7 @@ export const userReducer = (state = initialUserState, action) => {
 			return {
 				...state,
 				outfits: state.outfits.filter(
-					(outfit) => outfit.id !== action.payload.id,
+					(outfit) => outfit._id !== action.payload,
 				),
 			}
 		}

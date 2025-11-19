@@ -3,8 +3,9 @@ import styles from './styles.module.scss'
 import { request } from '../../utils'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Loader } from '../../components/ui'
-import { deleteOutfitAsync } from '../../actions'
-import { useDispatch } from 'react-redux'
+import { addToCombinerAsync, deleteOutfitAsync } from '../../actions'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectCombinerProducts } from '../../selectors'
 
 export const Outfit = () => {
 	const { id: userId, outfitId } = useParams()
@@ -12,6 +13,7 @@ export const Outfit = () => {
 	const [isLoading, setIsLoading] = useState(true)
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
+	const combinerProducts = useSelector(selectCombinerProducts)
 
 	useEffect(() => {
 		request(`/api/users/${userId}/outfits/${outfitId}`).then(({ data }) => {
@@ -25,12 +27,26 @@ export const Outfit = () => {
 		navigate(`/users/${userId}/combiner`)
 	}
 
+	const editOutfit = () => {
+		sessionStorage.setItem('combinerScene', JSON.stringify(outfitData.scene))
+		outfitData.products.forEach((productId) => {
+			const exists = combinerProducts.find((p) => p.id === productId)
+			if (!exists) {
+				dispatch(addToCombinerAsync(userId, productId))
+			}
+		})
+
+		navigate(`/users/${userId}/combiner`)
+	}
+
 	return (
 		<>
 			{isLoading ? (
 				<Loader />
 			) : (
-				<section className={`${styles.outfit} container flex items-center flex-col`}>
+				<section
+					className={`${styles.outfit} container flex items-center flex-col`}
+				>
 					name: {outfitData.name}
 					<div className={`${styles.outfit__scene} `}>
 						<div
@@ -63,7 +79,7 @@ export const Outfit = () => {
 						/>
 					</div>
 					<div className={`${styles.outfit__buttons} flex`}>
-						<button>edit</button>
+						<button onClick={editOutfit}>edit</button>
 						<button onClick={deleteOutfit}>delete</button>
 					</div>
 				</section>
