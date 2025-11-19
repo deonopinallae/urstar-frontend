@@ -58,7 +58,7 @@ export const ProductEdit = () => {
 				price: priceValue,
 				description: descriptionValue,
 			}),
-		).then((productData) => navigate(`/products/${productId}`))
+		).then(() => navigate(`/products/${productId}`))
 	}
 	const changeProductImage = () => {
 		// setImageUrlValue
@@ -72,11 +72,10 @@ export const ProductEdit = () => {
 		setSelectedCategory(target.value)
 	}
 
-	return isLoading ? (
-		<Loader />
-	) : !isAdmin ? (
-		<Error />
-	) : (
+	if(!isAdmin) return <Error />
+	if(!isLoading) return <Loader />
+
+	return  (
 		<section className={`${styles.product} container flex flex-col`}>
 			<div className={`${styles.product__imageInfo} flex flex-wrap`}>
 				<div

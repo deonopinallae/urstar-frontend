@@ -1,19 +1,21 @@
-import { Link, useNavigate, useParams } from 'react-router-dom'
 import styles from './styles.module.scss'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { AddToCombinerButton, Cart, Like, Loader } from '../../components/ui'
 import { Review } from '..'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectProduct, selectUserRole } from '../../selectors'
 import { useEffect, useState } from 'react'
 import { useGetProductRating } from '../../hooks'
-import { addToCartAsync, loadProductAsync } from '../../actions'
-import { checkAccess } from '../../utils'
+import { loadProductAsync } from '../../actions'
+import { checkAccess, request } from '../../utils'
 import { CATEGORIES, ROLE } from '../../constants'
-import { selectUserId } from '../../selectors/select-user-id'
+import { ReviewForm } from './review/review-form'
+import { deleteReview } from '../../actions/delete-review'
 
 export const Product = () => {
 	const productData = useSelector(selectProduct)
-	const { id, imageUrl, name, brand, price, category, description, reviews } = productData
+	const { imageUrl, name, brand, price, category, description, reviews } =
+		productData
 	const dispatch = useDispatch()
 	const { id: productId } = useParams()
 	const [isLoading, setIsLoading] = useState(true)
@@ -36,11 +38,17 @@ export const Product = () => {
 		isGuest && navigate('/login')
 	}
 
+	const removeReview = (reviewId) => {
+		request(`/api/products/${productId}/reviews/${reviewId}`, 'DELETE').then(() => {
+			dispatch(deleteReview(reviewId))
+		})
+	}
+
 	const productDataAndSize = { ...productData, size: size }
 
-	return isLoading ? (
-		<Loader />
-	) : (
+	if (isLoading) return <Loader />
+
+	return (
 		<section className={`${styles.product} container flex flex-col`}>
 			<div className={`${styles.product__imageInfo} flex flex-wrap`}>
 				<div
@@ -72,7 +80,7 @@ export const Product = () => {
 						<div className={styles.product__chooseSizeAlert}>choose size</div>
 					)}
 					<div className={`${styles.product__buttons} flex`}>
-						<Cart {...{ productDataAndSize}} />
+						<Cart {...{ productDataAndSize }} />
 						<Like productId={productId} />
 						<AddToCombinerButton productId={productId} />
 						{isAdmin && (
@@ -95,9 +103,13 @@ export const Product = () => {
 			</div>
 			<div className={`${styles.product__reviews} flex flex-col`}>
 				<div>Reviews</div>
+				{!isGuest && <ReviewForm {...{ productId }} />}
+
 				{reviews.length === 0
 					? 'no reviews yet'
-					: reviews.map((review) => <Review key={review.id} review={review} />)}
+					: reviews.map((review) => (
+							<Review key={review.id} {...{ review, removeReview }} />
+						))}
 			</div>
 		</section>
 	)

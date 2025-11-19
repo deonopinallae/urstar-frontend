@@ -1,15 +1,15 @@
 import { ACTION_TYPE } from '../actions'
 
-const initialState: stateTypes = {
-	id: null,
-	imageUrl: null,
-	name: null,
-	type: null,
-	brand: null,
-	category: null,
-	price: null,
-	description: null,
-	reviews: null,
+const initialState = {
+	id: '',
+	imageUrl: '',
+	name: '',
+	type: '',
+	brand: '',
+	category: '',
+	price: '',
+	description: '',
+	reviews: [],
 }
 
 export const productReducer = (state = initialState, action) => {
@@ -20,19 +20,20 @@ export const productReducer = (state = initialState, action) => {
 				...action.payload,
 			}
 		}
+		case ACTION_TYPE.SET_REVIEW: {
+			return {
+				...state,
+				reviews: [action.payload, ...state.reviews]
+			}
+		}
+		case ACTION_TYPE.DELETE_REVIEW: {
+			return {
+				...state,
+				reviews: state.reviews.filter((review) => review.id !== action.payload)
+			}
+		}
 		default:
 			return state
 	}
 }
 
-interface stateTypes {
-	id: string | null
-	imageUrl: string | null
-	name: string | null
-	type: string | null
-	brand: string | null
-	category: string | null
-	price: string | null
-	description: string | null
-	reviews: object[] | null
-}
