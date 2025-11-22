@@ -34,7 +34,7 @@
 	&__info {
 		gap: 30px;
 	}
-	&__size {
+	&__sizes {
 		gap: 10px;
 		width: fit-content;
 		&Btn {
@@ -42,6 +42,10 @@
 			width: clamp(50px, 4.17vw, 60px);
 			height: clamp(50px, 4.17vw, 60px);
 			border: 1px solid;
+			&.active {
+				color: pink;
+				font-weight: 600;
+			}
 
 		}
 	}
@@ -64,6 +68,6 @@
 		width: 200px;
 	}
 	&__editButton {
-		margin-left: 30px;
+		margin-left: 50px;
 	}
 }

@@ -1,6 +1,6 @@
 import styles from './styles.module.scss'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { AddToCombinerButton, Cart, Like, Loader } from '../../components/ui'
+import { AddToCombinerButton, AddToCart, Like, Loader } from '../../components/ui'
 import { Review } from '..'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectProduct, selectUserRole } from '../../selectors'
@@ -13,38 +13,38 @@ import { ReviewForm } from './review/review-form'
 import { deleteReview } from '../../actions/delete-review'
 
 export const Product = () => {
-	const productData = useSelector(selectProduct)
-	const { imageUrl, name, brand, price, category, description, reviews } =
-		productData
+	const product = useSelector(selectProduct)
+	const { imageUrl, name, brand, price, category, description, reviews } = product
 	const dispatch = useDispatch()
-	const { id: productId } = useParams()
+	const { id } = useParams()
 	const [isLoading, setIsLoading] = useState(true)
 	const roleId = useSelector(selectUserRole)
 	const isAdmin = checkAccess([ROLE.ADMIN], roleId)
 	const isGuest = checkAccess([ROLE.GUEST], roleId)
 	const navigate = useNavigate()
-	const [size, setSize] = useState(null)
-	const [chooseSizeAlert, setChooseSizeAlert] = useState(false)
+  const [selectedSize, setSelectedSize] = useState('')
+
 	const sizes = ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl']
 
 	useEffect(() => {
-		dispatch(loadProductAsync(productId)).then(() => {
+		dispatch(loadProductAsync(id)).then(() => {
 			setIsLoading(false)
 		})
-	}, [dispatch, productId])
+	}, [dispatch, id])
 
-	const chooseSize = (size) => {
-		setSize(size)
+	const chooseSize = (selectedSize) => {
+		setSelectedSize(selectedSize)
 		isGuest && navigate('/login')
 	}
 
 	const removeReview = (reviewId) => {
-		request(`/api/products/${productId}/reviews/${reviewId}`, 'DELETE').then(() => {
+		if (!isAdmin) return
+		request(`/api/products/${id}/reviews/${reviewId}`, 'DELETE').then(() => {
 			dispatch(deleteReview(reviewId))
 		})
 	}
 
-	const productDataAndSize = { ...productData, size: size }
+	const productData = { product: {id}, selectedSize }
 
 	if (isLoading) return <Loader />
 
@@ -59,34 +59,32 @@ export const Product = () => {
 					<h1 className={`${styles.product__name}`}>{name}</h1>
 					<h2 className={`${styles.product__brand}`}>{brand}</h2>
 					<div className={`${styles.product__price}`}>{price}$</div>
-					<div>choosed size: {size ? size : "size isn't choosed yet"}</div>
 					{[category].includes(CATEGORIES.TOP) ||
 					[category].includes(CATEGORIES.BOTTOM) ? (
-						<div className={`${styles.product__size} flex`}>
-							{sizes.map((size) => (
+						<div className={`${styles.product__sizes} flex`}>
+							{sizes.map((s) => (
 								<button
-									key={Math.random()}
-									onClick={() => chooseSize(size)}
-									className={styles.product__sizeBtn}
+									key={s}
+									onClick={() => chooseSize(s)}
+									className={`${styles.product__sizesBtn} ${
+										selectedSize === s ? styles.active : ''
+									}`}
 								>
-									{size}
+									{s}
 								</button>
 							))}
 						</div>
 					) : (
 						<div>no size</div>
 					)}
-					{chooseSizeAlert && (
-						<div className={styles.product__chooseSizeAlert}>choose size</div>
-					)}
 					<div className={`${styles.product__buttons} flex`}>
-						<Cart {...{ productDataAndSize }} />
-						<Like productId={productId} />
-						<AddToCombinerButton productId={productId} />
+						<AddToCart productData={productData} selectedSize={selectedSize} />
+						<Like productId={id} />
+						<AddToCombinerButton productId={id} />
 						{isAdmin && (
 							<Link
 								className={`${styles.product__editButton}`}
-								to={`/products/${productId}/edit`}
+								to={`/products/${id}/edit`}
 							>
 								edit product
 							</Link>
@@ -103,7 +101,7 @@ export const Product = () => {
 			</div>
 			<div className={`${styles.product__reviews} flex flex-col`}>
 				<div>Reviews</div>
-				{!isGuest && <ReviewForm {...{ productId }} />}
+				{!isGuest && <ReviewForm {...{ id }} />}
 
 				{reviews.length === 0
 					? 'no reviews yet'

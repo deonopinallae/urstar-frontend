@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux'
 import styles from './styles.module.scss'
 import { selectUserOutfits } from '../../selectors'
-import { OutfitCard } from '../../components/ui'
+import { OutfitCard } from './outfit-card/outfit-card' 
 
 export const Outfits = () => {
 	const outfits = useSelector(selectUserOutfits)

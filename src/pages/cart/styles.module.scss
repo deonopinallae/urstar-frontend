@@ -1,17 +1,100 @@
-.form {
-	margin: clamp(20px, 2.08vw, 30px) auto;
-	width: clamp(250px, 20.83vw, 300px);
+.cart {
+	padding: 2rem;
 	display: flex;
 	flex-direction: column;
-	gap: clamp(1px, 1.39vw, 20px);
-	text-align: center;
+	gap: 1.5rem;
+	width: 600px;
+	margin: 0 auto;
 
+	&__title {
+		font-size: 1.8rem;
+		font-weight: 600;
+		text-align: center;
+	}
 
-		&__error {
-			background-color: #fcadad;
-			padding: clamp(7px, 0.69vw, 10px);
-			width: 100%;
-			text-align: left;
+	&__products {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	&__empty {
+		text-align: center;
+		color: #999;
+	}
+
+	&__footer {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding-top: 1rem;
+		border-top: 1px solid #ddd;
+	}
+
+	&__total {
+		font-weight: 600;
+		font-size: 1.2rem;
+	}
+
+	&__orderBtn {
+		background: #111;
+		color: #fff;
+		border: none;
+		padding: 0.6rem 1.2rem;
+		border-radius: 5px;
+		cursor: pointer;
+		transition: 0.2s;
+
+		&:hover {
+			background: #333;
 		}
-	
+	}
+}
+
+.card {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background: #f9f9f9;
+	padding: 0.8rem 1rem;
+	border-radius: 6px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+	position: relative;
+
+	&__img {
+		width: 60px;
+		height: 60px;
+		object-fit: cover;
+		border-radius: 4px;
+		margin-right: 1rem;
+	}
+
+	&__info {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+	}
+
+	&__size {
+		font-size: 1.5rem;
+		color: #666;
+	}
+
+
+	&__removeBtn {
+		background: transparent;
+		border: none;
+		font-size: 1.2rem;
+		color: #999;
+		cursor: pointer;
+		position: absolute;
+		top: 8px;
+		right: 8px;
+		transition: 0.2s;
+
+		&:hover {
+			color: #e74c3c;
+		}
+	}
 }

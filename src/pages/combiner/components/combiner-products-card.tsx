@@ -17,7 +17,7 @@ export const CombinerProductsCard = ({
 			</div>
 			<div className={`${styles.combiner__cardsItemPrice}`}>{price}$</div>
 			<Link to={`/products/${combinerProductId}`}>info</Link>
-			<button onClick={() => handleRemoveProduct(combinerProductId, imageUrl, combinerProductId)} style={{ marginLeft: '15px' }}>
+			<button onClick={() => handleRemoveProduct(combinerProductId, imageUrl)} style={{ marginLeft: '15px' }}>
 				remove
 			</button>
 		</div>

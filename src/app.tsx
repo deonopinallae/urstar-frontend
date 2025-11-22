@@ -22,7 +22,6 @@ import { useLayoutEffect } from 'react'
 import { setUser  } from './actions'
 import { useDispatch  } from 'react-redux'
 import { request } from './utils'
-import { Loader } from './components/ui'
 
 export const App = () => {
 	const dispatch = useDispatch()
@@ -74,7 +73,7 @@ export const App = () => {
 					<Route path="/favorites" element={<Favorites />} />
 					<Route path="/users/:id/combiner" element={<Combiner />} />
 					<Route path="/users/:id/outfits/:outfitId" element={<Outfit />} />
-					<Route path="/:id/cart" element={<Cart />} />
+					<Route path="/cart" element={<Cart />} />
 					<Route path="/registration" element={<Registration />} />
 					<Route path="/login" element={<Authorization />} />
 					<Route path="/users" element={<Users />} />

@@ -6,7 +6,7 @@ const initialUserState = {
 	login: '',
 	roleId: ROLE.GUEST,
 	registeredAt: '',
-	inCart: [],
+	cart: [],
 	favorites: [],
 	combinerProducts: [],
 	outfits: [],
@@ -23,7 +23,18 @@ export const userReducer = (state = initialUserState, action) => {
 		case ACTION_TYPE.ADD_TO_CART: {
 			return {
 				...state,
-				inCart: [...state.inCart, action.payload],
+				cart: [...state.cart, action.payload],
+			}
+		}
+		case ACTION_TYPE.REMOVE_FROM_CART: {
+			return {
+				...state,
+				cart: state.cart.filter((el) => {
+					return !(
+						el.id === action.payload.productId &&
+						el.size === action.payload.size
+					)
+				}),
 			}
 		}
 		case ACTION_TYPE.ADD_TO_COMBINER: {
@@ -55,9 +66,7 @@ export const userReducer = (state = initialUserState, action) => {
 		case ACTION_TYPE.DELETE_OUTFIT: {
 			return {
 				...state,
-				outfits: state.outfits.filter(
-					(outfit) => outfit._id !== action.payload,
-				),
+				outfits: state.outfits.filter((outfit) => outfit._id !== action.payload),
 			}
 		}
 		case ACTION_TYPE.ADD_TO_FAVORITES: {

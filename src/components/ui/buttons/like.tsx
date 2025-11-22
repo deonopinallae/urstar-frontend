@@ -5,7 +5,7 @@ import { selectUserId, selectUserFavorites } from '../../../selectors'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-export const Like = ({ id: productId }) => {
+export const Like = ({ productId }) => {
 	const dispatch = useDispatch()
 	const userId = useSelector(selectUserId)
 	const favorites = useSelector(selectUserFavorites)

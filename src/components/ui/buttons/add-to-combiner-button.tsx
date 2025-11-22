@@ -1,6 +1,6 @@
 import styles from './styles.module.scss'
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCombinerAsync } from '../../../actions'
+import { addToCombinerAsync, removeFromCombinerAsync } from '../../../actions'
 import { selectCombinerProducts, selectUserId } from '../../../selectors'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -11,13 +11,12 @@ export const AddToCombinerButton = ({ productId }) => {
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 	const [isAdded, setIsAdded] = useState(
-		combinerProducts.some((p) => p._id === productId),
+		combinerProducts.some((p) => p.id === productId),
 	)
 
-	useEffect(
-		() => setIsAdded(combinerProducts.some((p) => p.id === productId)),
-		[combinerProducts],
-	)
+	useEffect(() => {
+		setIsAdded(combinerProducts.some((p) => p.id === productId))
+	}, [combinerProducts])
 
 	const addToCombiner = () => {
 		if (!userId) navigate('/login')
@@ -27,14 +26,17 @@ export const AddToCombinerButton = ({ productId }) => {
 		dispatch(addToCombinerAsync(userId, productId))
 	}
 
+	const removeFromCombine = () => {
+		dispatch(removeFromCombinerAsync(userId, productId))
+	}
+
 	return (
 		<>
 			<button
-				disabled={isAdded}
 				className={styles.iconButton}
-				onClick={addToCombiner}
+				onClick={isAdded ? removeFromCombine : addToCombiner}
 			>
-				{isAdded ? 'in combiner' : 'combine'}
+				{isAdded ? 'no combine' : 'combine'}
 			</button>
 		</>
 	)

@@ -1,11 +1,13 @@
 .card {
-    margin: 0 auto;
+	margin: 0 auto;
 	gap: clamp(3px, 0.67vw, 10px);
-    box-shadow: 0 0 10px 3px var(--main-color);
-    padding: 10px;
+	box-shadow: 0 0 10px 3px var(--main-color);
+	padding: 10px;
 	box-sizing: content-box;
-    background-color: var(--bg-color);
-    &__buttons {
+	background-color: var(--bg-color);
+	width: 200px;
+	height: 400px;
+	&__buttons {
 		gap: 10px;
 	}
 	&__image {
@@ -14,5 +16,18 @@
 		background-position: center;
 		background-size: cover;
 		background-repeat: no-repeat;
+	}
+	&__sizes {
+		gap: 10px;
+		width: fit-content;
+		&Btn {
+			background-color: var(--bg-color);
+			color: var(--text-color);
+
+			&.active {
+				color: pink;
+				font-weight: 600;
+			}
+		}
 	}
 }
