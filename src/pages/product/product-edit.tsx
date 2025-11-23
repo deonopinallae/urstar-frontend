@@ -3,7 +3,7 @@ import styles from './styles.module.scss'
 import { Loader } from '../../components/ui'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectProduct, selectUserRole } from '../../selectors'
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState, useRef } from 'react'
 import { loadProductAsync, saveProductAsync } from '../../actions'
 import { CATEGORIES, PRODUCT_TYPES, ROLE } from '../../constants'
 import { checkAccess } from '../../utils'
@@ -12,62 +12,65 @@ import { Error } from '../error/error'
 export const ProductEdit = () => {
 	const roleId = useSelector(selectUserRole)
 	const isAdmin = checkAccess([ROLE.ADMIN], roleId)
-	const { imageUrl, name, brand, price, type, category, description } =
-		useSelector(selectProduct)
+	const product = useSelector(selectProduct)
 	const dispatch = useDispatch()
 	const { id: productId } = useParams()
 	const [isLoading, setIsLoading] = useState(true)
-	const [imageUrlValue, setImageUrlValue] = useState(imageUrl)
-	const [nameValue, setNameValue] = useState(name)
-	const [brandValue, setBrandValue] = useState(brand)
-	const [priceValue, setPriceValue] = useState(price)
-	const [descriptionValue, setDescriptionValue] = useState(description)
-	const [selectedType, setSelectedType] = useState(type)
-	const [selectedCategory, setSelectedCategory] = useState(category)
-	const userRole = useSelector(selectUserRole)
+
+	// состояния для редактирования
+	const [imageFile, setImageFile] = useState(null)
+	const [imageUrlValue, setImageUrlValue] = useState(product.imageUrl)
+	const [nameValue, setNameValue] = useState(product.name)
+	const [brandValue, setBrandValue] = useState(product.brand)
+	const [priceValue, setPriceValue] = useState(product.price)
+	const [descriptionValue, setDescriptionValue] = useState(product.description)
+	const [selectedType, setSelectedType] = useState(product.type)
+	const [selectedCategory, setSelectedCategory] = useState(product.category)
+
 	const navigate = useNavigate()
+	const fileInputRef = useRef(null)
 
 	useLayoutEffect(() => {
-		setImageUrlValue(imageUrl)
-		setNameValue(name)
-		setBrandValue(brand)
-		setSelectedType(type)
-		setSelectedCategory(category)
-		setPriceValue(price)
-		setDescriptionValue(description)
-	}, [imageUrl, name, brand, type, category, price, description])
+		setImageUrlValue(product.imageUrl)
+		setNameValue(product.name)
+		setBrandValue(product.brand)
+		setPriceValue(product.price)
+		setDescriptionValue(product.description)
+		setSelectedType(product.type)
+		setSelectedCategory(product.category)
+	}, [product])
 
 	useEffect(() => {
-		if (!checkAccess([ROLE.ADMIN], userRole)) {
+		if (!checkAccess([ROLE.ADMIN], roleId)) {
 			setIsLoading(false)
 			return
 		}
 		dispatch(loadProductAsync(productId)).then(() => setIsLoading(false))
 	}, [dispatch, productId])
 
+	const changeProductImage = () => fileInputRef.current.click()
+
+	const onFileSelect = (e) => {
+		const file = e.target.files[0]
+		if (!file) return
+		setImageFile(file)
+		setImageUrlValue(URL.createObjectURL(file)) // превью
+	}
+
 	const saveProduct = () => {
-		dispatch(
-			saveProductAsync(productId, {
-				imageUrl: imageUrlValue,
-				name: nameValue,
-				brand: brandValue,
-				type: selectedType,
-				category: selectedCategory,
-				price: priceValue,
-				description: descriptionValue,
-			}),
-		).then(() => navigate(`/products/${productId}`))
-	}
-	const changeProductImage = () => {
-		// setImageUrlValue
-	}
+		const form = new FormData()
+		if (imageFile) form.append('image', imageFile)
+		form.append('name', nameValue)
+		form.append('brand', brandValue)
+		form.append('price', priceValue)
+		form.append('type', selectedType)
+		form.append('category', selectedCategory)
+		form.append('description', descriptionValue)
+		form.append('imageUrl', imageUrlValue)
 
-	const onTypeChange = ({ target }) => {
-		setSelectedType(target.value)
-	}
-
-	const onCategoryChange = ({ target }) => {
-		setSelectedCategory(target.value)
+		dispatch(saveProductAsync(productId, form)).then(() =>
+			navigate(`/products/${productId}`),
+		)
 	}
 
 	if (!isAdmin) return <Error />
@@ -76,55 +79,70 @@ export const ProductEdit = () => {
 	return (
 		<section className={`${styles.product} container flex flex-col`}>
 			<div className={`${styles.product__imageInfo} flex flex-wrap`}>
+				<input
+					type="file"
+					accept="image/*"
+					ref={fileInputRef}
+					style={{ display: 'none' }}
+					onChange={onFileSelect}
+				/>
 				<div
 					onClick={changeProductImage}
 					className={`${styles.product__image} ${styles.product__imageEditing}`}
-					style={{ backgroundImage: `url(${imageUrlValue})` }}
+					style={{
+						backgroundImage: imageUrlValue ? `url(${imageUrlValue})` : 'none',
+					}}
 				>
-					<div
-						className={`${styles.product__imageEditingLayout}  items-center justify-center`}
-					>
+					<div className={styles.product__imageEditingLayout}>
 						<p>edit</p>
 					</div>
 				</div>
+
 				<div className={`${styles.product__info} flex flex-col`}>
 					<input
-						onChange={({ target }) => setNameValue(target.value)}
-						placeholder="name"
 						value={nameValue}
-						className={`${styles.product__editInput}`}
+						onChange={(e) => setNameValue(e.target.value)}
+						placeholder="name"
+						className={styles.product__editInput}
 					/>
 					<input
-						onChange={({ target }) => setBrandValue(target.value)}
-						placeholder="brand"
 						value={brandValue}
-						className={`${styles.product__editInput}`}
+						onChange={(e) => setBrandValue(e.target.value)}
+						placeholder="brand"
+						className={styles.product__editInput}
 					/>
 					<input
-						onChange={({ target }) => setPriceValue(target.value)}
-						placeholder="price"
 						value={priceValue}
-						className={`${styles.product__editInput}`}
+						onChange={(e) => setPriceValue(e.target.value)}
+						placeholder="price"
+						className={styles.product__editInput}
 					/>
-					<select value={selectedType} onChange={onTypeChange}>
+					<select
+						value={selectedType}
+						onChange={(e) => setSelectedType(e.target.value)}
+					>
 						{PRODUCT_TYPES.map((type) => (
-							<option key={Math.random()} value={type}>
+							<option key={type} value={type}>
 								{type}
 							</option>
 						))}
 					</select>
-					<select value={selectedCategory} onChange={onCategoryChange}>
-						{Object.values(CATEGORIES).map((category) => (
-							<option key={Math.random()} value={category}>
-								{category}
+					<select
+						value={selectedCategory}
+						onChange={(e) => setSelectedCategory(e.target.value)}
+					>
+						{Object.values(CATEGORIES).map((cat) => (
+							<option key={cat} value={cat}>
+								{cat}
 							</option>
 						))}
 					</select>
 				</div>
 			</div>
+
 			<textarea
-				onChange={({ target }) => setDescriptionValue(target.value)}
 				value={descriptionValue}
+				onChange={(e) => setDescriptionValue(e.target.value)}
 				className={styles.product__description}
 			/>
 			<button className={styles.product__editButton} onClick={saveProduct}>
