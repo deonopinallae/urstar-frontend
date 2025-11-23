@@ -1,12 +1,12 @@
-import { useState } from 'react'
 import styles from './styles.module.scss'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectUserId, selectUserLogin } from '../../../selectors'
+import { selectUserLogin } from '../../../selectors'
 import { request } from '../../../utils'
 import { setReview } from '../../../actions'
 import { StarRating } from './star-rating'
 
-export const ReviewForm = ({ productId }) => {
+export const ReviewForm = ({ id: productId }) => {
 	const [reviewValue, setReviewValue] = useState('')
 	const userLogin = useSelector(selectUserLogin)
 	const dispatch = useDispatch()
@@ -15,13 +15,20 @@ export const ReviewForm = ({ productId }) => {
 
 	const onReviewSend = (event) => {
 		event.preventDefault()
-		if(rating === 0) return setAlert('set the rating')
+		if (rating === 0) {
+			setAlert('set the rating')
+			return
+		}
+		if (reviewValue === '') {
+			setAlert('write a review')
+			return
+		}
 		const reviewDate = new Date().toISOString().split('T')[0]
 
 		request(`/api/products/${productId}/reviews`, 'POST', {
 			userLogin,
 			rating,
-			reviewValue,
+			reviewValue: reviewValue.trim(),
 			reviewDate,
 		}).then(({ review }) => {
 			dispatch(setReview(review))

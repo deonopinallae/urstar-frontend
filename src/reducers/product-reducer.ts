@@ -20,6 +20,7 @@ export const productReducer = (state = initialState, action) => {
 				...action.payload,
 			}
 		}
+
 		case ACTION_TYPE.SET_REVIEW: {
 			return {
 				...state,

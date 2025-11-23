@@ -1,7 +1,7 @@
 import { ACTION_TYPE } from '../actions'
 
 const initialState: object = {
-	products: []
+	products: [],
 }
 
 export const productsReducer = (state = initialState, action) => {
@@ -10,6 +10,18 @@ export const productsReducer = (state = initialState, action) => {
 			return {
 				...state,
 				products: [...action.payload],
+			}
+		}
+		case ACTION_TYPE.ADD_PRODUCT: {
+			return {
+				...state,
+				products: [...state.products, action.payload],
+			}
+		}
+		case ACTION_TYPE.DELETE_PRODUCT: {
+			return {
+				...state,
+				products: state.products.filter((product) => product.id !== action.payload),
 			}
 		}
 		default:

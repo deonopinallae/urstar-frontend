@@ -1,53 +1,37 @@
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styles from './styles.module.scss'
 import { Loader } from '../../components/ui'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectProduct, selectUserRole } from '../../selectors'
+import { selectUserRole } from '../../selectors'
 import { useEffect, useLayoutEffect, useState } from 'react'
-import { loadProductAsync, saveProductAsync } from '../../actions'
+import { addProductAsync } from '../../actions'
 import { CATEGORIES, PRODUCT_TYPES, ROLE } from '../../constants'
 import { checkAccess } from '../../utils'
 import { Error } from '../error/error'
 
-export const ProductEdit = () => {
+export const ProductAdd = () => {
 	const roleId = useSelector(selectUserRole)
 	const isAdmin = checkAccess([ROLE.ADMIN], roleId)
-	const { imageUrl, name, brand, price, type, category, description } =
-		useSelector(selectProduct)
 	const dispatch = useDispatch()
-	const { id: productId } = useParams()
-	const [isLoading, setIsLoading] = useState(true)
-	const [imageUrlValue, setImageUrlValue] = useState(imageUrl)
-	const [nameValue, setNameValue] = useState(name)
-	const [brandValue, setBrandValue] = useState(brand)
-	const [priceValue, setPriceValue] = useState(price)
-	const [descriptionValue, setDescriptionValue] = useState(description)
-	const [selectedType, setSelectedType] = useState(type)
-	const [selectedCategory, setSelectedCategory] = useState(category)
+	const [imageUrlValue, setImageUrlValue] = useState()
+	const [nameValue, setNameValue] = useState()
+	const [brandValue, setBrandValue] = useState()
+	const [priceValue, setPriceValue] = useState()
+	const [descriptionValue, setDescriptionValue] = useState()
+	const [selectedType, setSelectedType] = useState()
+	const [selectedCategory, setSelectedCategory] = useState()
 	const userRole = useSelector(selectUserRole)
 	const navigate = useNavigate()
 
 	useLayoutEffect(() => {
-		setImageUrlValue(imageUrl)
-		setNameValue(name)
-		setBrandValue(brand)
-		setSelectedType(type)
-		setSelectedCategory(category)
-		setPriceValue(price)
-		setDescriptionValue(description)
-	}, [imageUrl, name, brand, type, category, price, description])
-
-	useEffect(() => {
 		if (!checkAccess([ROLE.ADMIN], userRole)) {
-			setIsLoading(false)
 			return
 		}
-		dispatch(loadProductAsync(productId)).then(() => setIsLoading(false))
-	}, [dispatch, productId])
+	}, [])
 
-	const saveProduct = () => {
+	const addProduct = () => {
 		dispatch(
-			saveProductAsync(productId, {
+			addProductAsync({
 				imageUrl: imageUrlValue,
 				name: nameValue,
 				brand: brandValue,
@@ -56,7 +40,9 @@ export const ProductEdit = () => {
 				price: priceValue,
 				description: descriptionValue,
 			}),
-		).then(() => navigate(`/products/${productId}`))
+		).then((data) => {
+			navigate(`/products/${data.id}`)
+		})
 	}
 	const changeProductImage = () => {
 		// setImageUrlValue
@@ -71,7 +57,6 @@ export const ProductEdit = () => {
 	}
 
 	if (!isAdmin) return <Error />
-	if (isLoading) return <Loader />
 
 	return (
 		<section className={`${styles.product} container flex flex-col`}>
@@ -127,8 +112,8 @@ export const ProductEdit = () => {
 				value={descriptionValue}
 				className={styles.product__description}
 			/>
-			<button className={styles.product__editButton} onClick={saveProduct}>
-				save product
+			<button className={styles.product__addButton} onClick={addProduct}>
+				add product
 			</button>
 		</section>
 	)

@@ -30,18 +30,30 @@ export const Header = () => {
 					className={`${styles.header__navLinks} flex justify-center items-center`}
 				>
 					<Link to="/catalog">catalog</Link>
-					<Link to="/catalog/top">top</Link>
-					<Link to="/catalog/bottom">bottom</Link>
-					<Link to="/catalog/shoes">shoes</Link>
-					<Link to="/catalog/accessory">accessory</Link>
-					<Link to={roleId === ROLE.GUEST ? `/login` : `/users/${userId}/combiner`}>
-						<div>combine</div>
-						<div>clothes</div>
+					{!isAdmin && (
+						<>
+							<Link to="/catalog/top">top</Link>
+							<Link to="/catalog/bottom">bottom</Link>
+							<Link to="/catalog/shoes">shoes</Link>
+							<Link to="/catalog/accessory">accessory</Link>
+						</>
+					)}
+					<Link
+						to={
+							roleId === ROLE.GUEST ? `/login` : `/users/${userId}/combiner`
+						}
+					>
+						<div>combine clothes</div>
 					</Link>
 				</div>
 			</nav>
 			<div className={`${styles.header__buttons} flex items-center`}>
 				{isAdmin && <Link to="/users">users</Link>}
+				{isAdmin && (
+					<Link to="/add-product">
+						<div>add product</div>
+					</Link>
+				)}
 				<Link
 					to={roleId === ROLE.GUEST ? `/login` : `/favorites`}
 					className={`${styles.header__button} favorite-button icon-button`}

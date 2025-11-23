@@ -59,7 +59,7 @@ export const Users = () => {
 	return (
 		<>
 			<section className={`${styles.users} container`}>
-				<h2>users</h2>
+				<h2 className="text-center">users</h2>
 				<div className={styles.table}>
 					<div className={styles.table__header}>
 						<div>login</div>

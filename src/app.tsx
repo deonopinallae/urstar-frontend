@@ -17,6 +17,7 @@ import {
 	Users,
 	Error,
 	Favorites,
+	ProductAdd,
 } from './pages'
 import { useLayoutEffect } from 'react'
 import { setUser  } from './actions'
@@ -56,7 +57,6 @@ export const App = () => {
 		}
 	}, [dispatch])
 
-
 	return (
 		<AppColumn>
 			<Header />
@@ -70,6 +70,7 @@ export const App = () => {
 					<Route path="/catalog/shoes" element={<Shoes />} />
 					<Route path="/products/:id" element={<Product />} />
 					<Route path="/products/:id/edit" element={<ProductEdit />} />
+					<Route path="/add-product" element={<ProductAdd/>} />
 					<Route path="/favorites" element={<Favorites />} />
 					<Route path="/users/:id/combiner" element={<Combiner />} />
 					<Route path="/users/:id/outfits/:outfitId" element={<Outfit />} />
@@ -77,7 +78,6 @@ export const App = () => {
 					<Route path="/registration" element={<Registration />} />
 					<Route path="/login" element={<Authorization />} />
 					<Route path="/users" element={<Users />} />
-					<Route path="/add-product" element="" />
 					<Route path="*" element={<Error />} />
 					<Route path="/error" element={<Error />} />
 				</Routes>

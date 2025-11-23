@@ -18,7 +18,7 @@ export const Products = ({ products }: { products: any }) => {
 			<div className="grow">
 				<div className={`${styles.products__list} grid items-center`}>
 					{Array.isArray(products) && products.length === 0 ? (
-						<div className="text-center w-screen">
+						<div className="w-screen">
 							products are out of stock yet
 						</div>
 					) : (

@@ -6,11 +6,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectProduct, selectUserRole } from '../../selectors'
 import { useEffect, useState } from 'react'
 import { useGetProductRating } from '../../hooks'
-import { loadProductAsync } from '../../actions'
+import { loadProductAsync, deleteProductAsync, deleteReview } from '../../actions'
 import { checkAccess, request } from '../../utils'
 import { CATEGORIES, ROLE } from '../../constants'
 import { ReviewForm } from './review/review-form'
-import { deleteReview } from '../../actions/delete-review'
 
 export const Product = () => {
 	const product = useSelector(selectProduct)
@@ -22,7 +21,7 @@ export const Product = () => {
 	const isAdmin = checkAccess([ROLE.ADMIN], roleId)
 	const isGuest = checkAccess([ROLE.GUEST], roleId)
 	const navigate = useNavigate()
-  const [selectedSize, setSelectedSize] = useState('')
+	const [selectedSize, setSelectedSize] = useState('')
 
 	const sizes = ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl']
 
@@ -44,7 +43,12 @@ export const Product = () => {
 		})
 	}
 
-	const productData = { product: {id}, selectedSize }
+	const productData = { product: { id }, selectedSize }
+
+	const deleteProduct = () => {
+		dispatch(deleteProductAsync(id))
+		navigate('/catalog')
+	}
 
 	if (isLoading) return <Loader />
 
@@ -78,16 +82,27 @@ export const Product = () => {
 						<div>no size</div>
 					)}
 					<div className={`${styles.product__buttons} flex`}>
-						<AddToCart productData={productData} selectedSize={selectedSize} />
+						<AddToCart
+							productData={productData}
+							selectedSize={selectedSize}
+						/>
 						<Like productId={id} />
 						<AddToCombinerButton productId={id} />
 						{isAdmin && (
 							<Link
-								className={`${styles.product__editButton}`}
+								className={`${styles.product__button}`}
 								to={`/products/${id}/edit`}
 							>
 								edit product
 							</Link>
+						)}
+						{isAdmin && (
+							<button
+								className={`${styles.product__button}`}
+								onClick={deleteProduct}
+							>
+								delete product
+							</button>
 						)}
 					</div>
 				</div>

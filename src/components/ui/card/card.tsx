@@ -2,10 +2,11 @@ import { Link, useNavigate } from 'react-router-dom'
 import styles from './styles.module.scss'
 import { AddToCombinerButton, AddToCart, Like } from '../'
 import { checkAccess } from '../../../utils'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { CATEGORIES, ROLE } from '../../../constants'
 import { selectUserRole } from '../../../selectors'
 import { useEffect, useState } from 'react'
+import { deleteProductAsync } from '../../../actions'
 
 export const Card = ({
 	productData: { imageUrl, name, brand, type, price, category },
@@ -13,13 +14,18 @@ export const Card = ({
 }) => {
 	const [selectedSize, setSelectedSize] = useState('')
 	const sizes = ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl']
-	const [productData, setProductData] = useState({ product:{ id}, size: selectedSize })
+	const [productData, setProductData] = useState({
+		product: { id },
+		size: selectedSize,
+	})
 	const roleId = useSelector(selectUserRole)
 	const isGuest = checkAccess([ROLE.GUEST], roleId)
+	const isAdmin = checkAccess([ROLE.ADMIN], roleId)
 	const navigate = useNavigate()
+	const dispatch = useDispatch()
 
 	useEffect(() => {
-		setProductData({product: {id} , size: selectedSize })
+		setProductData({ product: { id }, size: selectedSize })
 	}, [selectedSize])
 
 	const chooseSize = (size) => {
@@ -62,6 +68,8 @@ export const Card = ({
 			<div className={`${styles.card__buttons} flex flex-wrap`}>
 				<Like productId={id} />
 				<AddToCart productData={productData} selectedSize={selectedSize} />
+				
+				{isAdmin && <button onClick={() => dispatch(deleteProductAsync(id))}>delete</button>}
 			</div>
 			<AddToCombinerButton productId={id} />
 		</div>
