@@ -1,14 +1,30 @@
 .appColumn {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	background-position: center;
-	background-size: cover;
-	background-repeat: no-repeat;
-	background-image: url('/assets/bgimg.webp');
 	margin: 0 auto;
 	min-height: 100%;
 	max-width: 1200px;
 	background-color: var(--bg-color);
-	box-shadow: 0px 0px 30px 10px #828282;
+	overflow: hidden;
+}
+
+.appColumn::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background-image: url('/assets/bgimage.jpg');
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	box-shadow: 0px 0px 30px 20px var(--bg-color) inset;
+
+	opacity: 0.4; /* регулирует тусклость */
+	z-index: 0;
+}
+
+.appColumn > * {
+	position: relative;
+	z-index: 1;
 }

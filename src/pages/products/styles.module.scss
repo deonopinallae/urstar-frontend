@@ -10,6 +10,7 @@
 		& input {
 			width: 100%;
 		}
+		align-items: center;
 	}
 	&__list {
 		gap: clamp(47px, 4.67vw, 70px) clamp(25px, 3.33vw, 50px);

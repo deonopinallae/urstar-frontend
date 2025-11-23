@@ -1,5 +1,4 @@
 .outfit {
-	
 	&__scene {
 		width: clamp(400px, 41.67vw, 600px);
 		height: clamp(467px, 48.61vw, 700px);
@@ -9,6 +8,8 @@
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr;
 		grid-template-rows: 1fr 1fr 1fr;
+		border-radius: clamp(10px, 1vw, 15px);
+
 		&Card {
 			height: 200px;
 			background-color: var(--bg-color);
@@ -53,5 +54,4 @@
 	&__buttons {
 		gap: 20px;
 	}
-
 }

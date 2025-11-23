@@ -1,33 +1,78 @@
 .card {
-	margin: 0 auto;
-	gap: clamp(3px, 0.67vw, 10px);
-	box-shadow: 0 0 10px 3px var(--main-color);
-	padding: 10px;
-	box-sizing: content-box;
-	background-color: var(--bg-color);
-	width: 200px;
-	height: 400px;
-	&__buttons {
-		gap: 10px;
-	}
-	&__image {
-		width: 200px;
-		height: 200px;
-		background-position: center;
-		background-size: cover;
-		background-repeat: no-repeat;
-	}
-	&__sizes {
-		gap: 10px;
-		width: fit-content;
-		&Btn {
-			background-color: var(--bg-color);
-			color: var(--text-color);
+  margin: 0 auto;
+  gap: clamp(5px, 1vw, 10px);
+  box-shadow: 0 clamp(2px, 0.2vw, 4px) clamp(6px, 0.6vw, 12px) var(--main-color);
+  padding: clamp(8px, 1vw, 12px);
+  background-color: var(--bg-color);
+  width: clamp(180px, 15vw, 220px);
+  border-radius: clamp(10px, 1vw, 15px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s;
 
-			&.active {
-				color: pink;
-				font-weight: 600;
-			}
-		}
-	}
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: 0 clamp(3px, 0.3vw, 6px) clamp(8px, 0.8vw, 14px) var(--decore-color);
+  }
+
+  &__image {
+    width: 100%;
+    height: 200px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: clamp(8px, 1vw, 12px);
+  }
+
+  &__name {
+    font-size: clamp(16px, 1.5vw, 20px);
+    margin-top: clamp(5px, 0.5vw, 8px);
+  }
+
+  &__price {
+    font-size: clamp(14px, 1.3vw, 18px);
+  }
+
+  &__brand, &__type {
+    font-size: clamp(13px, 1.2vw, 16px);
+    color: #555;
+  }
+
+  &__sizes {
+    display: flex;
+    gap: clamp(5px, 0.5vw, 10px);
+    flex-wrap: wrap;
+
+    &Btn {
+      padding: clamp(4px, 0.5vw, 8px) clamp(8px, 1vw, 12px);
+      border-radius: clamp(6px, 0.5vw, 10px);
+      background-color: var(--bg-color);
+      font-size: clamp(12px, 1vw, 14px);
+      cursor: pointer;
+
+      &.active {
+        color: var(--decore-color);
+      }
+
+      &:hover {
+        color: var(--decore-color);
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    gap: clamp(8px, 1vw, 12px);
+    flex-wrap: wrap;
+
+    button, .iconButton {
+      transition: 0.2s;
+      &:hover {
+        transform: scale(1.05);
+        color: var(--decore-color);
+      }
+    }
+  }
 }

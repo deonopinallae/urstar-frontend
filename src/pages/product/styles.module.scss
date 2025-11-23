@@ -98,7 +98,7 @@
 
 	&__buttons {
 		display: flex;
-		gap: 30px;
+		gap: 50px;
 		flex-wrap: wrap;
 		align-items: center;
 
@@ -112,6 +112,9 @@
 				transform: scale(1.05);
 			}
 		}
+	}
+	&__button {
+		width: fit-content;
 	}
 
 	&__description {

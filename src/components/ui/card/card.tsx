@@ -40,7 +40,7 @@ export const Card = ({
 					className={styles.card__image}
 					style={{ backgroundImage: `url(${imageUrl})` }}
 				/>
-				<div className="flex justify-between">
+				<div className="flex justify-between items-center">
 					<p className={styles.card__name}>{name}</p>
 					<p className={styles.card__price}>{price}$</p>
 				</div>
@@ -69,8 +69,8 @@ export const Card = ({
 				<Like productId={id} />
 				<AddToCart productData={productData} selectedSize={selectedSize} />
 				
-				{isAdmin && <button onClick={() => dispatch(deleteProductAsync(id))}>delete</button>}
 			</div>
+				{isAdmin && <button onClick={() => dispatch(deleteProductAsync(id))}>delete</button>}
 			<AddToCombinerButton productId={id} />
 		</div>
 	)

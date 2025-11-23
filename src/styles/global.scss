@@ -1,4 +1,4 @@
-.icon-button{
+.icon-button {
 	width: clamp(27px, 2.67vw, 40px);
 }
 
@@ -8,12 +8,15 @@
 	min-width: 133px;
 }
 
-.container{
+.container {
 	padding: 0 clamp(10px, 3.33vw, 50px);
 }
 
-button:hover{
+button:hover {
 	color: var(--decore-color);
-	transition: .5s;
+	transition: 0.5s;
 	transform: scale(1.01);
+}
+input {
+	background-color: var(--bg-color);
 }

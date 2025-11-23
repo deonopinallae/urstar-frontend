@@ -88,6 +88,7 @@ export const Product = () => {
 						/>
 						<Like productId={id} />
 						<AddToCombinerButton productId={id} />
+					</div>
 						{isAdmin && (
 							<Link
 								className={`${styles.product__button}`}
@@ -104,7 +105,6 @@ export const Product = () => {
 								delete product
 							</button>
 						)}
-					</div>
 				</div>
 			</div>
 			<div className={`${styles.product__description}`}>

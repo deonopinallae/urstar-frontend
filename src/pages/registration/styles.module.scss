@@ -5,13 +5,13 @@
 	flex-direction: column;
 	gap: clamp(1px, 1.39vw, 20px);
 	text-align: center;
-
-
-		&__error {
-			background-color: #fcadad;
-			padding: clamp(7px, 0.69vw, 10px);
-			width: 100%;
-			text-align: left;
-		}
-	
+	input {
+		background-color: var(--bg-color);
+	}
+	&__error {
+		background-color: #fcadad;
+		padding: clamp(7px, 0.69vw, 10px);
+		width: 100%;
+		text-align: left;
+	}
 }
