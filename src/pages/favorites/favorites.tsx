@@ -11,7 +11,7 @@ export const Favorites = () => {
 			<div className={`${styles.favorites__list} grid items-center`}>
 				{Array.isArray(favorites) && favorites.length === 0 ? (
 					<div className="text-center w-screen">
-						products are out of stock yet
+						no products :(
 					</div>
 				) : (
 					favorites.map(({ id, ...productData }) => (
