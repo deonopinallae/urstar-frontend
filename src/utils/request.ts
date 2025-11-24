@@ -1,3 +1,5 @@
+import { API_URL } from "../constants"
+
 export const request = async (
 	url: string,
 	method?: string,
@@ -11,7 +13,7 @@ export const request = async (
 	const token = localStorage.getItem('token')
 	if (token) headers['Authorization'] = `Bearer ${token}`
 
-	const res = await fetch(url, {
+	const res = await fetch(`${API_URL}${url}`, {
 		method: method || 'GET',
 		headers,
 		body: data ? (isFormData ? data : JSON.stringify(data)) : undefined,
