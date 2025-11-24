@@ -3,7 +3,7 @@ import styles from '../styles.module.scss'
 import { useDispatch } from 'react-redux'
 import { deleteOutfitAsync } from '../../../actions'
 
-export const CombinerOutfitCard = ({ userId, outfit: { _id: id, scene, name } }) => {
+export const CombinerOutfitCard = ({ userId, outfit: { id, scene, name } }) => {
 	const dispatch = useDispatch()
 
 	return (
@@ -39,7 +39,7 @@ export const CombinerOutfitCard = ({ userId, outfit: { _id: id, scene, name } })
 				/>
 			</Link>
 			<div>{name}</div>
-            <button onClick={() => dispatch(deleteOutfitAsync(userId, id))}>delete</button>
+            <button onClick={() => dispatch(() => dispatch(deleteOutfitAsync(userId, id)))}>delete</button>
 		</div>
 	)
 }

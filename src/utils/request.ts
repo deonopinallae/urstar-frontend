@@ -1,3 +1,5 @@
+import { API_URL } from "../constants"
+
 export const request = async (
 	url: string,
 	method?: string,
@@ -8,7 +10,7 @@ export const request = async (
 
 	if (!isFormData) headers['content-type'] = 'application/json'
 
-	const res = await fetch(url, {
+	const res = await fetch(`${API_URL}/${url}`, {
 		method: method || 'GET',
 		credentials: 'include',
 		headers,

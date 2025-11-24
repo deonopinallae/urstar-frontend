@@ -38,8 +38,8 @@ export const Authorization = () => {
 		formState: { errors },
 	} = useForm({
 		defaultValues: {
-			login: 'leebit',
-			password: 'allin006',
+			login: '',
+			password: '',
 		},
 		resolver: yupResolver(authFormSchema),
 	})

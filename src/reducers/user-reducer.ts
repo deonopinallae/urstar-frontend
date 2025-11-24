@@ -66,7 +66,7 @@ export const userReducer = (state = initialUserState, action) => {
 		case ACTION_TYPE.DELETE_OUTFIT: {
 			return {
 				...state,
-				outfits: state.outfits.filter((outfit) => outfit._id !== action.payload),
+				outfits: state.outfits.filter((outfit) => outfit.id !== action.payload),
 			}
 		}
 		case ACTION_TYPE.ADD_TO_FAVORITES: {
