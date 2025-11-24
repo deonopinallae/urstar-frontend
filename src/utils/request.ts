@@ -1,5 +1,3 @@
-import { API_URL } from "../constants"
-
 export const request = async (
 	url: string,
 	method?: string,
@@ -10,18 +8,16 @@ export const request = async (
 
 	if (!isFormData) headers['content-type'] = 'application/json'
 
-	const res = await fetch(`${API_URL}${url}`, {
+	const token = localStorage.getItem('token')
+	if (token) headers['Authorization'] = `Bearer ${token}`
+
+	const res = await fetch(url, {
 		method: method || 'GET',
-		credentials: 'include',
 		headers,
 		body: data ? (isFormData ? data : JSON.stringify(data)) : undefined,
 	})
 
 	const result = await res.json()
-	if (!res.ok) {
-		console.error('request failed:', result)
-		throw new Error(result.error || 'request failed')
-	}
-
+	if (!res.ok) throw new Error(result.error || 'request failed')
 	return result
 }
