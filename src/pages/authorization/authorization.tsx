@@ -50,11 +50,12 @@ export const Authorization = () => {
 	useResetForm(reset)
 
 	const onSubmit = ({ login, password }) => {
-		request('/api/login', 'POST', { login, password }).then(({ error, user }) => {
+		request('/api/login', 'POST', { login, password }).then(({ error, user, token }) => {
 			if (error) {
 				setServerError(`${error}`)
 				return
 			}
+			localStorage.setItem('token', token)
 			dispatch(setUser(user))
 			sessionStorage.setItem('userData', JSON.stringify(user))
 			navigate(-1)
