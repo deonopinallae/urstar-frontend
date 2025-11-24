@@ -10,7 +10,7 @@ export const request = async (
 
 	if (!isFormData) headers['content-type'] = 'application/json'
 
-	const res = await fetch(`${API_URL}/${url}`, {
+	const res = await fetch(`${API_URL}${url}`, {
 		method: method || 'GET',
 		credentials: 'include',
 		headers,
