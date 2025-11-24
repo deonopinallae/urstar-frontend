@@ -6,4 +6,6 @@ export const PRODUCT_TYPES = [
 	'hat',
 	'belt',
 	'bracelet',
+	'boots',
+	'sneakers',
 ]
