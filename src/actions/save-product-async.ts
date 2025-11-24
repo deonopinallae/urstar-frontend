@@ -31,7 +31,7 @@ export const saveProductAsync =
 			dispatch(setProductData(data.data || data))
 			return data.data || data
 		} catch (err) {
-			console.error('Ошибка при сохранении товара:', err)
+			console.error('product edit error:', err)
 			throw err
 		}
 	}
