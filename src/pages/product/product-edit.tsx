@@ -30,23 +30,22 @@ export const ProductEdit = () => {
 	const navigate = useNavigate()
 	const fileInputRef = useRef(null)
 
-	useLayoutEffect(() => {
-		setImageUrlValue(product.imageUrl)
-		setNameValue(product.name)
-		setBrandValue(product.brand)
-		setPriceValue(product.price)
-		setDescriptionValue(product.description)
-		setSelectedType(product.type)
-		setSelectedCategory(product.category)
-	}, [product])
-
 	useEffect(() => {
-		if (!checkAccess([ROLE.ADMIN], roleId)) {
-			setIsLoading(false)
-			return
-		}
-		dispatch(loadProductAsync(productId)).then(() => setIsLoading(false))
-	}, [dispatch, productId])
+		if (!checkAccess([ROLE.ADMIN], roleId)) return setIsLoading(false)
+
+		dispatch(loadProductAsync(productId))
+			.then((productData) => {
+				setImageUrlValue(productData.imageUrl)
+				setNameValue(productData.name)
+				setBrandValue(productData.brand)
+				setPriceValue(productData.price)
+				setDescriptionValue(productData.description)
+				setSelectedType(productData.type)
+				setSelectedCategory(productData.category)
+				setIsLoading(false)
+			})
+			.catch(() => setIsLoading(false))
+	}, [dispatch, productId, roleId])
 
 	const changeProductImage = () => fileInputRef.current.click()
 
