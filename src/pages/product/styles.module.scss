@@ -74,6 +74,7 @@
 	&__sizes {
 		display: flex;
 		gap: 10px;
+		flex-wrap: wrap;
 
 		&Btn {
 			width: clamp(50px, 4.17vw, 60px);
