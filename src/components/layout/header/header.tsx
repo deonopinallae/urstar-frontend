@@ -1,11 +1,7 @@
 // Header.tsx
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-	selectUserLogin,
-	selectUserRole,
-	selectUserId,
-} from '../../../selectors'
+import { selectUserLogin, selectUserRole, selectUserId } from '../../../selectors'
 import { ROLE } from '../../../constants'
 import { logout } from '../../../actions'
 import { checkAccess } from '../../../utils'
@@ -25,31 +21,35 @@ export const Header = ({ isMenuOpen, setIsMenuOpen }) => {
 
 	return (
 		<header className={styles.header}>
-			<Link to="/" >
+			<Link to="/">
 				<img className="logo" src="/assets/icons/logo.svg" alt="logo" />
 			</Link>
 
 			<nav className={styles.header__nav}>
-					<Link to="/catalog">catalog</Link>
-					{!isAdmin && (
-						<>
-							<Link to="/catalog/top">top</Link>
-							<Link to="/catalog/bottom">bottom</Link>
-							<Link to="/catalog/shoes">shoes</Link>
-							<Link to="/catalog/accessory">accessory</Link>
-						</>
-					)}
-					<Link
-						to={
-							roleId === ROLE.GUEST ? `/login` : `/users/${userId}/combiner`
-						}
-					>
-						combine clothes
-					</Link>
+				<Link to="/catalog">catalog</Link>
+				{!isAdmin && (
+					<>
+						<Link to="/catalog/top">top</Link>
+						<Link to="/catalog/bottom">bottom</Link>
+						<Link to="/catalog/shoes">shoes</Link>
+						<Link to="/catalog/accessory">accessory</Link>
+					</>
+				)}
+				<Link to={roleId === ROLE.GUEST ? `/login` : `/users/${userId}/combiner`}>
+					combine clothes
+				</Link>
 			</nav>
-
+			{isAdmin && (
+				<Link className={styles.header__menuBtns} to="/users" onClick={() => setIsMenuOpen(false)}>
+					users
+				</Link>
+			)}
+			{isAdmin && (
+				<Link className={styles.header__menuBtns} to="/add-product" onClick={() => setIsMenuOpen(false)}>
+					add product
+				</Link>
+			)}
 			<div className={styles.header__buttons}>
-
 				<Link
 					to={roleId === ROLE.GUEST ? `/login` : `/favorites`}
 					className={`${styles.header__button} favorite-button icon-button`}

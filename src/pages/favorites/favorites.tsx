@@ -10,7 +10,7 @@ export const Favorites = () => {
             <h2 className={`${styles.favorites__title} text-center`}>your favorites</h2>
 			<div className={`${styles.favorites__list} grid items-center`}>
 				{Array.isArray(favorites) && favorites.length === 0 ? (
-					<div className="text-center w-screen">
+					<div className="text-center min-w-full">
 						no products :(
 					</div>
 				) : (

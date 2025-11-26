@@ -8,7 +8,7 @@ export const Cart = () => {
 	const totalPrice = cart.reduce((sum, item) => sum + Number(item.price || 0), 0)
 
 	return (
-		<div className={`${styles.cart}`}>
+		<section className={`${styles.cart}`}>
 			<h2 className={styles.cart__title}>your cart</h2>
 			<div className={styles.cart__products}>
 				{cart.length ? (
@@ -25,6 +25,6 @@ export const Cart = () => {
 					<button className={styles.cart__orderBtn}>order now</button>
 				</div>
 			)}
-		</div>
+		</section>
 	)
 }
