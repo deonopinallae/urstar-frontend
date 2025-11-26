@@ -28,8 +28,8 @@ export const saveProductAsync =
 				)
 			}
 
-			dispatch(setProductData(data.data || data))
-			return data.data || data
+			dispatch(setProductData(data))
+			return data
 		} catch (err) {
 			console.error('product edit error:', err)
 			throw err

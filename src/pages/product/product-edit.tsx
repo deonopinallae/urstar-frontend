@@ -3,7 +3,7 @@ import styles from './styles.module.scss'
 import { Loader } from '../../components/ui'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectProduct, selectUserRole } from '../../selectors'
-import { useEffect, useLayoutEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { loadProductAsync, saveProductAsync } from '../../actions'
 import { CATEGORIES, PRODUCT_TYPES, ROLE } from '../../constants'
 import { checkAccess } from '../../utils'
@@ -17,7 +17,6 @@ export const ProductEdit = () => {
 	const { id: productId } = useParams()
 	const [isLoading, setIsLoading] = useState(true)
 
-	// состояния для редактирования
 	const [imageFile, setImageFile] = useState(null)
 	const [imageUrlValue, setImageUrlValue] = useState(product.imageUrl)
 	const [nameValue, setNameValue] = useState(product.name)

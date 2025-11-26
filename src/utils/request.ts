@@ -19,6 +19,7 @@ export const request = async (
 		body: data ? (isFormData ? data : JSON.stringify(data)) : undefined,
 	})
 
+
 	const result = await res.json()
 	if (!res.ok) throw new Error(result.error || 'request failed')
 	return result
