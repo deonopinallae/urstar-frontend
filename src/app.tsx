@@ -1,5 +1,10 @@
+// App.tsx
+import { useState, useLayoutEffect } from 'react'
 import { Routes, Route } from 'react-router'
-import { AppColumn, Header, Footer, Page } from './components/layout'
+import { AppColumn, Header, Footer, Page, Menu } from './components/layout'
+import { useDispatch } from 'react-redux'
+import { setUser } from './actions'
+import { request } from './utils'
 import {
 	Main,
 	Catalog,
@@ -19,16 +24,13 @@ import {
 	Favorites,
 	ProductAdd,
 } from './pages'
-import { useLayoutEffect } from 'react'
-import { setUser  } from './actions'
-import { useDispatch  } from 'react-redux'
-import { request } from './utils'
 
 export const App = () => {
 	const dispatch = useDispatch()
+	const [isMenuOpen, setIsMenuOpen] = useState(false)
+
 	useLayoutEffect(() => {
 		const currentUserDataJSON = sessionStorage.getItem('userData')
-
 		const currentUserData = JSON.parse(currentUserDataJSON)
 
 		if (currentUserData?.id) {
@@ -45,8 +47,7 @@ export const App = () => {
 						)
 					}
 				})
-				.catch((err) => {
-					console.error('user load error: ', err)
+				.catch(() => {
 					dispatch(
 						setUser({
 							...currentUserData,
@@ -59,7 +60,8 @@ export const App = () => {
 
 	return (
 		<AppColumn>
-			<Header />
+			<Header isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
+			<Menu isOpen={isMenuOpen} setIsOpen={setIsMenuOpen} />
 			<Page>
 				<Routes>
 					<Route path="/" element={<Main />} />
@@ -70,7 +72,7 @@ export const App = () => {
 					<Route path="/catalog/shoes" element={<Shoes />} />
 					<Route path="/products/:id" element={<Product />} />
 					<Route path="/products/:id/edit" element={<ProductEdit />} />
-					<Route path="/add-product" element={<ProductAdd/>} />
+					<Route path="/add-product" element={<ProductAdd />} />
 					<Route path="/favorites" element={<Favorites />} />
 					<Route path="/users/:id/combiner" element={<Combiner />} />
 					<Route path="/users/:id/outfits/:outfitId" element={<Outfit />} />

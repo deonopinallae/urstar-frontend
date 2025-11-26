@@ -1,12 +1,17 @@
-import styles from './styles.module.scss'
+// Header.tsx
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectUserLogin, selectUserRole, selectUserId } from '../../../selectors'
+import {
+	selectUserLogin,
+	selectUserRole,
+	selectUserId,
+} from '../../../selectors'
 import { ROLE } from '../../../constants'
 import { logout } from '../../../actions'
 import { checkAccess } from '../../../utils'
+import styles from './styles.module.scss'
 
-export const Header = () => {
+export const Header = ({ isMenuOpen, setIsMenuOpen }) => {
 	const dispatch = useDispatch()
 	const roleId = useSelector(selectUserRole)
 	const login = useSelector(selectUserLogin)
@@ -19,16 +24,12 @@ export const Header = () => {
 	}
 
 	return (
-		<header className={`${styles.header} flex justify-between items-center`}>
-			<Link to="/" className="logo">
-				<img src="/assets/icons/logo.svg" alt="logo" />
+		<header className={styles.header}>
+			<Link to="/" >
+				<img className="logo" src="/assets/icons/logo.svg" alt="logo" />
 			</Link>
-			<nav
-				className={`${styles.header__nav} flex grow items-center justify-center ${/*${isBurgerNavOpen ? styles.closedNav : styles.opendNav}*/ null}`}
-			>
-				<div
-					className={`${styles.header__navLinks} flex justify-center items-center`}
-				>
+
+			<nav className={styles.header__nav}>
 					<Link to="/catalog">catalog</Link>
 					{!isAdmin && (
 						<>
@@ -43,29 +44,26 @@ export const Header = () => {
 							roleId === ROLE.GUEST ? `/login` : `/users/${userId}/combiner`
 						}
 					>
-						<div>combine clothes</div>
+						combine clothes
 					</Link>
-				</div>
 			</nav>
-			<div className={`${styles.header__buttons} flex items-center`}>
-				{isAdmin && <Link to="/users">users</Link>}
-				{isAdmin && (
-					<Link to="/add-product">
-						<div>add product</div>
-					</Link>
-				)}
+
+			<div className={styles.header__buttons}>
+
 				<Link
 					to={roleId === ROLE.GUEST ? `/login` : `/favorites`}
 					className={`${styles.header__button} favorite-button icon-button`}
 				>
 					<img src="/assets/icons/like.svg" alt="favorite" />
 				</Link>
+
 				<Link
 					to={roleId === ROLE.GUEST ? `/login` : `/cart`}
 					className={`${styles.header__button} cart-button icon-button`}
 				>
 					<img src="/assets/icons/cart.svg" alt="cart" />
 				</Link>
+
 				{roleId === ROLE.GUEST ? (
 					<Link
 						to="/login"
@@ -74,12 +72,18 @@ export const Header = () => {
 						sign in
 					</Link>
 				) : (
-					<div>
-						<div>{login}</div>
-						<div onClick={onLogout}>logout</div>
-					</div>
+					<div onClick={onLogout}>{login} / logout</div>
 				)}
 			</div>
+
+			<button
+				className={styles.header__burgerButton}
+				onClick={() => setIsMenuOpen(!isMenuOpen)}
+			>
+				<span></span>
+				<span></span>
+				<span></span>
+			</button>
 		</header>
 	)
 }

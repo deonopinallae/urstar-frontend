@@ -1,5 +1,7 @@
 .products {
 	gap: clamp(20px, 2.00vw, 30px);
+	position: relative;
+
 	&__search {
 		width: clamp(200px, 33.33vw, 500px);
 		border: 1px solid var(--main-color);

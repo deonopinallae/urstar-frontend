@@ -7,7 +7,6 @@
 	min-height: 100%;
 	max-width: 1200px;
 	background-color: var(--bg-color);
-	overflow: hidden;
 }
 
 .appColumn::before {
@@ -20,11 +19,6 @@
 	background-repeat: no-repeat;
 	box-shadow: 0px 0px 30px 20px var(--bg-color) inset;
 
-	opacity: 0.4; /* регулирует тусклость */
+	opacity: 0.4;
 	z-index: 0;
-}
-
-.appColumn > * {
-	position: relative;
-	z-index: 1;
 }
