@@ -14,19 +14,19 @@ export const request = async (
 	const token = getCookieToken('token')
 	if (token) headers['Authorization'] = `Bearer ${token}`
 
-	// const res = await fetch(`${API_URL}${url}`, {
-	// 	method: method || 'GET',
-	// 	headers,
-	// 	body: data ? (isFormData ? data : JSON.stringify(data)) : undefined,
-	// 	credentials: 'include',
-	// })
-
-	const res = await fetch(`${url}`, {
+	const res = await fetch(`${API_URL}${url}`, {
 		method: method || 'GET',
 		headers,
 		body: data ? (isFormData ? data : JSON.stringify(data)) : undefined,
 		credentials: 'include',
 	})
+
+	// const res = await fetch(`${url}`, {
+	// 	method: method || 'GET',
+	// 	headers,
+	// 	body: data ? (isFormData ? data : JSON.stringify(data)) : undefined,
+	// 	credentials: 'include',
+	// })
 
 	const result = await res.json()
 	if (!res.ok) throw new Error(result.error || 'request failed')
