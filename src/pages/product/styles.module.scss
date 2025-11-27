@@ -11,8 +11,8 @@
 	}
 
 	&__image {
-		min-width: 300px;
-		height: 300px;
+		width: clamp(200px, 20.83vw, 300px);
+		height: clamp(200px, 20.83vw, 300px);
 		background-position: center;
 		background-size: cover;
 		background-repeat: no-repeat;

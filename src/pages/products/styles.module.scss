@@ -15,7 +15,7 @@
 		align-items: center;
 	}
 	&__list {
-		gap: clamp(47px, 4.67vw, 70px) clamp(25px, 3.33vw, 50px);
+		gap: 50px;
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr) );
 	}
 }

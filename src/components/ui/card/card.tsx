@@ -68,9 +68,10 @@ export const Card = ({
 			<div className={`${styles.card__buttons} flex flex-wrap`}>
 				<Like productId={id} />
 				<AddToCart productData={productData} selectedSize={selectedSize} />
-				
 			</div>
-				{isAdmin && <button onClick={() => dispatch(deleteProductAsync(id))}>delete</button>}
+			{isAdmin && (
+				<button onClick={() => dispatch(deleteProductAsync(id))}>delete</button>
+			)}
 			<AddToCombinerButton productId={id} />
 		</div>
 	)
