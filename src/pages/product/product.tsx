@@ -58,7 +58,7 @@ export const Product = () => {
 			{isModalOpen && (
 				<ModalWindow
 					action={deleteProduct}
-					text="remove product from combiner?"
+					text="delete product?"
 					{...{ setIsModalOpen }}
 				/>
 			)}
