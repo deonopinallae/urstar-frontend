@@ -2,13 +2,26 @@ import { Link } from 'react-router-dom'
 import styles from '../styles.module.scss'
 import { useDispatch } from 'react-redux'
 import { deleteOutfitAsync } from '../../../actions'
+import { useState } from 'react'
+import { ModalWindow } from '../../../components/ui'
 
 export const CombinerOutfitCard = ({ userId, outfit: { id, scene, name } }) => {
 	const dispatch = useDispatch()
+	const [isModalOpen, setIsModalOpen] = useState(false)
 
 	return (
 		<div className={`${styles.combiner__outfitCard}`}>
-			<Link to={`/users/${userId}/outfits/${id}`} className={`${styles.combiner__sceneCard} `}>
+			{isModalOpen && (
+				<ModalWindow
+					action={() => dispatch(deleteOutfitAsync(userId, id))}
+					text="delete outfit?"
+					{...{ setIsModalOpen }}
+				/>
+			)}
+			<Link
+				to={`/users/${userId}/outfits/${id}`}
+				className={`${styles.combiner__sceneCard} `}
+			>
 				<div
 					className={`${styles.combiner__sceneItem} ${styles.combiner__sceneItemTop} `}
 					style={{
@@ -39,7 +52,9 @@ export const CombinerOutfitCard = ({ userId, outfit: { id, scene, name } }) => {
 				/>
 			</Link>
 			<div>{name}</div>
-            <button onClick={() => dispatch(() => dispatch(deleteOutfitAsync(userId, id)))}>delete</button>
+			<button onClick={() => setIsModalOpen(true)}>
+				delete
+			</button>
 		</div>
 	)
 }

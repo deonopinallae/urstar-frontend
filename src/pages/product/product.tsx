@@ -1,6 +1,6 @@
 import styles from './styles.module.scss'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { AddToCombinerButton, AddToCart, Like, Loader } from '../../components/ui'
+import { AddToCombinerButton, AddToCart, Like, Loader, ModalWindow } from '../../components/ui'
 import { Review } from '..'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectProduct, selectUserRole } from '../../selectors'
@@ -22,6 +22,7 @@ export const Product = () => {
 	const isGuest = checkAccess([ROLE.GUEST], roleId)
 	const navigate = useNavigate()
 	const [selectedSize, setSelectedSize] = useState('')
+	const [isModalOpen, setIsModalOpen] = useState(false)
 
 	const sizes = ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl']
 
@@ -54,6 +55,13 @@ export const Product = () => {
 
 	return (
 		<section className={`${styles.product} container flex flex-col`}>
+			{isModalOpen && (
+				<ModalWindow
+					action={deleteProduct}
+					text="remove product from combiner?"
+					{...{ setIsModalOpen }}
+				/>
+			)}
 			<div className={`${styles.product__imageInfo} flex flex-wrap`}>
 				<div
 					className={`${styles.product__image}`}
@@ -89,22 +97,22 @@ export const Product = () => {
 						<Like productId={id} />
 						<AddToCombinerButton productId={id} />
 					</div>
-						{isAdmin && (
-							<Link
-								className={`${styles.product__button}`}
-								to={`/products/${id}/edit`}
-							>
-								edit product
-							</Link>
-						)}
-						{isAdmin && (
-							<button
-								className={`${styles.product__button}`}
-								onClick={deleteProduct}
-							>
-								delete product
-							</button>
-						)}
+					{isAdmin && (
+						<Link
+							className={`${styles.product__button}`}
+							to={`/products/${id}/edit`}
+						>
+							edit product
+						</Link>
+					)}
+					{isAdmin && (
+						<button
+							className={`${styles.product__button}`}
+							onClick={() => setIsModalOpen(true)}
+						>
+							delete product
+						</button>
+					)}
 				</div>
 			</div>
 			<div className={`${styles.product__description}`}>

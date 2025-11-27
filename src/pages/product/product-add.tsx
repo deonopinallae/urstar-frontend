@@ -26,7 +26,10 @@ export const ProductAdd = () => {
 	const [imageUrlValue, setImageUrlValue] = useState(null)
 	const [alert, setAlert] = useState('')
 
-	const changeProductImage = () => fileInputRef.current.click()
+	const changeProductImage = () => {
+		setAlert('')
+		fileInputRef.current.click()
+	}
 
 	const onFileSelect = (e) => {
 		const file = e.target.files[0]
@@ -43,6 +46,7 @@ export const ProductAdd = () => {
 
 	const addProduct = () => {
 		if (
+			!imageFile ||
 			!nameValue ||
 			!brandValue ||
 			!priceValue ||
@@ -50,7 +54,7 @@ export const ProductAdd = () => {
 			!selectedType ||
 			!selectedCategory
 		)
-			return setAlert("enter all the inputs")
+			return setAlert('enter all the inputs')
 		const form = new FormData()
 		form.append('image', imageFile)
 		form.append('name', nameValue)
@@ -64,10 +68,12 @@ export const ProductAdd = () => {
 	}
 
 	const onTypeChange = ({ target }) => {
+		setAlert('')
 		setSelectedType(target.value)
 	}
 
 	const onCategoryChange = ({ target }) => {
+		setAlert('')
 		setSelectedCategory(target.value)
 	}
 
@@ -75,7 +81,7 @@ export const ProductAdd = () => {
 
 	return (
 		<section className={`${styles.product} container flex flex-col`}>
-			{alert && <Alert text={alert}/>}
+			{alert && <Alert text={alert} />}
 			<div className={`${styles.product__imageInfo} flex flex-wrap`}>
 				<input
 					type="file"
@@ -99,19 +105,28 @@ export const ProductAdd = () => {
 
 				<div className={`${styles.product__info} flex flex-col`}>
 					<input
-						onChange={({ target }) => setNameValue(target.value)}
+						onChange={({ target }) => {
+							setAlert('')
+							setNameValue(target.value)
+						}}
 						placeholder="name"
 						value={nameValue}
 						className={`${styles.product__editInput}`}
 					/>
 					<input
-						onChange={({ target }) => setBrandValue(target.value)}
+						onChange={({ target }) => {
+							setAlert('')
+							setBrandValue(target.value)
+						}}
 						placeholder="brand"
 						value={brandValue}
 						className={`${styles.product__editInput}`}
 					/>
 					<input
-						onChange={({ target }) => setPriceValue(target.value)}
+						onChange={({ target }) => {
+							setAlert('')
+							setPriceValue(target.value)
+						}}
 						placeholder="price"
 						value={priceValue}
 						className={`${styles.product__editInput}`}

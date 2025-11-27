@@ -20,11 +20,12 @@ export const request = async (
 		body: data ? (isFormData ? data : JSON.stringify(data)) : undefined,
 		credentials: 'include',
 	})
+
 	// const res = await fetch(`${url}`, {
 	// 	method: method || 'GET',
 	// 	headers,
 	// 	body: data ? (isFormData ? data : JSON.stringify(data)) : undefined,
-	// credentials: 'include',
+	// 	credentials: 'include',
 	// })
 
 	const result = await res.json()

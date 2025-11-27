@@ -50,12 +50,7 @@ export const Combiner = () => {
 		})
 	}
 
-	const handleRemoveProduct = (productId, imageUrl) => {
-		if (!productId) {
-			setAlert('product remove error')
-			setTimeout(() => setAlert(''), 3000)
-			return
-		}
+	const modalRemoveProductFromCombiner = (productId, imageUrl) => {
 		dispatch(removeFromCombinerAsync(userId, productId))
 		setScene((prev) => {
 			const updated = { ...prev }
@@ -97,10 +92,9 @@ export const Combiner = () => {
 			products: outfitProducts,
 		}
 		dispatch(saveOutfitAsync(userId, outfitData))
-
 		clearScene()
 		setOutfitName('')
-		setAlert('outfit have been saved')
+		setAlert('the outfit was added')
 		setTimeout(() => setAlert(''), 3000)
 	}
 
@@ -108,6 +102,7 @@ export const Combiner = () => {
 		<>
 			<section className={`${styles.combiner} container`}>
 				{alert && <Alert text={alert} />}
+
 				<div className={`${styles.combiner__main} flex justify-between`}>
 					<div className={`${styles.combiner__container} flex flex-col`}>
 						<div className={`${styles.combiner__name} flex justify-between`}>
@@ -169,7 +164,7 @@ export const Combiner = () => {
 								{...{
 									combinerProductData,
 									addProductToScene,
-									handleRemoveProduct,
+									modalRemoveProductFromCombiner,
 								}}
 							/>
 						))}
