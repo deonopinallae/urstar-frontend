@@ -21,7 +21,7 @@ export const CartCard = ({ product: { id: productId, imageUrl, name, price, size
 				<p className={styles.card__price}>${price}</p>
 			</div>
 			<button className={styles.card__removeBtn} onClick={removeProductFromCart}>
-				×
+				X
 			</button>
 		</div>
 	)
