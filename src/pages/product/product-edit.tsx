@@ -111,8 +111,11 @@ export const ProductEdit = () => {
 					/>
 					<input
 						value={priceValue}
-						onChange={(e) => setPriceValue(e.target.value)}
+						onChange={(e) => {
+							setPriceValue(e.target.value)}
+						}
 						placeholder="price"
+						type='number'
 						className={styles.product__editInput}
 					/>
 					<select

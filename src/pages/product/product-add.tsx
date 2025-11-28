@@ -128,6 +128,7 @@ export const ProductAdd = () => {
 							setPriceValue(target.value)
 						}}
 						placeholder="price"
+						type='number'
 						value={priceValue}
 						className={`${styles.product__editInput}`}
 					/>
