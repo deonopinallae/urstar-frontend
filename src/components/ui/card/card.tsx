@@ -15,8 +15,8 @@ export const Card = ({
 	const [selectedSize, setSelectedSize] = useState('')
 	const sizes = ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl']
 	const [productData, setProductData] = useState({
-		product: { id },
-		size: selectedSize,
+		product: { id, name, category },
+		size: category === CATEGORIES.ACCESSORY ? 'no size' : selectedSize,
 	})
 	const roleId = useSelector(selectUserRole)
 	const isGuest = checkAccess([ROLE.GUEST], roleId)
@@ -25,7 +25,7 @@ export const Card = ({
 	const dispatch = useDispatch()
 
 	useEffect(() => {
-		setProductData({ product: { id }, size: selectedSize })
+		setProductData({ product: { id }, size: category === CATEGORIES.ACCESSORY ? 'no size' : selectedSize })
 	}, [selectedSize])
 
 	const chooseSize = (size) => {
@@ -51,7 +51,7 @@ export const Card = ({
 			</Link>
 
 			{[category].includes(CATEGORIES.TOP) ||
-			[category].includes(CATEGORIES.BOTTOM) ? (
+			[category].includes(CATEGORIES.BOTTOM) || [category].includes(CATEGORIES.SHOES) ? (
 				<div className={`${styles.card__sizes} flex`}>
 					{sizes.map((size) => (
 						<button
@@ -67,7 +67,7 @@ export const Card = ({
 
 			<div className={`${styles.card__buttons} flex flex-wrap`}>
 				<Like productId={id} />
-				<AddToCart productData={productData} selectedSize={selectedSize} />
+				<AddToCart productData={productData} />
 			</div>
 			{isAdmin && (
 				<button onClick={() => dispatch(deleteProductAsync(id))}>delete</button>

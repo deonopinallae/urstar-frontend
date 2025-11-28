@@ -3,14 +3,8 @@
 	display: flex;
 	flex-direction: column;
 	gap: 1.5rem;
-	width: 600px;
+	width: clamp(400px, 34.72vw, 500px);
 	margin: 0 auto;
-
-	&__title {
-		font-size: 1.8rem;
-		font-weight: 600;
-		text-align: center;
-	}
 
 	&__products {
 		display: flex;
@@ -27,13 +21,8 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding-top: 1rem;
+		padding-top: 20px;
 		border-top: 1px solid #ddd;
-	}
-
-	&__total {
-		font-weight: 600;
-		font-size: 1.2rem;
 	}
 
 	&__orderBtn {
@@ -59,6 +48,7 @@
 	padding: 0.8rem 1rem;
 	border-radius: 6px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+	position: relative;
 
 	&__img {
 		width: 60px;
@@ -80,15 +70,13 @@
 		color: #666;
 	}
 
-
 	&__removeBtn {
 		background: transparent;
 		border: none;
-		font-size: 20px;
 		color: #999;
 		cursor: pointer;
 		position: absolute;
-		top: 8px;
+		top: 0px;
 		right: 8px;
 		transition: 0.2s;
 

@@ -72,7 +72,7 @@ export const Product = () => {
 					<h2 className={`${styles.product__brand}`}>{brand}</h2>
 					<div className={`${styles.product__price}`}>{price}$</div>
 					{[category].includes(CATEGORIES.TOP) ||
-					[category].includes(CATEGORIES.BOTTOM) ? (
+					[category].includes(CATEGORIES.BOTTOM) || [category].includes(CATEGORIES.SHOES) ? (
 						<div className={`${styles.product__sizes} flex`}>
 							{sizes.map((s) => (
 								<button
