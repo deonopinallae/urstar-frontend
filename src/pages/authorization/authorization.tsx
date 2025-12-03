@@ -71,7 +71,7 @@ export const Authorization = () => {
 
 	return (
 		<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-			<h2>авторизация</h2>
+			<h2>authorization</h2>
 			<Input
 				{...register('login', { onChange: () => setServerError('') })}
 				placeholder="логин"

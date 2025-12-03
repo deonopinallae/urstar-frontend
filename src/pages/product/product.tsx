@@ -1,47 +1,79 @@
 import styles from './styles.module.scss'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { AddToCombinerButton, AddToCart, Like, Loader, ModalWindow } from '../../components/ui'
+import {
+	AddToCombinerButton,
+	AddToCart,
+	Like,
+	Loader,
+	ModalWindow,
+} from '../../components/ui'
 import { Review } from '..'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectProduct, selectUserRole } from '../../selectors'
+import { selectProducts, selectUserRole } from '../../selectors'
 import { useEffect, useState } from 'react'
 import { useGetProductRating } from '../../hooks'
-import { loadProductAsync, deleteProductAsync, deleteReview } from '../../actions'
+import {
+	loadProductAsync,
+	deleteProductAsync,
+	deleteReview,
+	setProducts,
+} from '../../actions'
 import { checkAccess, request } from '../../utils'
 import { CATEGORIES, ROLE } from '../../constants'
 import { ReviewForm } from './review/review-form'
 
 export const Product = () => {
-	const product = useSelector(selectProduct)
-	const { imageUrl, name, brand, price, category, description, reviews } = product
 	const dispatch = useDispatch()
 	const { id } = useParams()
-	const [isLoading, setIsLoading] = useState(true)
+	const navigate = useNavigate()
+
+	const products = useSelector(selectProducts)
 	const roleId = useSelector(selectUserRole)
 	const isAdmin = checkAccess([ROLE.ADMIN], roleId)
 	const isGuest = checkAccess([ROLE.GUEST], roleId)
-	const navigate = useNavigate()
+
+	const [isLoading, setIsLoading] = useState(true)
 	const [selectedSize, setSelectedSize] = useState('')
 	const [isModalOpen, setIsModalOpen] = useState(false)
 
 	const sizes = ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl']
 
+	// загрузка продуктов, если ещё нет
 	useEffect(() => {
-		dispatch(loadProductAsync(id)).then(() => {
+		if (products.length === 0) {
+			request('/api/products')
+				.then(({ data: { products } }) => {
+					dispatch(setProducts(products))
+				})
+				.finally(() => setIsLoading(false))
+		} else {
 			setIsLoading(false)
-		})
-	}, [dispatch, id])
+		}
+	}, [products, dispatch])
 
-	const chooseSize = (selectedSize) => {
-		setSelectedSize(selectedSize)
-		isGuest && navigate('/login')
+	const product = products.find((p) => p.id === id)
+
+	useEffect(() => {
+		if (!product) {
+			dispatch(loadProductAsync(id))
+		}
+	}, [dispatch, id, product])
+
+	if (isLoading || !product) return <Loader />
+
+	const { imageUrl, name, brand, price, category, description, reviews } =
+		product
+
+	const chooseSize = (size) => {
+		setSelectedSize(size)
+		if (isGuest) navigate('/login')
 	}
 
 	const removeReview = (reviewId) => {
 		if (!isAdmin) return
-		request(`/api/products/${id}/reviews/${reviewId}`, 'DELETE').then(() => {
+		request(`/api/products/${id}/reviews/${reviewId}`, 'DELETE').then(() =>
 			dispatch(deleteReview(reviewId))
-		})
+		)
 	}
 
 	const productData = { product: { id }, selectedSize }
@@ -50,8 +82,6 @@ export const Product = () => {
 		dispatch(deleteProductAsync(id))
 		navigate('/catalog')
 	}
-
-	if (isLoading) return <Loader />
 
 	return (
 		<section className={`${styles.product} container flex flex-col`}>
@@ -71,8 +101,10 @@ export const Product = () => {
 					<h1 className={`${styles.product__name}`}>{name}</h1>
 					<h2 className={`${styles.product__brand}`}>{brand}</h2>
 					<div className={`${styles.product__price}`}>{price}$</div>
+
 					{[category].includes(CATEGORIES.TOP) ||
-					[category].includes(CATEGORIES.BOTTOM) || [category].includes(CATEGORIES.SHOES) ? (
+					[category].includes(CATEGORIES.BOTTOM) ||
+					[category].includes(CATEGORIES.SHOES) ? (
 						<div className={`${styles.product__sizes} flex`}>
 							{sizes.map((s) => (
 								<button
@@ -89,6 +121,7 @@ export const Product = () => {
 					) : (
 						<div>no size</div>
 					)}
+
 					<div className={`${styles.product__buttons} flex`}>
 						<AddToCart
 							productData={productData}
@@ -97,6 +130,7 @@ export const Product = () => {
 						<Like productId={id} />
 						<AddToCombinerButton productId={id} />
 					</div>
+
 					{isAdmin && (
 						<Link
 							className={`${styles.product__button}`}
@@ -115,22 +149,25 @@ export const Product = () => {
 					)}
 				</div>
 			</div>
+
 			<div className={`${styles.product__description}`}>
-				<div>Description</div>
+				<div>description</div>
 				{description}
 			</div>
+
 			<div className={`${styles.product__rating}`}>
-				Rating: {useGetProductRating(reviews)}
+				rating: {useGetProductRating(reviews)}
 			</div>
+
 			<div className={`${styles.product__reviews} flex flex-col`}>
-				<div>Reviews</div>
+				<div>reviews</div>
 				{!isGuest && <ReviewForm {...{ id }} />}
 
 				{reviews.length === 0
 					? 'no reviews yet'
 					: reviews.map((review) => (
 							<Review key={review.id} {...{ review, removeReview }} />
-						))}
+					  ))}
 			</div>
 		</section>
 	)

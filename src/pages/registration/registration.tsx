@@ -79,7 +79,7 @@ export const Registration = () => {
 
 	return (
 		<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-			<h2>регистрация</h2>
+			<h2>registration</h2>
 			<Input
 				{...register('login', { onChange: () => setServerError('') })}
 				placeholder="логин"
