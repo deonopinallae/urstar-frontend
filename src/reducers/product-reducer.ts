@@ -10,6 +10,7 @@ const initialState = {
 	price: '',
 	description: '',
 	reviews: [],
+	size: ''
 }
 
 export const productReducer = (state = initialState, action) => {

@@ -2,7 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import styles from './styles.module.scss'
 import { Loader } from '../../components/ui'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectProduct, selectUserRole } from '../../selectors'
+import { selectProduct, selectProducts, selectUserRole } from '../../selectors'
 import { useEffect, useState, useRef } from 'react'
 import { loadProductAsync, saveProductAsync } from '../../actions'
 import { CATEGORIES, PRODUCT_TYPES, ROLE } from '../../constants'
@@ -10,6 +10,7 @@ import { checkAccess } from '../../utils'
 import { Error } from '../error/error'
 
 export const ProductEdit = () => {
+	const products = useSelector(selectProducts) 
 	const roleId = useSelector(selectUserRole)
 	const isAdmin = checkAccess([ROLE.ADMIN], roleId)
 	const product = useSelector(selectProduct)
@@ -66,7 +67,7 @@ export const ProductEdit = () => {
 		form.append('description', descriptionValue)
 		form.append('imageUrl', imageUrlValue)
 
-		dispatch(saveProductAsync(productId, form)).then(() =>
+		dispatch(saveProductAsync(productId, form, products)).then(() =>
 			navigate(`/products/${productId}`),
 		)
 	}
