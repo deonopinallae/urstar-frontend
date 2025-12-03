@@ -5,7 +5,6 @@ import { setProducts } from './set-products'
 export const saveProductAsync = (id, newProductData, products) => async (dispatch) => {
 	const isFormData = true
 	request(`/api/products/${id}/edit`, 'PATCH', { newProductData }, isFormData)
-		.then((res) => res.json())
 		.then(({ updatedProduct }) => {
 			dispatch(setProductData(updatedProduct))
 			dispatch(
