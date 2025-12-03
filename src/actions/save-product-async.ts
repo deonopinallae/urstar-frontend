@@ -6,7 +6,7 @@ export const saveProductAsync = (id, newProductData, products) => async (dispatc
 		fetch(`/api/products/${id}/edit`, {
 			method: 'PATCH',
 			body: newProductData,
-			credentials: 'include',
+			// credentials: 'include',
 		}).then(res => res.json()).then(({updatedProduct}) => {
 			dispatch(setProductData(updatedProduct))
 			dispatch(setProducts(products.map(p => p.id === updatedProduct.id ? updatedProduct : p)))
