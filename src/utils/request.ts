@@ -18,7 +18,7 @@ export const request = async (
 		method: method || 'GET',
 		headers,
 		body: data ? (isFormData ? data : JSON.stringify(data)) : undefined,
-		credentials: 'include',
+		// credentials: 'include',
 	})
 
 	// const res = await fetch(`${url}`, {
